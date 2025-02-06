@@ -29,8 +29,11 @@ const TawkTo = () => {
       // Set up API hooks before script loads
       window.Tawk_API = window.Tawk_API || {};
       window.Tawk_API.onLoad = () => {
+        console.log("Tawk.to script loaded");
         if (isMounted && user?.email) {
-          updateTawkUser(user);
+          setTimeout(() => {
+            updateTawkUser(user);
+          }, 3000); // Delay of 3 seconds
         }
       };
 
@@ -50,7 +53,9 @@ const TawkTo = () => {
 
     // Update user if script is already loaded
     if (window.Tawk_API && window.Tawk_API.setAttributes && user?.email) {
-      updateTawkUser(user);
+      setTimeout(() => {
+        updateTawkUser(user);
+      }, 3000); // Delay of 3 seconds
     }
 
     return () => {
