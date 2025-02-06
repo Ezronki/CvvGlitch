@@ -1,6 +1,9 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
-const TawkTo = () => {
+function TawkToPageTracker() {
+  const location = useLocation();
+
   useEffect(() => {
     // Initialize Tawk.to script
     var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
@@ -12,9 +15,16 @@ const TawkTo = () => {
       s1.setAttribute('crossorigin', '*');
       s0.parentNode.insertBefore(s1, s0);
     })();
-  }, []);
+
+    // Track page changes
+    if (window.Tawk_API) {
+      window.Tawk_API.setAttributes({ currentPage: location.pathname }, function (error) {
+        if (error) console.error("Tawk.to tracking error:", error);
+      });
+    }
+  }, [location.pathname]);
 
   return null;
-};
+}
 
-export default TawkTo;
+export default TawkToPageTracker;
