@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const TidioChat = () => {
+const TawkTo = () => {
   useEffect(() => {
     // Dynamically add the Tidio script to the document
     const script = document.createElement('script');
@@ -17,4 +17,4 @@ const TidioChat = () => {
   return null; // This component doesn't render anything
 };
 
-export default TidioChat;
+export default TawkTo;
