@@ -1,36 +1,20 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect } from 'react';
 
-function TawkTo() {
-  const location = useLocation();
-
+const TidioChat = () => {
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "//code.tidio.co/jxz29aflxc3rzxvtw9dzlw2xwdfcquzu.js";
+    // Dynamically add the Tidio script to the document
+    const script = document.createElement('script');
+    script.src = '//code.tidio.co/jxz29aflxc3rzxvtw9dzlw2xwdfcquzu.js';
     script.async = true;
     document.body.appendChild(script);
 
+    // Cleanup function to remove the script when the component unmounts
     return () => {
       document.body.removeChild(script);
     };
   }, []);
 
-  useEffect(() => {
-    const checkTidioAPI = () => {
-      if (window.tidioChatApi) {
-        window.tidioChatApi.setAttributes({ currentPage: location.pathname }, function (error) {
-          if (error) console.error("Tidio tracking error:", error);
-        });
-      } else {
-        // Retry after a short delay if the API is not available yet
-        setTimeout(checkTidioAPI, 1000);
-      }
-    };
+  return null; // This component doesn't render anything
+};
 
-    checkTidioAPI();
-  }, [location.pathname]);
-
-  return null;
-}
-
-export default TawkTo;
+export default TidioChat;
