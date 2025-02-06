@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux"; // For Redux state
-import { useLocation } from "react-router-dom"; 
-import { checkAuth } from "../../store/auth-slice";
-
+import { useLocation } from "react-router-dom"; // To get the current route
 
 const TawkTo = () => {
-   const { user } = checkAuth() || {}; // Assuming checkAuth() returns an object with user data
-    const location = useLocation();
+  const user = useSelector((state) => state.auth.user); // Assuming user data is stored in Redux
+  const location = useLocation(); // Get the current route location
 
   // Don't render Tawk on login or register pages
   if (location.pathname === "/login" || location.pathname === "/register") {
