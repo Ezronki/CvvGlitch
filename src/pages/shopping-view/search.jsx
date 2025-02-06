@@ -22,7 +22,7 @@ function SearchProducts() {
 
   const { user } = useSelector((state) => state.auth);
 
-  const { cartItems } = useSelector((state) => state.shopCart);
+  
   const { toast } = useToast();
   useEffect(() => {
     if (keyword && keyword.trim() !== "" && keyword.trim().length > 3) {
