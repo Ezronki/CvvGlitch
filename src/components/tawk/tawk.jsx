@@ -1,51 +1,60 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux"; // For Redux state
-import { useLocation } from "react-router-dom"; // To get the current route
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const TawkTo = () => {
-  const user = useSelector((state) => state.auth.user); // Assuming user data is stored in Redux
-  const location = useLocation(); // Get the current route location
+  const user = useSelector((state) => state.auth.user);
+  const location = useLocation();
 
-  // Don't render Tawk on login or register pages
+  // Don't render Tawk on specific routes
   if (location.pathname === "/login" || location.pathname === "/register") {
     return null;
   }
 
   useEffect(() => {
-    // Only load the Tawk script if user is authenticated
-    if (!user?.email) return;
+    let isMounted = true;
+    
+    // Initialize Tawk only once
+    if (!window.Tawk_API) {
+      const script = document.createElement("script");
+      script.src = "https://embed.tawk.to/67a23d823a8427326079a65a/default";
+      script.async = true;
+      script.charset = "UTF-8";
+      script.setAttribute("crossorigin", "*");
 
-    const script = document.createElement("script");
-    script.src = "https://embed.tawk.to/67a23d823a8427326079a65a/default";
-    script.async = true;
-    script.charset = "UTF-8";
-    script.setAttribute("crossorigin", "*");
+      // Set up API hooks before script loads
+      window.Tawk_API = window.Tawk_API || {};
+      window.Tawk_API.onLoad = () => {
+        if (isMounted && user?.email) {
+          updateTawkUser(user);
+        }
+      };
 
-    document.body.appendChild(script);
+      document.body.appendChild(script);
+    }
 
-    script.onload = () => {
-      if (window.Tawk_API && user?.email) {
-        window.Tawk_API.onLoad = function () {
-          window.Tawk_API.setAttributes(
-            {
-              name: user?.userName || "Guest", // Use userName or fallback to "Guest"
-              email: user?.email,
-              userId: user?._id, // Using _id as a unique identifier
-            },
-            function (error) {
-              if (error) {
-                console.log("Tawk API Error:", error);
-              }
-            }
-          );
-        };
-      }
-    };
+    // Update user if script is already loaded
+    if (window.Tawk_API && window.Tawk_API.setAttributes && user?.email) {
+      updateTawkUser(user);
+    }
 
     return () => {
-      document.body.removeChild(script);
+      isMounted = false;
     };
-  }, [user, location]); // Runs when user or route changes
+  }, [user]); // Only react to user changes
+
+  const updateTawkUser = (currentUser) => {
+    window.Tawk_API.setAttributes(
+      {
+        name: currentUser?.userName || "Guest",
+        email: currentUser?.email,
+        userId: currentUser?._id,
+      },
+      (error) => {
+        if (error) console.error("Tawk.to attribute error:", error);
+      }
+    );
+  };
 
   return null;
 };
