@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { checkAuth } from "../../store/auth-slice"
 
 const TawkTo = () => {
-  const { user } = useAuth(); // Get logged-in user from context/state
+  const { user } = checkAuth(); // Get logged-in user from context/state
 
   useEffect(() => {
     // Initialize Tawk.to script
