@@ -104,19 +104,23 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                   productDetails?.salePrice > 0 ? "line-through" : ""
                 }`}
               >
-                ${productDetails?.price}
+                Price: ${productDetails?.price}
               </p>
               {productDetails?.salePrice > 0 && (
                 <p className="text-xl sm:text-2xl font-bold text-muted-foreground">
-                  ${productDetails?.salePrice}
+                  Price: ${productDetails?.salePrice}
                 </p>
               
                
               )}
-               <p className="text-xl sm:text-2xl font-bold text-primary">
-                  ${productDetails?.balance}
-                </p>
+               
             </div>
+             <div className="flex items-center justify-between">
+                <p className="text-xl sm:text-2xl font-bold text-primary">
+                  Balance: ${productDetails?.balance}
+                </p>
+
+               </div>
 
             {/* Ratings */}
             <div className="flex items-center gap-2 mt-2">
