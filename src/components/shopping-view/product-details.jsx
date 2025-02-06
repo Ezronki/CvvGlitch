@@ -5,32 +5,27 @@ import { Dialog, DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { Input } from "../ui/input";
 import { useDispatch, useSelector } from "react-redux";
-
 import { useToast } from "../ui/use-toast";
 import { setProductDetails } from "@/store/shop/products-slice";
 import { Label } from "../ui/label";
 import StarRatingComponent from "../common/star-rating";
 import { useEffect, useState } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const [reviewMsg, setReviewMsg] = useState("");
   const [rating, setRating] = useState(0);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
- 
   const { reviews } = useSelector((state) => state.shopReview);
   const navigate = useNavigate();
-
   const { toast } = useToast();
 
   function handleRatingChange(getRating) {
     console.log(getRating, "getRating");
     setRating(getRating);
   }
-
-  
 
   function handleDialogClose() {
     setOpen(false);
@@ -69,7 +64,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const averageReview =
     reviews && reviews.length > 0
       ? reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) /
-      reviews.length
+        reviews.length
       : 0;
 
   return (
@@ -91,22 +86,22 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold">
               {productDetails?.title}
-            >
-            <div>
-  {/* Title for the description */}
-  <h3 className="text-lg sm:text-xl font-semibold mb-2">Description:</h3>
+            </h1>
 
-  {/* Product description */}
-  <p className="text-muted-foreground text-lg sm:text-xl mt-3 mb-4">
-    {productDetails?.description}
-  </p>
-</div>
+            {/* Description */}
+            <div>
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">Description:</h3>
+              <p className="text-muted-foreground text-lg sm:text-xl mt-3 mb-4">
+                {productDetails?.description}
+              </p>
+            </div>
 
             {/* Pricing */}
             <div className="flex items-center justify-between">
               <p
-                className={`text-xl sm:text-2xl font-bold text-primary ${productDetails?.salePrice > 0 ? "line-through" : ""
-                  }`}
+                className={`text-xl sm:text-2xl font-bold text-primary ${
+                  productDetails?.salePrice > 0 ? "line-through" : ""
+                }`}
               >
                 ${productDetails?.price}
               </p>
