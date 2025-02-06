@@ -1,6 +1,7 @@
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 
 import { fetchProductDetails } from "@/store/shop/products-slice";
 import {
@@ -18,11 +19,9 @@ function SearchProducts() {
   const dispatch = useDispatch();
   const { searchResults } = useSelector((state) => state.shopSearch);
   const { productDetails } = useSelector((state) => state.shopProducts);
-
   const { user } = useSelector((state) => state.auth);
-
- 
   const { toast } = useToast();
+
   useEffect(() => {
     if (keyword && keyword.trim() !== "" && keyword.trim().length > 3) {
       setTimeout(() => {
@@ -35,8 +34,6 @@ function SearchProducts() {
     }
   }, [keyword]);
 
-
-
   function handleGetProductDetails(getCurrentProductId) {
     console.log(getCurrentProductId);
     dispatch(fetchProductDetails(getCurrentProductId));
@@ -46,7 +43,7 @@ function SearchProducts() {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
 
-  console.log(searchResults, "searchResults");
+  console.log("searchResults:", searchResults);
 
   return (
     <div className="mt-10 container mx-auto md:px-6 px-4 py-8">
@@ -61,13 +58,13 @@ function SearchProducts() {
           />
         </div>
       </div>
-      {!searchResults.length ? (
+      {!searchResults?.length ? (
         <h1 className="text-2xl text-white font-extrabold">No results found!</h1>
       ) : null}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        {searchResults.map((item) => (
+        {searchResults?.map((item) => (
           <ShoppingProductTile
-            
+            key={item.id} // Ensure you add a unique key
             product={item}
             handleGetProductDetails={handleGetProductDetails}
           />
@@ -79,13 +76,12 @@ function SearchProducts() {
         productDetails={productDetails}
       />
       <div className="flex flex-col md:flex-row justify-center items-center gap-6">
-          {/* Left Section: Copyright */}
-          <div className="text-center md:text-left">
-            <p className="text-sm text-gray-400">
-              &copy; {new Date().getFullYear()} TRACK4. All rights reserved.
-            </p>
-          </div>
+        <div className="text-center md:text-left">
+          <p className="text-sm text-gray-400">
+            &copy; {new Date().getFullYear()} TRACK4. All rights reserved.
+          </p>
         </div>
+      </div>
     </div>
   );
 }
