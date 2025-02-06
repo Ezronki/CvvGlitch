@@ -91,6 +91,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold">
               {productDetails?.title}
+            >
             <div>
   {/* Title for the description */}
   <h3 className="text-lg sm:text-xl font-semibold mb-2">Description:</h3>
