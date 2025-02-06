@@ -5,7 +5,7 @@ import { checkAuth } from "../../store/auth-slice";
 
 
 const TawkTo = () => {
-    const { user } = checkAuth(); // Assuming checkAuth() returns an object with user data
+   const { user } = checkAuth() || {}; // Assuming checkAuth() returns an object with user data
     const location = useLocation();
 
   // Don't render Tawk on login or register pages
