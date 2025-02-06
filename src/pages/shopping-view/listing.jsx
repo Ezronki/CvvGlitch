@@ -39,6 +39,7 @@ const categories = [
   { id: "venmo", label: "Venmo", path: "/shop/venmo" },
   { id: "applepay", label: "ApplePay", path: "/shop/apple-pay" },
   { id: "gpay", label: "GooglePay", path: "/shop/google-pay" },
+  { id: "dump", label: "Dumps", path: "/shop/dump" }
 ];
 
 function ShoppingListing() {
@@ -114,7 +115,7 @@ function ShoppingListing() {
             </DropdownMenu>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
           {productList && productList.length > 0
             ? productList.map((productItem) => (
               <ShoppingProductTile
