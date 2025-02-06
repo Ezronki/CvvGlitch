@@ -110,6 +110,10 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 <p className="text-xl sm:text-2xl font-bold text-muted-foreground">
                   ${productDetails?.salePrice}
                 </p>
+               <p className="text-xl sm:text-2xl font-bold text-primary">
+                  ${productDetails?.balance}
+                </p>
+               
               )}
             </div>
 
