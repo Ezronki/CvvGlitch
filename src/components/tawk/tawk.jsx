@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"; // For Redux state
 import { useLocation } from "react-router-dom"; // To get the current route
 
 const TawkTo = () => {
-  const user = useSelector((state) => state.check-auth.user); // Assuming user data is stored in Redux
+  const user = useSelector((state) => state.check.user); // Assuming user data is stored in Redux
   const location = useLocation(); // Get the current route location
 
   // Don't render Tawk on login or register pages
