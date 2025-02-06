@@ -5,11 +5,11 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/store.js";
 import { Toaster } from "./components/ui/toaster.jsx";
-import TawkToPageTracker from "./components/tawk/tawkToPageTracker.jsx";
+
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <TawkToPageTracker />
+ 
     <Provider store={store}>
       <App />
       <Toaster />
