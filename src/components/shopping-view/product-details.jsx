@@ -81,7 +81,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               className="aspect-square w-full object-cover"
             />
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">Description:</h3>
+              <h3 className="mt-2 text-lg text-center sm:text-xl font-semibold mb-2">Description:</h3>
               <p className="text-muted-foreground text-lg sm:text-xl mt-3 mb-4">
                 {productDetails?.description}
               </p>
