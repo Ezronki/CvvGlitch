@@ -91,10 +91,15 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold">
               {productDetails?.title}
-            </h1>
-            <p className="text-muted-foreground text-lg sm:text-xl mt-3 mb-4">
-              {productDetails?.description}
-            </p>
+            <div>
+  {/* Title for the description */}
+  <h3 className="text-lg sm:text-xl font-semibold mb-2">Description:</h3>
+
+  {/* Product description */}
+  <p className="text-muted-foreground text-lg sm:text-xl mt-3 mb-4">
+    {productDetails?.description}
+  </p>
+</div>
 
             {/* Pricing */}
             <div className="flex items-center justify-between">
