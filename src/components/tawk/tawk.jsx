@@ -5,23 +5,22 @@ function TawkTo() {
   const location = useLocation();
 
   useEffect(() => {
-    // Initialize Tawk.to script
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function () {
-      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = 'https://embed.tawk.to/67a23d823a8427326079a65a/default';
-      s1.charset = 'UTF-8';
-      s1.setAttribute('crossorigin', '*');
-      s0.parentNode.insertBefore(s1, s0);
-    })();
+    // Initialize Tidio script
+    const script = document.createElement("script");
+    script.src = "//code.tidio.co/jxz29aflxc3rzxvtw9dzlw2xwdfcquzu.js";
+    script.async = true;
+    document.body.appendChild(script);
 
     // Track page changes
-    if (window.Tawk_API) {
-      window.Tawk_API.setAttributes({ currentPage: location.pathname }, function (error) {
-        if (error) console.error("Tawk.to tracking error:", error);
+    if (window.tidioChatApi) {
+      window.tidioChatApi.setAttributes({ currentPage: location.pathname }, function (error) {
+        if (error) console.error("Tidio tracking error:", error);
       });
     }
+
+    return () => {
+      document.body.removeChild(script);
+    };
   }, [location.pathname]);
 
   return null;
