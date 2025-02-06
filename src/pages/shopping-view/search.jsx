@@ -90,6 +90,5 @@ function SearchProducts() {
         </div>
     </div>
   );
-}
 
 export default SearchProducts;
