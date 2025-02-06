@@ -1,53 +1,43 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux"; // For Redux state
-import { useLocation } from "react-router-dom"; // To get the current route
+import React, { useRef } from 'react';
+import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 const TawkTo = () => {
-  const user = useSelector((state) => state.auth.user); // Assuming user data is stored in Redux
-  const location = useLocation(); // Get the current route location
+  const tawkMessengerRef = useRef();
+  const user = useSelector((state) => state.auth.user);
+  const location = useLocation();
 
-  // Don't render Tawk on login or register pages
-  if (location.pathname === "/login" || location.pathname === "/register") {
+  // Don't render Tawk.to on login or register pages
+  if (location.pathname === '/login' || location.pathname === '/register') {
     return null;
   }
 
-  useEffect(() => {
-    // Only load the Tawk script if user is authenticated
-    if (!user?.email) return;
+  const handleOnLoad = () => {
+    if (tawkMessengerRef.current && user?.email) {
+      tawkMessengerRef.current.setAttributes(
+        {
+          name: user.userName || 'Guest',
+          email: user.email,
+          userId: user._id,
+        },
+        (error) => {
+          if (error) {
+            console.error('Tawk API Error:', error);
+          }
+        }
+      );
+    }
+  };
 
-    const script = document.createElement("script");
-    script.src = "https://embed.tawk.to/67a23d823a8427326079a65a/default";
-    script.async = true;
-    script.charset = "UTF-8";
-    script.setAttribute("crossorigin", "*");
-
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      if (window.Tawk_API && user?.email) {
-        window.Tawk_API.onLoad = function () {
-          window.Tawk_API.setAttributes(
-            {
-              name: user?.userName || "Guest", // Use userName or fallback to "Guest"
-              email: user?.email,
-              userId: user?._id, // Using _id as a unique identifier
-            },
-            function (error) {
-              if (error) {
-                console.log("Tawk API Error:", error);
-              }
-            }
-          );
-        };
-      }
-    };
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, [user, location]); // Runs when user or route changes
-
-  return null;
+  return (
+    <TawkMessengerReact
+      propertyId="67a23d823a8427326079a65a"
+      widgetId="default"
+      onLoad={handleOnLoad}
+      ref={tawkMessengerRef}
+    />
+  );
 };
 
 export default TawkTo;
