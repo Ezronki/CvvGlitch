@@ -20,10 +20,6 @@ function SearchProducts() {
   const { searchResults } = useSelector((state) => state.shopSearch);
   const { productDetails } = useSelector((state) => state.shopProducts);
 
-  const { user } = useSelector((state) => state.auth);
-
-  
-  const { toast } = useToast();
   useEffect(() => {
     if (keyword && keyword.trim() !== "" && keyword.trim().length > 3) {
       setTimeout(() => {
@@ -36,19 +32,13 @@ function SearchProducts() {
     }
   }, [keyword]);
 
- 
-  }
-
   function handleGetProductDetails(getCurrentProductId) {
-    console.log(getCurrentProductId);
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
   useEffect(() => {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
-
-  console.log(searchResults, "searchResults");
 
   return (
     <div className="mt-10 container mx-auto md:px-6 px-4 py-8">
@@ -69,7 +59,6 @@ function SearchProducts() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {searchResults.map((item) => (
           <ShoppingProductTile
-            
             product={item}
             handleGetProductDetails={handleGetProductDetails}
           />
@@ -81,14 +70,15 @@ function SearchProducts() {
         productDetails={productDetails}
       />
       <div className="flex flex-col md:flex-row justify-center items-center gap-6">
-          {/* Left Section: Copyright */}
-          <div className="text-center md:text-left">
-            <p className="text-sm text-gray-400">
-              &copy; {new Date().getFullYear()} TRACK4. All rights reserved.
-            </p>
-          </div>
+        {/* Left Section: Copyright */}
+        <div className="text-center md:text-left">
+          <p className="text-sm text-gray-400">
+            &copy; {new Date().getFullYear()} TRACK4. All rights reserved.
+          </p>
         </div>
+      </div>
     </div>
   );
+}
 
 export default SearchProducts;
