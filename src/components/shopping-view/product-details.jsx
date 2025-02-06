@@ -80,6 +80,12 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               height={600}
               className="aspect-square w-full object-cover"
             />
+            <div>
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">Description:</h3>
+              <p className="text-muted-foreground text-lg sm:text-xl mt-3 mb-4">
+                {productDetails?.description}
+              </p>
+            </div>
           </div>
 
           {/* Product Info */}
@@ -89,12 +95,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             </h1>
 
             {/* Description */}
-            <div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">Description:</h3>
-              <p className="text-muted-foreground text-lg sm:text-xl mt-3 mb-4">
-                {productDetails?.description}
-              </p>
-            </div>
+            
 
             {/* Pricing */}
             <div className="flex items-center justify-between">
