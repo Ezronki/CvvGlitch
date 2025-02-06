@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-function TawkToPageTracker() {
+function TawkTo() {
   const location = useLocation();
 
   useEffect(() => {
@@ -27,4 +27,4 @@ function TawkToPageTracker() {
   return null;
 }
 
-export default TawkToPageTracker;
+export default TawkTo;
