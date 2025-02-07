@@ -189,10 +189,10 @@ export const shoppingViewHeaderMenuItems = [
       { id: "canada_banks", label: "Canada Banks", path: "/shop/listing?category=canada_banks" },
       { id: "cc_cvv", label: "CC & CVV", path: "/shop/listing?category=cc_cvv" },
       { id: "stealth_accounts", label: "Stealth Accounts", path: "/shop/listing?category=stealth_accounts" },
-      { id: "fullz", label: "Fullz", path: "/shop/listing?category=fullz" },
+  
       { id: "tools", label: "Tools", path: "/shop/listing?category=toolss" },
       { id: "e_gift_cards", label: "E-Gift Cards", path: "/shop/listing?category=e_gift_cards" },
-      { id: "clones", label: "Clones", path: "/shop/listing?category=clones" },
+     
       { id: "carded_products", label: "Carded Products", path: "/shop/listing?category=carded_products" },
       { id: "cashapp", label: "CashApp", path: "/shop/listing?category=cashapp" },
       { id: "paypal", label: "PayPal", path: "/shop/listing?category=paypal" },
