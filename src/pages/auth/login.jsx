@@ -30,9 +30,11 @@ const AuthLogin = () => {
         // navigate("/dashboard"); // Navigate to dashboard on success
       } else {
         toast({
-          title: data?.payload?.message,
-          variant: "destructive",
-        });
+  title: data?.payload?.message,
+  variant: "destructive",
+  className: "text-white",
+});
+
       }
     });
   };
