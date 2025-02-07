@@ -190,7 +190,7 @@ export const shoppingViewHeaderMenuItems = [
       { id: "cc_cvv", label: "CC & CVV", path: "/shop/listing?category=cc_cvv" },
       { id: "stealth_accounts", label: "Stealth Accounts", path: "/shop/listing?category=stealth_accounts" },
   
-      { id: "tools", label: "Tools", path: "/shop/listing?category=toolss" },
+      { id: "toolss", label: "Tools", path: "/shop/listing?category=toolss" },
       { id: "e_gift_cards", label: "E-Gift Cards", path: "/shop/listing?category=e_gift_cards" },
      
       { id: "carded_products", label: "Carded Products", path: "/shop/listing?category=carded_products" },
