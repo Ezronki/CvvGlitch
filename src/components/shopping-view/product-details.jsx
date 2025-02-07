@@ -80,12 +80,6 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               height={600}
               className="aspect-square w-full object-cover"
             />
-            <div >
-              <h3 className="mt-2 justify-center text-lg  sm:text-xl font-semibold mb-2">Description:</h3>
-              <p className="text-muted-foreground text-lg sm:text-xl mt-3 mb-4">
-                {productDetails?.description}
-              </p>
-            </div>
           </div>
 
           {/* Product Info */}
@@ -95,7 +89,12 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             </h1>
 
             {/* Description */}
-            
+            <h3 className="mt-2 text-center text-lg sm:text-xl font-semibold mb-2">
+              Description:
+            </h3>
+            <p className="text-muted-foreground text-lg sm:text-xl mt-3 mb-4">
+              {productDetails?.description}
+            </p>
 
             {/* Pricing */}
             <div className="flex items-center justify-between">
@@ -110,20 +109,17 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 <p className="text-xl sm:text-2xl font-bold text-muted-foreground">
                   Price: ${productDetails?.salePrice}
                 </p>
-              
-               
               )}
-               
             </div>
-             </div>
-            {product?.balance !== null && product?.balance !== 0 && (
+
+            {/* Balance */}
+            {productDetails?.balance !== null && productDetails?.balance !== 0 && (
               <div className="flex justify-center items-center mb-2">
                 <span className="text-[15px] font-bold">
-                  Balance: ${product?.balance}
+                  Balance: ${productDetails?.balance}
                 </span>
               </div>
             )}
-
 
             {/* Ratings */}
             <div className="flex items-center gap-2 mt-2">
