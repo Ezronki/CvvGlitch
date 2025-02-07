@@ -94,10 +94,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               {productDetails?.title}
             </h1>
 
-            {/* Description */}
-            <h3 className="mt-2 text-center text-lg sm:text-xl font-semibold mb-2">
-              Description:
-            </h3>
+           
             
 
             {/* Pricing */}
