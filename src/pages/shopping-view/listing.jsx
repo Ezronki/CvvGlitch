@@ -34,7 +34,7 @@ const categories = [
   { id: "carded_products", label: "Carded Products", path: "/shop/listing?category=carded_products" },
   { id: "cashapp", label: "CashApp", path: "/shop/listing?category=cashapp" },
   { id: "paypal", label: "PayPal", path: "/shop/listing?category=paypal" },
-  { id: "cl", label: "Cashapp", path: "/shop/cashapp-linkables" },
+  { id: "clm", label: "Cashapp", path: "/shop/cashapp-linkables" },
   { id: "pp", label: "Paypal", path: "/shop/paypal-linkabes" },
   { id: "venmo", label: "Venmo", path: "/shop/venmo" },
   { id: "applepay", label: "ApplePay", path: "/shop/apple-pay" },
