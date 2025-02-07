@@ -205,10 +205,10 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/linkables",
     dropdown: [
       { id: "clm", label: "Cashapp", path: "/shop/listing?category=cashapp-linkables" },
-      { id: "pp", label: "Paypal", path: "/shop/listing?category=paypal-linkabes" },
-      { id: "venmo", label: "Venmo", path: "/shop/listing?category=venmo" },
-      { id: "applepay", label: "ApplePay", path: "/shop/listing?category=apple-pay" },
-      { id: "gpay", label: "GooglePay", path: "/shop/listing?category=google-pay" },
+      { id: "ppm", label: "Paypal", path: "/shop/listing?category=paypal-linkabes" },
+      { id: "venmom", label: "Venmo", path: "/shop/listing?category=venmo" },
+      { id: "applepaym", label: "ApplePay", path: "/shop/listing?category=apple-pay" },
+      { id: "gpaym", label: "GooglePay", path: "/shop/listing?category=google-pay" },
     ],
   },
   {
