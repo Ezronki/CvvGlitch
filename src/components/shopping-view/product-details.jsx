@@ -115,12 +115,13 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               )}
                
             </div>
-             <div className="flex items-center justify-between">
-                <p className="text-xl sm:text-2xl font-bold text-primary">
-                  Balance: ${productDetails?.balance}
-                </p>
-
-               </div>
+             </div>
+            {product?.balance !== null && product?.balance !== 0 && (
+              <div className="flex justify-center items-center mb-2">
+                <span className="text-[15px] font-bold">
+                  Balance: ${product?.balance}
+                </span>
+              </div>
 
             {/* Ratings */}
             <div className="flex items-center gap-2 mt-2">
