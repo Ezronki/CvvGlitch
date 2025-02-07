@@ -80,7 +80,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               height={600}
               className="aspect-square w-full object-cover"
             />
-            <h3 className="mt-2 text-center text-lg sm:text-xl font-bold mb-2">
+            <h3 className="mt-2 text-left text-lg sm:text-xl font-bold mb-2">
               Description:
             </h3>
             <p className="text-muted-foreground text-lg sm:text-xl mt-3 mb-4">
