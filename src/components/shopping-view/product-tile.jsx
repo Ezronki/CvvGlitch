@@ -69,7 +69,7 @@ function ShoppingProductTile({ product, handleGetProductDetails }) {
                 </span>
               ) : null}
             </div>
-            {product?.balance !== null && product?.balance !== undefined && (
+            {product?.balance !== null && product?.balance !== 0 && (
               <div className="flex justify-center items-center mb-2">
                 <span className="text-[15px] font-bold">
                   Balance: ${product?.balance}
