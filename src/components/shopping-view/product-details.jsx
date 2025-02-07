@@ -115,8 +115,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
 
             {/* Balance */}
             {productDetails?.balance !== null && productDetails?.balance !== 0 && (
-              <div className="flex justify-center items-center mb-2">
-                <span className="text-[15px] font-bold">
+              <div className="flex justify-left items-left mb-2">
+                <span className="text-xl text-[15px] font-bold">
                   Balance: ${productDetails?.balance}
                 </span>
               </div>
