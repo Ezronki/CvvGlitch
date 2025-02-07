@@ -122,6 +122,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                   Balance: ${product?.balance}
                 </span>
               </div>
+            )}
+
 
             {/* Ratings */}
             <div className="flex items-center gap-2 mt-2">
