@@ -198,7 +198,7 @@ function ShoppingHeader() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full flex items-center font-bold text-white border-b bg-black">
       <div className="flex h-16 items-center justify-between px-4 md:px-6 w-full max-w-7xl mx-auto">
-        <Link to="/shop/home" className="flex items-center gap-2 text-xl font-bold text-[#ff9900] transition-colors duration-300">
+        <Link to="/shop/home">
           <img src={track4Logo} alt="Track4 Logo" className="h-6 w-auto" />
         </Link>
 
