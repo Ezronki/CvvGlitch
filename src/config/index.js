@@ -193,7 +193,7 @@ export const shoppingViewHeaderMenuItems = [
       { id: "toolss", label: "Tools", path: "/shop/listing?category=toolss" },
       { id: "e_gift_cardss", label: "E-Gift Cards", path: "/shop/listing?category=e_gift_cards" },
      
-      { id: "carded_products", label: "Carded Products", path: "/shop/listing?category=carded_products" },
+      { id: "carded_productss", label: "Carded Products", path: "/shop/listing?category=carded_products" },
       { id: "cashapp", label: "CashApp", path: "/shop/listing?category=cashapp" },
       { id: "paypal", label: "PayPal", path: "/shop/listing?category=paypal" },
      
