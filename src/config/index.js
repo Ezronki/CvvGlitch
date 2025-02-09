@@ -82,7 +82,7 @@ export const addProductFormElements = [
       { id: "applepaym", label: "Apple Pay" },
       { id: "venmom", label: "Venmo" },
       { id: "gpaym", label: "Google Pay" },
-      { id: "dumps", label: "Dumps" },
+    
       
     ],
   }
