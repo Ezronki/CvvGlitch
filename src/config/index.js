@@ -196,7 +196,7 @@ export const shoppingViewHeaderMenuItems = [
       { id: "carded_products", label: "Carded Products", path: "/shop/listing?category=carded_products" },
       { id: "cashapp", label: "CashApp", path: "/shop/listing?category=cashapp" },
       { id: "paypal", label: "PayPal", path: "/shop/listing?category=paypal" },
-      { id: "dumps", label: "Dumps", path: "/shop/listing?category=dumps" }
+     
     ],
   },
   {
