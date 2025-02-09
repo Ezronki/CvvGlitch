@@ -36,9 +36,9 @@ const categories = [
   { id: "paypal", label: "PayPal", path: "/shop/listing?category=paypal" },
   { id: "clm", label: "Cashapp Linkables", path: "/shop/listing?category=clm" },
   { id: "ppm", label: "Paypal Linkables", path: "/shop/listing?category=ppm" },
-  { id: "venmo", label: "Venmo", path: "/shop/listing?category=venmom" },
-  { id: "applepay", label: "ApplePay", path: "/shop/listing/category=applepaym" },
-  { id: "gpay", label: "GooglePay", path: "/shop/listing?category=gpaym" },
+  { id: "venmom", label: "Venmo", path: "/shop/listing?category=venmom" },
+  { id: "applepaym", label: "ApplePay", path: "/shop/listing/category=applepaym" },
+  { id: "gpaym", label: "GooglePay", path: "/shop/listing?category=gpaym" },
   { id: "dump", label: "Dumps", path: "/shop/dump" }
 ];
 
