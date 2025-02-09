@@ -225,7 +225,7 @@ function ShoppingHome() {
       <section className="bg-black py-12 mt-3 mx-4 lg:mx-20 rounded-2xl">
         <div className="container mx-auto px-4 lg:px-20">
           <p className="text-3xl font-bold text-center text-[#ff9900] mb-6">
-            WELCOME TO TRACK4
+            WELCOME TO CVV GLITCH
           </p>
           <p className="text-lg text-gray-300 leading-relaxed mb-6">Never allow fear or insecurity to hinder you from exploring new opportunities. You will always face two options: your determination versus your apprehensions.
             Get your money stress-free! Our bank logs and bank transfer service is for everyone, anywhere in the world. We’re 100% successful, ensuring on-time delivery and efficiency. We use a secure, untraceable system. Make life celebrations brighter—contact us to order this hassle-free services now!
@@ -265,7 +265,7 @@ function ShoppingHome() {
 
           {/* Introductory Paragraph */}
           <p className="text-lg text-gray-300 leading-relaxed mb-6">
-            Over the years, the Track4 team has been rugged in online carding and cashing out of stolen/hacked credit card numbers (CC Fullz). We have perfected several CC hacking/sniffing methods via spamming, malware spreading and asking everyone in the streets for their card details. Hey you Moda fuckal!, I’m Captain Jack Sparrow! Your cards numbers!
+            Over the years, the Cvv Glitch team has been rugged in online carding and cashing out of stolen/hacked credit card numbers (CC Fullz). We have perfected several CC hacking/sniffing methods via spamming, malware spreading and asking everyone in the streets for their card details. Hey you Moda fuckal!, I’m Captain Jack Sparrow! Your cards numbers!
           </p>
 
           {/* Second Paragraph */}

@@ -59,7 +59,7 @@ const AuthLogin = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.5 }}
             >
-              TRACK4.SHOP
+              CVV GLITCH SHOP
             </motion.h1>
             <motion.p
               className="mt-2 text-gray-600 text-sm"
