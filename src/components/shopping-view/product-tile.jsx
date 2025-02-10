@@ -40,7 +40,7 @@ function ShoppingProductTile({ product, handleGetProductDetails }) {
             />
             {product?.totalStock === 0 ? (
               <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">
-                Out Of Stock
+                SOLD OUT
               </Badge>
             ) : product?.totalStock < 10 ? (
               <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">
@@ -83,7 +83,7 @@ function ShoppingProductTile({ product, handleGetProductDetails }) {
         <CardFooter className="relative h-12">
           {product?.totalStock === 0 ? (
             <Button className="w-full opacity-60 cursor-not-allowed">
-              Out Of Stock
+              SOLD OUT
             </Button>
           ) : (
             <motion.div
