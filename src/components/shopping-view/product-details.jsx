@@ -133,7 +133,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
             {/* Add to Cart */}
             <div className="mt-5">
               {productDetails?.totalStock === 0 ? (
-                <Button className="w-full opacity-60 cursor-not-allowed">
+                <Button className="w-full opacity-60 bg-red-500 cursor-not-allowed">
                   SOLD OUT
                 </Button>
               ) : (

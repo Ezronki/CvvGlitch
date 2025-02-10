@@ -82,7 +82,7 @@ function ShoppingProductTile({ product, handleGetProductDetails }) {
         </div>
         <CardFooter className="relative h-12">
           {product?.totalStock === 0 ? (
-            <Button className="w-full opacity-60 cursor-not-allowed">
+            <Button className="w-full opacity-60 bg-red-500 cursor-not-allowed">
               SOLD OUT
             </Button>
           ) : (
