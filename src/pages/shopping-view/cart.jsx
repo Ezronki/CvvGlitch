@@ -114,7 +114,7 @@ const Checkout = () => {
       Once payment is confirmed, orders awaiting payment will be processed successfully.
       </p>
       <a
-        href="https://t.me/track4admin1"
+        href="https://t.me/cvvglitchshop"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl font-semibold transition-all transform hover:-translate-y-0.5 mx-auto group w-full sm:w-auto"

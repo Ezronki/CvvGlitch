@@ -78,7 +78,7 @@ function SearchProducts() {
       <div className="flex flex-col md:flex-row justify-center items-center gap-6">
         <div className="text-center md:text-left">
           <p className="text-sm text-gray-400">
-            &copy; {new Date().getFullYear()} TRACK4. All rights reserved.
+            &copy; {new Date().getFullYear()} Cvvglitch. All rights reserved.
           </p>
         </div>
       </div>

@@ -17,7 +17,7 @@ function OrdersPage() {
           {/* Left Section: Copyright */}
           <div className="text-center md:text-left">
             <p className="text-sm text-gray-400 font-extrabold">
-              &copy; {new Date().getFullYear()} TRACK4. All rights reserved.
+              &copy; {new Date().getFullYear()} Cvvglitch. All rights reserved.
             </p>
           </div>
         </div>

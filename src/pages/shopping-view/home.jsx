@@ -208,12 +208,12 @@ function ShoppingHome() {
           <span className="text-white font-extrabold">
             NOTICE: All orders and payments must be made through our website or to our telegram support&nbsp;
             <a
-              href="https://t.me/Track4admin1"
+              href="https://t.me/cvvglitchshop"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue"
             >
-              @Track4admin1
+              @Cvvglitchshop
             </a>
             &nbsp;ONLY. Avoid paying to any third-party user claiming to represent us.
           </span>
@@ -372,7 +372,7 @@ function ShoppingHome() {
           {/* Left Section: Copyright */}
           <div className="text-center md:text-left">
             <p className="text-sm text-gray-400">
-              &copy; {new Date().getFullYear()} TRACK4. All rights reserved.
+              &copy; {new Date().getFullYear()} Cvvglitch. All rights reserved.
             </p>
           </div>
         </div>
