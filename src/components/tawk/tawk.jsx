@@ -17,13 +17,24 @@ const TawkTo = () => {
       document.body.appendChild(script);
       
       script.onload = () => {
-        if (window.Tawk_API && user) {
+        if (window.Tawk_API) {
           window.Tawk_API.onLoad = function () {
-            window.Tawk_API.setAttributes({
-              name: user.userName,
-              email: user.email,
+            // Set user attributes if user is logged in
+            if (user) {
+              window.Tawk_API.setAttributes({
+                name: user.userName,
+                email: user.email,
+              }, function(error) {
+                if (error) console.error('Tawk.to user setup error:', error);
+              });
+            }
+            
+            // Track full page URL changes
+            window.Tawk_API.addEvent('page_view', {
+              url: window.location.href,
+              title: document.title,
             }, function(error) {
-              if (error) console.error('Tawk.to user setup error:', error);
+              if (error) console.error('Tawk.to page tracking error:', error);
             });
           };
         }
