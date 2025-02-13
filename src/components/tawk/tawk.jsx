@@ -27,22 +27,21 @@ const TawkTo = () => {
       script.onload = () => {
         if (window.Tawk_API) {
           window.Tawk_API.onLoad = function () {
-            // Set user attributes if user is logged in
-            if (user) {
-              window.Tawk_API.setAttributes(
-                {
-                  name: user.userName,
-                  email: user.email,
-                },
-                function (error) {
-                  if (error) console.error('Tawk.to user setup error:', error);
-                }
-              );
-            }
+            // Override Tawk.to's default title tracking
+            window.Tawk_API.setAttributes(
+              {
+                name: user?.userName || 'Guest', // Fallback to 'Guest' if no user
+                email: user?.email || '', // Fallback to empty string if no email
+                pageTitle: location.pathname, // Explicitly set the page title to the route
+              },
+              function (error) {
+                if (error) console.error('Tawk.to user setup error:', error);
+              }
+            );
 
             // Track the current route (page) users navigate to
             window.Tawk_API.addEvent(
-              'page_view', // You can use a custom event name like 'route_change' if you prefer
+              'route_change', // Custom event name
               {
                 url: window.location.href,
                 route: location.pathname, // Track the route instead of the title
@@ -70,7 +69,7 @@ const TawkTo = () => {
     addTawkToScript();
   }, [location.pathname, user]); // Re-run when the route or user info changes
 
-  return null; // This component doesn't render anything
+  return null; 
 };
 
 export default TawkTo;
