@@ -1,20 +1,46 @@
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const TawkTo = () => {
-  useEffect(() => {
-    // Dynamically add the Tawk.to script to the document
-    const script = document.createElement('script');
-    script.src = 'https://embed.tawk.to/67adeeff825083258e149cc2/default';
-    script.async = true;
-    script.charset = 'UTF-8';
-    script.setAttribute('crossorigin', '*');
-    document.body.appendChild(script);
+  const location = useLocation();
+  const user = useSelector((state) => state.auth.user); // Assuming user info is stored in Redux
 
-    // Cleanup function to remove the script when the component unmounts
-    return () => {
-      document.body.removeChild(script);
+  useEffect(() => {
+    // Function to add the Tawk.to script
+    const addTawkToScript = () => {
+      const script = document.createElement('script');
+      script.src = 'https://embed.tawk.to/67adeeff825083258e149cc2/default';
+      script.async = true;
+      script.charset = 'UTF-8';
+      script.setAttribute('crossorigin', '*');
+      document.body.appendChild(script);
+      
+      script.onload = () => {
+        if (window.Tawk_API && user) {
+          window.Tawk_API.onLoad = function () {
+            window.Tawk_API.setAttributes({
+              name: user.userName,
+              email: user.email,
+            }, function(error) {
+              if (error) console.error('Tawk.to user setup error:', error);
+            });
+          };
+        }
+      };
     };
-  }, []);
+
+    // Remove existing script if any
+    const removeTawkToScript = () => {
+      const existingScript = document.querySelector('script[src="https://embed.tawk.to/67adeeff825083258e149cc2/default"]');
+      if (existingScript) {
+        document.body.removeChild(existingScript);
+      }
+    };
+
+    removeTawkToScript(); // Ensure no duplicate scripts
+    addTawkToScript();
+  }, [location.pathname, user]); // Re-run when the route or user info changes
 
   return null; // This component doesn't render anything
 };
