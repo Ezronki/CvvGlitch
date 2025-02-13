@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 
 const TawkTo = () => {
   useEffect(() => {
-    // Dynamically add the Tidio script to the document
+    // Dynamically add the Tawk.to script to the document
     const script = document.createElement('script');
-    script.src = '//code.tidio.co/jxz29aflxc3rzxvtw9dzlw2xwdfcquzu.js';
+    script.src = 'https://embed.tawk.to/67adeeff825083258e149cc2/default';
     script.async = true;
+    script.charset = 'UTF-8';
+    script.setAttribute('crossorigin', '*');
     document.body.appendChild(script);
 
     // Cleanup function to remove the script when the component unmounts
