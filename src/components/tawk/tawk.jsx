@@ -7,6 +7,14 @@ const TawkTo = () => {
   const user = useSelector((state) => state.auth.user); // Assuming user info is stored in Redux
 
   useEffect(() => {
+    // Check if the current route is an auth route
+    const isAuthRoute = ['/auth/login', '/auth/register'].includes(location.pathname);
+
+    // If it's an auth route, do nothing
+    if (isAuthRoute) {
+      return;
+    }
+
     // Function to add the Tawk.to script
     const addTawkToScript = () => {
       const script = document.createElement('script');
@@ -15,27 +23,34 @@ const TawkTo = () => {
       script.charset = 'UTF-8';
       script.setAttribute('crossorigin', '*');
       document.body.appendChild(script);
-      
+
       script.onload = () => {
         if (window.Tawk_API) {
           window.Tawk_API.onLoad = function () {
             // Set user attributes if user is logged in
             if (user) {
-              window.Tawk_API.setAttributes({
-                name: user.userName,
-                email: user.email,
-              }, function(error) {
-                if (error) console.error('Tawk.to user setup error:', error);
-              });
+              window.Tawk_API.setAttributes(
+                {
+                  name: user.userName,
+                  email: user.email,
+                },
+                function (error) {
+                  if (error) console.error('Tawk.to user setup error:', error);
+                }
+              );
             }
-            
-            // Track full page URL changes
-            window.Tawk_API.addEvent('page_view', {
-              url: window.location.href,
-              title: document.title,
-            }, function(error) {
-              if (error) console.error('Tawk.to page tracking error:', error);
-            });
+
+            // Track full page URL changes (route changes)
+            window.Tawk_API.addEvent(
+              'route_change',
+              {
+                url: window.location.href,
+                route: location.pathname, // Track the route instead of the title
+              },
+              function (error) {
+                if (error) console.error('Tawk.to route tracking error:', error);
+              }
+            );
           };
         }
       };
@@ -43,7 +58,9 @@ const TawkTo = () => {
 
     // Remove existing script if any
     const removeTawkToScript = () => {
-      const existingScript = document.querySelector('script[src="https://embed.tawk.to/67adeeff825083258e149cc2/default"]');
+      const existingScript = document.querySelector(
+        'script[src="https://embed.tawk.to/67adeeff825083258e149cc2/default"]'
+      );
       if (existingScript) {
         document.body.removeChild(existingScript);
       }
