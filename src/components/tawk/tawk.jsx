@@ -40,9 +40,9 @@ const TawkTo = () => {
               );
             }
 
-            // Track full page URL changes (route changes)
+            // Track the current route (page) users navigate to
             window.Tawk_API.addEvent(
-              'route_change',
+              'page_view', // You can use a custom event name like 'route_change' if you prefer
               {
                 url: window.location.href,
                 route: location.pathname, // Track the route instead of the title
