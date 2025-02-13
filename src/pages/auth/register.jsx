@@ -37,7 +37,7 @@ function AuthRegister() {
     dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {
         toast({ title: data.payload.message });
-        navigate("/shop/home");
+        navigate("/auth/login");
       } else {
         toast({ title: data?.payload?.message, variant: "destructive", className: "text-white", });
       }
