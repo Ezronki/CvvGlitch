@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const TawkTo = () => {
   const location = useLocation();
+  const params = useParams(); // Extract dynamic route parameters
   const user = useSelector((state) => state.auth.user); // Assuming user info is stored in Redux
 
   useEffect(() => {
@@ -44,7 +45,8 @@ const TawkTo = () => {
               'route_change', // Custom event name
               {
                 url: window.location.href,
-                route: location.pathname, // Track the route instead of the title
+                route: location.pathname, // Track the route
+                params: params, // Include dynamic route parameters
               },
               function (error) {
                 if (error) console.error('Tawk.to route tracking error:', error);
@@ -67,9 +69,9 @@ const TawkTo = () => {
 
     removeTawkToScript(); // Ensure no duplicate scripts
     addTawkToScript();
-  }, [location.pathname, user]); // Re-run when the route or user info changes
+  }, [location.pathname, user, params]); // Re-run when the route, user info, or params change
 
-  return null; 
+  return null; // This component doesn't render anything
 };
 
 export default TawkTo;
