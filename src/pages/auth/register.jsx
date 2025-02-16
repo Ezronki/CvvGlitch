@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "@/store/auth-slice";
 import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff } from "lucide-react";
+import "@/styles/global.css"; // Assuming you have a global CSS file for common styles
 
 const initialState = {
   userName: "",
@@ -31,7 +32,7 @@ function AuthRegister() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      toast({ title: "Passwords do not match!", variant: "destructive", className: "text-white",});
+      toast({ title: "Passwords do not match!", variant: "destructive", className: "text-white", });
       return;
     }
     dispatch(registerUser(formData)).then((data) => {
@@ -46,12 +47,12 @@ function AuthRegister() {
 
   return (
     <motion.div
-      className="h-screen w-screen bg-gradient-to-br from-white to-gray-200 flex items-center justify-center"
+      className="h-screen w-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center p-0 m-0"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <div className=" w-full h-full max-w-md bg-white shadow-lg rounded-xl p-8 border border-gray-300">
+      <div className="w-full max-w-md bg-gray-800/90 backdrop-blur-lg rounded-xl p-8 border border-gray-700 shadow-2xl m-0">
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -59,71 +60,116 @@ function AuthRegister() {
         >
           <div className="text-center mb-6">
             <motion.h1
-              className="text-3xl font-extrabold text-gray-800"
+              className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
               initial={{ y: -10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.5 }}
             >
-              Create New Account
+              CVV GLITCH SHOP
             </motion.h1>
             <motion.p
-              className="mt-2 text-gray-600 text-sm"
+              className="mt-4 text-gray-400 text-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
             >
-              Already have an account?{' '}
-              <Link to="/auth/login" className="font-medium text-blue-500 hover:underline">
-                Login
+              Already have an account?{" "}
+              <Link to="/auth/login" className="font-medium text-purple-400 hover:text-purple-300 transition-colors">
+                Sign in here
               </Link>
             </motion.p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {[{ label: "Username", type: "text", id: "userName" }, { label: "Email", type: "email", id: "email" }].map(({ label, type, id }) => (
-              <div key={id}>
-                <label htmlFor={id} className="block text-sm font-medium text-gray-700">
-                  {label}
-                </label>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="userName" className="block text-sm font-medium text-gray-300 mb-2">
+                Username
+              </label>
+              <input
+                type="text"
+                id="userName"
+                value={formData.userName}
+                onChange={(e) => setFormData({ ...formData, userName: e.target.value })}
+                required
+                placeholder="Enter your username"
+                className="w-full rounded-lg bg-gray-700/50 border border-gray-600 text-gray-200 px-4 py-3 
+                  focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 focus:outline-none
+                  placeholder:text-gray-500 transition-all"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+                placeholder="Enter your email"
+                className="w-full rounded-lg bg-gray-700/50 border border-gray-600 text-gray-200 px-4 py-3 
+                  focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 focus:outline-none
+                  placeholder:text-gray-500 transition-all"
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+                Password
+              </label>
+              <div className="relative">
                 <input
-                  type={type}
-                  id={id}
-                  value={formData[id]}
-                  onChange={(e) => setFormData({ ...formData, [id]: e.target.value })}
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 bg-gray-50 text-gray-800 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition-all"
+                  placeholder="••••••••"
+                  className="w-full rounded-lg bg-gray-700/50 border border-gray-600 text-gray-200 px-4 py-3 
+                    focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 focus:outline-none
+                    placeholder:text-gray-500 pr-10 transition-all"
                 />
-              </div>
-            ))}
-            {[{ id: "password", label: "Password", show: showPassword, toggle: setShowPassword }, { id: "confirmPassword", label: "Confirm Password", show: showConfirmPassword, toggle: setShowConfirmPassword }].map(({ id, label, show, toggle }) => (
-              <div key={id}>
-                <label htmlFor={id} className="block text-sm font-medium text-gray-700">
-                  {label}
-                </label>
-                <div className="relative mt-1">
-                  <input
-                    type={show ? "text" : "password"}
-                    id={id}
-                    value={formData[id]}
-                    onChange={(e) => setFormData({ ...formData, [id]: e.target.value })}
-                    required
-                    className="block w-full rounded-md border-gray-300 bg-gray-50 text-gray-800 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 pr-10 transition-all"
-                  />
-                  <div
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                    onClick={() => toggle((prev) => !prev)}
-                  >
-                    {show ? <EyeOff className="h-5 w-5 text-gray-500" /> : <Eye className="h-5 w-5 text-gray-500" />}
-                  </div>
+                <div
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer hover:text-gray-300 transition-colors"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5 text-gray-400" /> : <Eye className="h-5 w-5 text-gray-400" />}
                 </div>
               </div>
-            ))}
+            </div>
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
+                Confirm Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                  required
+                  placeholder="••••••••"
+                  className="w-full rounded-lg bg-gray-700/50 border border-gray-600 text-gray-200 px-4 py-3 
+                    focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 focus:outline-none
+                    placeholder:text-gray-500 pr-10 transition-all"
+                />
+                <div
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer hover:text-gray-300 transition-colors"
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+                >
+                  {showConfirmPassword ? <EyeOff className="h-5 w-5 text-gray-400" /> : <Eye className="h-5 w-5 text-gray-400" />}
+                </div>
+              </div>
+            </div>
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-3 px-4 rounded-md shadow-md text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                className="mt-6 w-full py-3 px-4 rounded-lg text-sm font-semibold text-white 
+                  bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 
+                  focus:outline-none focus:ring-2 focus:ring-purple-400/30 transition-all
+                  shadow-lg hover:shadow-purple-500/20"
               >
-                Sign Up
+                Register
               </button>
             </div>
           </form>
