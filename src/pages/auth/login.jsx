@@ -7,7 +7,37 @@ import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff } from "lucide-react";
 
 const AuthLogin = () => {
-  // ... existing state and logic ...
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Disable body scroll globally for this page
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(loginUser({ email, password })).then((data) => {
+      if (data?.payload?.success) {
+        toast({ title: data.payload.message });
+        // navigate("/dashboard"); // Navigate to dashboard on success
+      } else {
+        toast({
+  title: data?.payload?.message,
+  variant: "destructive",
+  className: "text-white",
+});
+
+      }
+    });
+  };
 
   return (
     <motion.div
