@@ -26,7 +26,7 @@ const AuthLogin = () => {
     dispatch(loginUser({ email, password })).then((data) => {
       if (data?.payload?.success) {
         toast({ title: data.payload.message });
-        navigate("/dashboard");
+        navigate("/shop/home");
       } else {
         toast({ title: data?.payload?.message, variant: "destructive", className: "text-white" });
       }
