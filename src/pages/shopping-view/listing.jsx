@@ -42,6 +42,7 @@ const categories = [
   { id: "dump", label: "Dumps", path: "/shop/dump" }
 ];
 
+
 function ShoppingListing() {
   const dispatch = useDispatch();
   const { productList, productDetails } = useSelector((state) => state.shopProducts);
