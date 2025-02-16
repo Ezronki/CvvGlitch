@@ -144,7 +144,10 @@ function HeaderButtons({ onItemClick, isMobile }) {
     <div className="flex text-black items-center gap-2">
       <Button
         className="bg-[#04D94F] font-extrabold hover:bg-white text-black rounded-md "
-        onClick={() => navigate('/shop/cart')}
+        onClick={() => {
+          navigate('/shop/cart');
+        onItemClick();
+        }}
       >
         Top Up
       </Button>
@@ -153,7 +156,10 @@ function HeaderButtons({ onItemClick, isMobile }) {
       </label>
       <Button
         className="bg-yellow-500  text-black hover:bg-white font-extrabold px-4 py-2 rounded-md transition-all"
-        onClick={() => navigate('/shop/Orders')}
+        onClick={() => {
+          navigate('/shop/Orders');
+        onItemClick();
+        }}
       >
         Orders
       </Button>
