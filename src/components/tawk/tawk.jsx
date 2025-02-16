@@ -16,59 +16,24 @@ const TawkTo = () => {
       return;
     }
 
-    // Function to add the Tawk.to script
-    const addTawkToScript = () => {
+    // Function to add the Tidio script
+    const addTidioScript = () => {
       const script = document.createElement('script');
-      script.src = 'https://embed.tawk.to/67adeeff825083258e149cc2/default';
+      script.src = '//code.tidio.co/di5frqgckcrvpmvwxzisminklh7gwaot.js';
       script.async = true;
-      script.charset = 'UTF-8';
-      script.setAttribute('crossorigin', '*');
       document.body.appendChild(script);
-
-      script.onload = () => {
-        if (window.Tawk_API) {
-          window.Tawk_API.onLoad = function () {
-            // Override Tawk.to's default title tracking
-            window.Tawk_API.setAttributes(
-              {
-                name: user?.userName || 'Guest', // Fallback to 'Guest' if no user
-                email: user?.email || '', // Fallback to empty string if no email
-                pageTitle: location.pathname, // Explicitly set the page title to the route
-              },
-              function (error) {
-                if (error) console.error('Tawk.to user setup error:', error);
-              }
-            );
-
-            // Track the current route (page) users navigate to
-            window.Tawk_API.addEvent(
-              'route_change', // Custom event name
-              {
-                url: window.location.href,
-                route: location.pathname, // Track the route
-                params: params, // Include dynamic route parameters
-              },
-              function (error) {
-                if (error) console.error('Tawk.to route tracking error:', error);
-              }
-            );
-          };
-        }
-      };
     };
 
     // Remove existing script if any
-    const removeTawkToScript = () => {
-      const existingScript = document.querySelector(
-        'script[src="https://embed.tawk.to/67adeeff825083258e149cc2/default"]'
-      );
+    const removeTidioScript = () => {
+      const existingScript = document.querySelector('script[src="//code.tidio.co/di5frqgckcrvpmvwxzisminklh7gwaot.js"]');
       if (existingScript) {
         document.body.removeChild(existingScript);
       }
     };
 
-    removeTawkToScript(); // Ensure no duplicate scripts
-    addTawkToScript();
+    removeTidioScript(); // Ensure no duplicate scripts
+    addTidioScript();
   }, [location.pathname, user, params]); // Re-run when the route, user info, or params change
 
   return null; // This component doesn't render anything
