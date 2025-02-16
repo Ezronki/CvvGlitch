@@ -210,7 +210,7 @@ export const shoppingViewHeaderMenuItems = [
   },
   {
     id: "about",
-    label: "About",
+    label: "Contact Us",
     path: "/shop/about",
   },
   {
