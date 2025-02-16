@@ -137,7 +137,7 @@ function MenuItems({ onItemClick, isMobile }) {
   );
 }
 
-function HeaderButtons() {
+function HeaderButtons({ onItemClick, isMobile }) {
   const navigate = useNavigate();
 
   return (
