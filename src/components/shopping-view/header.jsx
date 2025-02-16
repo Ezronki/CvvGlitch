@@ -143,8 +143,11 @@ function HeaderButtons() {
   return (
     <div className="flex text-black items-center gap-2">
       <Button
-        className="bg-[#04D94F] font-extrabold  text-black rounded-md "
-        onClick={() => navigate('/shop/cart')}
+        className="bg-[#04D94F] font-extrabold hover:bg-white text-black rounded-md "
+        onClick={() => {
+          navigate('/shop/cart');
+        onItemClick();
+        }}
       >
         Top Up
       </Button>
@@ -152,8 +155,11 @@ function HeaderButtons() {
         $0.00
       </label>
       <Button
-        className="bg-yellow-500 text-black font-extrabold px-4 py-2 rounded-md transition-all"
-        onClick={() => navigate('/shop/Orders')}
+        className="bg-yellow-500 hover:bg-white text-black font-extrabold px-4 py-2 rounded-md transition-all"
+        onClick={() => {
+          navigate('/shop/Orders');
+        onItemClick();
+        }}
       >
         Orders
       </Button>
@@ -211,7 +217,7 @@ function ShoppingHeader() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs">
-            <HeaderButtons />
+          <HeaderButtons onItemClick={() => setIsSheetOpen(false)} isMobile={true} />
             <div className="mt-4">
               <MenuItems onItemClick={() => setIsSheetOpen(false)} isMobile={true} />
               <HeaderRightContent />
@@ -220,7 +226,7 @@ function ShoppingHeader() {
         </Sheet>
 
         <div className="hidden lg:flex lg:items-center lg:gap-6">
-          <HeaderButtons onItemClick={() => setIsSheetOpen(false)} isMobile={true} />
+          <HeaderButtons isMobile={false} />
           <MenuItems isMobile={false} />
         </div>
 
