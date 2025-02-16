@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "@/store/auth-slice";
 import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff } from "lucide-react";
-import "@/styles/global.css"; // Assuming you have a global CSS file for common styles
+
 
 const initialState = {
   userName: "",
