@@ -2,15 +2,12 @@ import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-
 import { fetchProductDetails } from "@/store/shop/products-slice";
-import {
-  getSearchResults,
-  resetSearchResults,
-} from "@/store/shop/search-slice";
-import { useEffect, useState } from "react";
+import { getSearchResults, resetSearchResults } from "@/store/shop/search-slice";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import debounce from "lodash.debounce";
 
 function SearchProducts() {
   const [keyword, setKeyword] = useState("");
@@ -22,17 +19,22 @@ function SearchProducts() {
   const { user } = useSelector((state) => state.auth);
   const { toast } = useToast();
 
+  const updateSearch = useCallback(
+    debounce((searchTerm) => {
+      if (searchTerm.trim().length > 3) {
+        setSearchParams(new URLSearchParams(`?keyword=${searchTerm}`));
+        dispatch(getSearchResults(searchTerm));
+      } else {
+        setSearchParams(new URLSearchParams(""));
+        dispatch(resetSearchResults());
+      }
+    }, 500),
+    []
+  );
+
   useEffect(() => {
-    if (keyword && keyword.trim() !== "" && keyword.trim().length > 3) {
-      setTimeout(() => {
-        setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
-        dispatch(getSearchResults(keyword));
-      }, 1000);
-    } else {
-      setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
-      dispatch(resetSearchResults());
-    }
-  }, [keyword]);
+    updateSearch(keyword);
+  }, [keyword, updateSearch]);
 
   function handleGetProductDetails(getCurrentProductId) {
     console.log(getCurrentProductId);
@@ -42,8 +44,6 @@ function SearchProducts() {
   useEffect(() => {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
-
-  console.log("searchResults:", searchResults);
 
   return (
     <div className="mt-10 container mx-auto md:px-6 px-4 py-8">
@@ -64,7 +64,7 @@ function SearchProducts() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {searchResults?.map((item) => (
           <ShoppingProductTile
-            key={item.id} // Ensure you add a unique key
+            key={item.id}
             product={item}
             handleGetProductDetails={handleGetProductDetails}
           />
