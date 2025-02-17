@@ -30,16 +30,7 @@ function about() {
                                     <a href="https://t.me/cvvglitchshop">CLICK HERE</a>
                                 </span>
                             </p>
-                            <p className='flex justify-center items-center '>
-                                <span className="text-[#ff9900] font-extrabold text-2xl ">WhatsApp:</span>
-                                <a href="https://wa.me/13236770462" className="text-white font-bold ml-2">
-                                   +1 (323) 677-0462
-                                </a>
-                                <span className="text-[#00ff00] font-extrabold ml-2">
-                                    <a href="https://wa.me/13236770462">CLICK HERE</a>
-                                </span>
-                                
-                            </p>
+                           
                      
 
                 </div>
