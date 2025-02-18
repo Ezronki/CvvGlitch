@@ -27,7 +27,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Footer from "./components/shopping-view/Footer";
 
 
-import SearchProducts from "./pages/shopping-view/search";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
