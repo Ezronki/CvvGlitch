@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "@/config";
 import logo from "../../assets/logo.png";
+import SearchBar from "./SearchBar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -163,6 +164,9 @@ function HeaderButtons({ onItemClick, isMobile }) {
       >
         Orders
       </Button>
+      <div className="flex-1 max-w-xl mx-8">
+          <SearchBar />
+        </div>
     </div>
   );
 }
