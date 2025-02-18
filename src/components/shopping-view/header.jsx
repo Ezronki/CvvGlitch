@@ -235,7 +235,9 @@ function ShoppingHeader() {
 
         <div className="hidden lg:flex lg:items-center lg:gap-6">
           <HeaderButtons isMobile={false} />
-          <SearchBar className="text-black" />
+          <div className="flex-1 max-w-xl mx-8">
+            <SearchBar />
+          </div>
           <MenuItems isMobile={false} />
         </div>
 
