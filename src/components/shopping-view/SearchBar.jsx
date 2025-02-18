@@ -12,13 +12,12 @@ const SearchBar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState(-1); // For keyboard navigation
+    const [selectedIndex, setSelectedIndex] = useState(-1);
     const dropdownRef = useRef(null);
     const dispatch = useDispatch();
     const { searchResults } = useSelector((state) => state.shopSearch);
     const { productDetails } = useSelector((state) => state.shopProducts);
 
-    // Debounced search logic
     const updateSearch = useCallback(
         debounce((searchTerm) => {
             if (searchTerm.trim().length > 3) {
@@ -34,34 +33,35 @@ const SearchBar = () => {
         []
     );
 
-    // Update search when keyword changes
     useEffect(() => {
         updateSearch(keyword);
     }, [keyword, updateSearch]);
 
-    // Click-away functionality
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
                 setIsDropdownOpen(false);
             }
         };
-
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    // Handle product click
     const handleProductClick = (productId) => {
-        dispatch(fetchProductDetails(productId));
-        setIsDropdownOpen(false);
-        setOpenDetailsDialog(true);
+        console.log("Fetching details for product:", productId);
+        dispatch(fetchProductDetails(productId))
+            .then(() => {
+                console.log("Product details fetched:", productDetails);
+                setIsDropdownOpen(false);
+                setOpenDetailsDialog(true);
+            })
+            .catch((error) => {
+                console.error("Error fetching product details:", error);
+            });
     };
 
-    // Keyboard navigation
     const handleKeyDown = (e) => {
         if (!isDropdownOpen || searchResults.length === 0) return;
-
         if (e.key === "ArrowDown") {
             setSelectedIndex((prev) => (prev < searchResults.length - 1 ? prev + 1 : prev));
         } else if (e.key === "ArrowUp") {
@@ -94,7 +94,7 @@ const SearchBar = () => {
                 )}
             </div>
 
-            {/* Dropdown with Framer Motion */}
+            {/* Dropdown */}
             <AnimatePresence>
                 {isDropdownOpen && (
                     <motion.div
@@ -145,6 +145,7 @@ const SearchBar = () => {
                 open={openDetailsDialog}
                 setOpen={setOpenDetailsDialog}
                 productDetails={productDetails}
+                onClose={() => setOpenDetailsDialog(false)}
             />
         </div>
     );
