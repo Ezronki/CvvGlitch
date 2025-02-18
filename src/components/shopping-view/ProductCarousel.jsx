@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import ShoppingProductTile from './ShoppingProductTile';
+import ShoppingProductTile from '../../components/shopping-view/product-tile';
 
 const ProductCarousel = ({ handleGetProductDetails }) => {
   const { productList } = useSelector((state) => state.shoppingProducts);
