@@ -74,7 +74,7 @@ const SearchBar = () => {
     } else if (e.key === "Enter" && selectedIndex >= 0) {
       const selectedProduct = searchResults[selectedIndex];
       if (selectedProduct?.id) {
-        handleProductClick(selectedProduct.id);
+        handleGetProductDetails(selectedProduct.id);
       } else {
         console.error("Selected product has no ID");
       }
