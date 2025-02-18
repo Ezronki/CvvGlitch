@@ -125,7 +125,7 @@ const SearchBar = () => {
                   className={`p-4 hover:bg-gray-100 cursor-pointer transition-colors flex items-center gap-4 ${
                     index === selectedIndex ? "bg-gray-100" : ""
                   }`}
-                  onClick={() => handleGetProductDetails(productId)}
+                  onClick={() => handleGetProductDetails(item.id)}
                 >
                   <img
                     src={item.image}
