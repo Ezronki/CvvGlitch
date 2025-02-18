@@ -222,7 +222,7 @@ function ShoppingHeader() {
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs">
             <HeaderButtons onItemClick={() => setIsSheetOpen(false)} isMobile={true} />
-            <div className="flex-1 max-w-xl mx-8">
+            <div className="mt-4 ">
               <SearchBar />
             </div>
             <div className="mt-4">
@@ -235,7 +235,7 @@ function ShoppingHeader() {
 
         <div className="hidden lg:flex lg:items-center lg:gap-6">
           <HeaderButtons isMobile={false} />
-          <SearchBar />
+          <SearchBar className="text-white" />
           <MenuItems isMobile={false} />
         </div>
 
