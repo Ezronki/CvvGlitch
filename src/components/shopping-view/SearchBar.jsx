@@ -17,6 +17,7 @@ const SearchBar = () => {
     const dispatch = useDispatch();
     const { searchResults } = useSelector((state) => state.shopSearch);
     const { productDetails } = useSelector((state) => state.shopProducts);
+    const { user } = useSelector((state) => state.auth);
 
     // Open dialog when productDetails is updated
     useEffect(() => {
