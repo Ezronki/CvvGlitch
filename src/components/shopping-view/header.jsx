@@ -164,7 +164,9 @@ function HeaderButtons({ onItemClick, isMobile }) {
       >
         Orders
       </Button>
-      
+
+
+
     </div>
   );
 }
@@ -220,7 +222,11 @@ function ShoppingHeader() {
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs">
             <HeaderButtons onItemClick={() => setIsSheetOpen(false)} isMobile={true} />
+            <div className="flex-1 max-w-xl mx-8">
+              <SearchBar />
+            </div>
             <div className="mt-4">
+
               <MenuItems onItemClick={() => setIsSheetOpen(false)} isMobile={true} />
               <HeaderRightContent />
             </div>
