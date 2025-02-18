@@ -120,7 +120,7 @@ const SearchBar = () => {
                         ) : searchResults.length > 0 ? (
                             searchResults.map((item, index) => (
                                 <div
-                                    key={item.id}
+                                    key={item._id}
                                     className={`p-4 hover:bg-gray-100 cursor-pointer transition-colors flex items-center gap-4 ${index === selectedIndex ? "bg-gray-100" : ""}`}
                                     onClick={() => handleProductClick(item.id)}
                                 >
