@@ -1,3 +1,12 @@
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductDetails } from "@/store/shop/products-slice";
+import { getSearchResults, resetSearchResults } from "@/store/shop/search-slice";
+import ProductDetailsDialog from "@/components/shopping-view/product-details";
+import debounce from "lodash.debounce";
+import { Loader2, X } from "lucide-react";
+
 const SearchBar = () => {
     const [keyword, setKeyword] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -128,3 +137,5 @@ const SearchBar = () => {
         </div>
     );
 };
+
+export default SearchBar;
