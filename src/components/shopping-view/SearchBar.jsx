@@ -123,7 +123,7 @@ const SearchBar = () => {
                                     <div>
                                         <p className="font-semibold text-gray-800">{item.title}</p>
                                         <p className="text-sm text-gray-500">Price: ${item.price}</p>
-                                        {product?.balance !== null && product?.balance !== 0 && (
+                                        {item?.balance !== null && product?.balance !== 0 && (
                                             <div className="flex justify-center items-center mb-2">
                                                 <span className="text-[15px] font-bold">
                                                     Balance: ${item?.balance}
