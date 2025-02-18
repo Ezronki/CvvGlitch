@@ -18,6 +18,11 @@ const SearchBar = () => {
     const { searchResults } = useSelector((state) => state.shopSearch);
     const { productDetails } = useSelector((state) => state.shopProducts);
 
+    // Open dialog when productDetails is updated
+    useEffect(() => {
+        if (productDetails !== null) setOpenDetailsDialog(true);
+    }, [productDetails]);
+
     // Debounced search logic
     const updateSearch = useCallback(
         debounce((searchTerm) => {
@@ -53,9 +58,8 @@ const SearchBar = () => {
 
     // Handle product click
     const handleProductClick = (productId) => {
-        dispatch(fetchProductDetails(productId));
+        dispatch(fetchProductDetails(productId)); // Ensure productId is correct
         setIsDropdownOpen(false);
-        setOpenDetailsDialog(true);
     };
 
     // Keyboard navigation
@@ -121,7 +125,7 @@ const SearchBar = () => {
                                         className="w-12 h-12 object-cover rounded-md"
                                     />
                                     <div>
-                                        <p className="font-semibold text-gray-800">{item.title}</p>
+                                        <p className="font-extrabold text-gray-800">{item.title}</p>
                                         <p className="text-sm text-gray-500">Price: ${item.price}</p>
                                         {item?.balance !== null && item?.balance !== 0 && (
                                             <div className="flex justify-center items-center mb-2">
