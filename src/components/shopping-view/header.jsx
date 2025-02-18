@@ -147,7 +147,7 @@ function HeaderButtons({ onItemClick, isMobile }) {
         className="bg-[#04D94F] font-extrabold hover:bg-white text-black rounded-md "
         onClick={() => {
           navigate('/shop/cart');
-        onItemClick();
+          onItemClick();
         }}
       >
         Top Up
@@ -159,14 +159,12 @@ function HeaderButtons({ onItemClick, isMobile }) {
         className="bg-yellow-500  text-black hover:bg-white font-extrabold px-4 py-2 rounded-md transition-all"
         onClick={() => {
           navigate('/shop/Orders');
-        onItemClick();
+          onItemClick();
         }}
       >
         Orders
       </Button>
-      <div className="flex-1 max-w-xl mx-8">
-          <SearchBar />
-        </div>
+      
     </div>
   );
 }
@@ -221,7 +219,7 @@ function ShoppingHeader() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs">
-          <HeaderButtons onItemClick={() => setIsSheetOpen(false)} isMobile={true} />
+            <HeaderButtons onItemClick={() => setIsSheetOpen(false)} isMobile={true} />
             <div className="mt-4">
               <MenuItems onItemClick={() => setIsSheetOpen(false)} isMobile={true} />
               <HeaderRightContent />
@@ -231,6 +229,7 @@ function ShoppingHeader() {
 
         <div className="hidden lg:flex lg:items-center lg:gap-6">
           <HeaderButtons isMobile={false} />
+          <SearchBar />
           <MenuItems isMobile={false} />
         </div>
 
