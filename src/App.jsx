@@ -98,7 +98,7 @@ function App() {
 
 
 
-          <Route path="search" element={<SearchProducts />} />
+          
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />

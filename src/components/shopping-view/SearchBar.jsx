@@ -105,8 +105,8 @@ const SearchBar = () => {
                                         className="w-12 h-12 object-cover rounded-md"
                                     />
                                     <div>
-                                        <p className="font-extrabold text-gray-800">{item.title}</p>
-                                        <p className="text-sm text-gray-500">Price: ${item.price}</p>
+                                        <p className="font-bold text-gray-800">{item.title}</p>
+                                        <p className="text-sm font-bold text-gray-500">Price: ${item.price}</p>
                                         {item?.balance !== null && item?.balance !== 0 && (
                                             <div className="flex justify-center items-center mb-2">
                                                 <span className="text-[15px] font-bold">
