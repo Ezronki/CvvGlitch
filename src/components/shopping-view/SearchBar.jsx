@@ -1,12 +1,3 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useCallback, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProductDetails } from "@/store/shop/products-slice";
-import { getSearchResults, resetSearchResults } from "@/store/shop/search-slice";
-import ProductDetailsDialog from "@/components/shopping-view/product-details";
-import debounce from "lodash.debounce";
-import { Loader2, X } from "lucide-react";
-
 const SearchBar = () => {
     const [keyword, setKeyword] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -47,27 +38,12 @@ const SearchBar = () => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const handleProductClick = (productId) => {
-        console.log("Fetching details for product:", productId);
-        dispatch(fetchProductDetails(productId))
-            .then(() => {
-                console.log("Product details fetched:", productDetails);
-                setIsDropdownOpen(false);
-                setOpenDetailsDialog(true);
-            })
-            .catch((error) => {
-                console.error("Error fetching product details:", error);
-            });
-    };
-
-    const handleKeyDown = (e) => {
-        if (!isDropdownOpen || searchResults.length === 0) return;
-        if (e.key === "ArrowDown") {
-            setSelectedIndex((prev) => (prev < searchResults.length - 1 ? prev + 1 : prev));
-        } else if (e.key === "ArrowUp") {
-            setSelectedIndex((prev) => (prev > 0 ? prev - 1 : prev));
-        } else if (e.key === "Enter" && selectedIndex >= 0) {
-            handleProductClick(searchResults[selectedIndex]._id);
+    const handleProductClick = async (productId) => {
+        try {
+            await dispatch(fetchProductDetails(productId)).unwrap(); // Wait for data to be fetched
+            setOpenDetailsDialog(true); // Open dialog only after data is available
+        } catch (error) {
+            console.error("Error fetching product details:", error);
         }
     };
 
@@ -80,7 +56,6 @@ const SearchBar = () => {
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
                     onFocus={() => setIsDropdownOpen(true)}
-                    onKeyDown={handleKeyDown}
                     placeholder="Search products..."
                     className="w-full px-4 py-2 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#04D94F]"
                 />
@@ -142,13 +117,14 @@ const SearchBar = () => {
 
             {/* Product Details Dialog */}
             <ProductDetailsDialog
-                open={openDetailsDialog}
+                open={openDetailsDialog && !!productDetails} // Only open if productDetails exists
                 setOpen={setOpenDetailsDialog}
                 productDetails={productDetails}
-                onClose={() => setOpenDetailsDialog(false)}
+                onClose={() => {
+                    setOpenDetailsDialog(false);
+                    dispatch(resetProductDetails()); // Optionally reset productDetails
+                }}
             />
         </div>
     );
 };
-
-export default SearchBar;
