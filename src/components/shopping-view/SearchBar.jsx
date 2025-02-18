@@ -1,23 +1,22 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductDetails } from "@/store/shop/products-slice";
 import { getSearchResults, resetSearchResults } from "@/store/shop/search-slice";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import debounce from "lodash.debounce";
 import { Loader2, X } from "lucide-react";
 
-const SearchBar = () => {
+const SearchBar = ({ handleGetProductDetails }) => {
   const [keyword, setKeyword] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1); // For keyboard navigation
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
   const { searchResults } = useSelector((state) => state.shopSearch);
   const { productDetails } = useSelector((state) => state.shopProducts);
-  const { user } = useSelector((state) => state.auth);
+
+  const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
 
   // Open dialog when productDetails is updated
   useEffect(() => {
@@ -57,12 +56,6 @@ const SearchBar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Handle product click
-  function handleGetProductDetails(getCurrentProductId) {
-    console.log(getCurrentProductId);
-    dispatch(fetchProductDetails(getCurrentProductId));
-  }
-
   // Keyboard navigation
   const handleKeyDown = (e) => {
     if (!isDropdownOpen || searchResults.length === 0) return;
@@ -74,7 +67,7 @@ const SearchBar = () => {
     } else if (e.key === "Enter" && selectedIndex >= 0) {
       const selectedProduct = searchResults[selectedIndex];
       if (selectedProduct?.id) {
-        handleGetProductDetails(selectedProduct.id);
+        handleGetProductDetails(selectedProduct.id); // Pass product ID to parent
       } else {
         console.error("Selected product has no ID");
       }
@@ -120,21 +113,20 @@ const SearchBar = () => {
             ) : searchResults.length > 0 ? (
               searchResults.map((item, index) => (
                 <div
-                  key={item.id}
-                  product={item}
+                  key={item?._id}
                   className={`p-4 hover:bg-gray-100 cursor-pointer transition-colors flex items-center gap-4 ${
                     index === selectedIndex ? "bg-gray-100" : ""
                   }`}
-                  onClick={() => handleGetProductDetails(item.id)}
+                  onClick={() => handleGetProductDetails(item?._id)} // Pass product ID when clicked
                 >
                   <img
-                    src={item.image}
-                    alt={item.name}
+                    src={item?.image}
+                    alt={item?.name}
                     className="w-12 h-12 object-cover rounded-md"
                   />
                   <div>
-                    <p className="font-extrabold text-gray-800">{item.title}</p>
-                    <p className="text-sm text-gray-500">Price: ${item.price}</p>
+                    <p className="font-extrabold text-gray-800">{item?.title}</p>
+                    <p className="text-sm text-gray-500">Price: ${item?.price}</p>
                     {item?.balance !== null && item?.balance !== 0 && (
                       <div className="flex justify-center items-center mb-2">
                         <span className="text-[15px] font-bold">
@@ -156,7 +148,7 @@ const SearchBar = () => {
       <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
-        productDetails={productDetails}
+        productDetails={productDetails} // Pass product details here
       />
     </div>
   );
