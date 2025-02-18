@@ -66,8 +66,8 @@ const SearchBar = ({ handleGetProductDetails }) => {
       setSelectedIndex((prev) => (prev > 0 ? prev - 1 : prev));
     } else if (e.key === "Enter" && selectedIndex >= 0) {
       const selectedProduct = searchResults[selectedIndex];
-      if (selectedProduct?.id) {
-        handleGetProductDetails(selectedProduct.id); // Pass product ID to parent
+      if (selectedProduct?._id) { // Ensure _id is used
+        handleGetProductDetails(selectedProduct._id); // Pass product ID to parent
       } else {
         console.error("Selected product has no ID");
       }
@@ -113,11 +113,11 @@ const SearchBar = ({ handleGetProductDetails }) => {
             ) : searchResults.length > 0 ? (
               searchResults.map((item, index) => (
                 <div
-                  key={item?._id}
+                  key={item?._id} // Ensure _id is used
                   className={`p-4 hover:bg-gray-100 cursor-pointer transition-colors flex items-center gap-4 ${
                     index === selectedIndex ? "bg-gray-100" : ""
                   }`}
-                  onClick={() => handleGetProductDetails(item?._id)} // Pass product ID when clicked
+                  onClick={() => handleGetProductDetails(item?._id)} // Pass _id when clicked
                 >
                   <img
                     src={item?.image}
