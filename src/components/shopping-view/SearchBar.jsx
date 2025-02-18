@@ -66,7 +66,7 @@ const SearchBar = () => {
                     onChange={(e) => setKeyword(e.target.value)}
                     onFocus={() => setIsDropdownOpen(true)}
                     placeholder="Search products..."
-                    className="w-full px-4 py-2 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#04D94F]"
+                    className="w-full px-4 py-2 pr-10 text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#04D94F]"
                 />
                 {keyword && (
                     <button
@@ -106,10 +106,10 @@ const SearchBar = () => {
                                     />
                                     <div>
                                         <p className="font-bold text-gray-800">{item.title}</p>
-                                        <p className="text-sm font-bold text-gray-500">Price: ${item.price}</p>
+                                        <p className="text-sm font-bold text-green-800">Price: ${item.price}</p>
                                         {item?.balance !== null && item?.balance !== 0 && (
                                             <div className="flex justify-center items-center mb-2">
-                                                <span className="text-[15px] font-bold">
+                                                <span className="text-[15px] font-bold text-gray-800">
                                                     Balance: ${item?.balance}
                                                 </span>
                                             </div>
