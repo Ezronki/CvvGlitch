@@ -8,7 +8,7 @@ import cardedItemsImage from "../../assets/img/ci.jpg";
 import tutorialsImage from "../../assets/img/tut.jpg";
 import bankLoginsImage from "../../assets/img/bank.jpg";
 import { useSearchParams } from "react-router-dom";
-import ProductCarousel from '../../components/shopping-view/ProductCarousel';
+
 
 import softwaresImage from "../../assets/img/sw.jpg";
 import {
@@ -222,7 +222,7 @@ function ShoppingHome() {
       </div>
 
 
-      <ProductCarousel />
+      
       <section className="bg-black py-12 mt-3 mx-4 lg:mx-20 rounded-2xl">
         <div className="container mx-auto px-4 lg:px-20">
           <p className="text-3xl font-bold text-center text-[#ff9900] mb-6">
