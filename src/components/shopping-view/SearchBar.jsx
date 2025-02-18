@@ -59,8 +59,13 @@ const SearchBar = () => {
 
     // Handle product click
     const handleProductClick = (productId) => {
-        dispatch(fetchProductDetails(productId)); // Ensure productId is correct
-        setIsDropdownOpen(false);
+        console.log("Selected product ID:", productId); // Log the productId
+        if (productId) {
+            dispatch(fetchProductDetails(productId));
+            setIsDropdownOpen(false);
+        } else {
+            console.error("Product ID is undefined");
+        }
     };
 
     // Keyboard navigation
@@ -116,8 +121,7 @@ const SearchBar = () => {
                             searchResults.map((item, index) => (
                                 <div
                                     key={item.id}
-                                    className={`p-4 hover:bg-gray-100 cursor-pointer transition-colors flex items-center gap-4 ${index === selectedIndex ? "bg-gray-100" : ""
-                                        }`}
+                                    className={`p-4 hover:bg-gray-100 cursor-pointer transition-colors flex items-center gap-4 ${index === selectedIndex ? "bg-gray-100" : ""}`}
                                     onClick={() => handleProductClick(item.id)}
                                 >
                                     <img
