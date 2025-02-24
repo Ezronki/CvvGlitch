@@ -5,11 +5,11 @@ const TawkTo = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Check if the current route is not auth/login or auth/register
+    // Ensure the script does not load on auth/login and auth/register routes
     if (!location.pathname.startsWith('/auth/login') && !location.pathname.startsWith('/auth/register')) {
       // Initialize LiveChat script
       window.__lc = window.__lc || {};
-      window.__lc.license = 19051053;
+      window.__lc.license = 19051053; // Replace with your actual LiveChat license ID
       window.__lc.integration_name = "manual_onboarding";
       window.__lc.product_name = "livechat";
 
@@ -39,15 +39,21 @@ const TawkTo = () => {
           },
           init: function() {
             var n = t.createElement("script");
-            n.async = !0, n.type = "text/javascript", n.src = "https://cdn.livechatinc.com/tracking.js", t.head.appendChild(n);
+            n.async = true;
+            n.type = "text/javascript";
+            n.src = "https://cdn.livechatinc.com/tracking.js";
+            t.head.appendChild(n);
           }
         };
-        !n.__lc.asyncInit && e.init(), n.LiveChatWidget = n.LiveChatWidget || e;
+        if (!n.__lc.asyncInit) {
+          e.init();
+        }
+        n.LiveChatWidget = n.LiveChatWidget || e;
       }(window, document, [].slice));
     }
   }, [location.pathname]);
 
-  return null; // This component doesn't render anything
+  return null; // This component does not render anything
 };
 
 export default TawkTo;
