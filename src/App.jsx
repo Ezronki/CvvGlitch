@@ -1,42 +1,112 @@
-import React, { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Route, Routes } from "react-router-dom";
+import AuthLayout from "./components/auth/layout";
+import AuthLogin from "./pages/auth/login";
+import AuthRegister from "./pages/auth/register";
+import AdminLayout from "./components/admin-view/layout";
+import AdminDashboard from "./pages/admin-view/dashboard";
+import AdminProducts from "./pages/admin-view/products";
+import About from "./pages/shopping-view/about";
 
-const TawkTo = () => {
-  const location = useLocation();
-  const params = useParams(); // Extract dynamic route parameters
-  const user = useSelector((state) => state.auth.user); // Assuming user info is stored in Redux
+import AdminFeatures from "./pages/admin-view/features";
+import ShoppingLayout from "./components/shopping-view/layout";
+import NotFound from "./pages/not-found";
+import ShoppingHome from "./pages/shopping-view/home";
+import ShoppingListing from "./pages/shopping-view/listing";
+import Checkout from "./pages/shopping-view/cart";
+import CartPage from "./pages/shopping-view/Orders";
+import TawkTo from "./components/tawk/tawk.jsx";
+import AdminBalanceEditor from "./pages/admin-view/AdminBalanceEditor"
+
+
+import CheckAuth from "./components/common/check-auth";
+import UnauthPage from "./pages/unauth-page";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { checkAuth } from "./store/auth-slice";
+import { Skeleton } from "@/components/ui/skeleton";
+import Footer from "./components/shopping-view/Footer";
+
+
+
+function App() {
+  const { user, isAuthenticated, isLoading } = useSelector(
+    (state) => state.auth
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // Check if the current route is an auth route
-    const isAuthRoute = location.pathname.startsWith('/auth');
+    dispatch(checkAuth());
+  }, [dispatch]);
 
-    // If it's an auth route, do nothing
-    if (isAuthRoute) {
-      return;
-    }
+  if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
-    // Function to add the Tidio script
-    const addTidioScript = () => {
-      const script = document.createElement('script');
-      script.src = '//code.tidio.co/4jqjwvcpwyrohxt2vyzhvdgk4defmamp.js';
-      script.async = true;
-      document.body.appendChild(script);
-    };
+  console.log(isLoading, user);
 
-    // Remove existing script if any
-    const removeTidioScript = () => {
-      const existingScript = document.querySelector('script[src="//code.tidio.co/4jqjwvcpwyrohxt2vyzhvdgk4defmamp.js"]');
-      if (existingScript) {
-        document.body.removeChild(existingScript);
-      }
-    };
+  return (
+    <div className="flex flex-col min-h-screen overflow-hidden bg-[#040c1b]">
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <CheckAuth
+              isAuthenticated={isAuthenticated}
+              user={user}
+            ></CheckAuth>
+          }
+        />
+        <Route
+          path="/auth"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <AuthLayout />
+            </CheckAuth>
+          }
+        >
+          <Route path="login" element={<AuthLogin />} />
+          <Route path="register" element={<AuthRegister />} />
+        </Route>
+        <Route
+          path="/admin"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <AdminLayout />
+            </CheckAuth>
+          }
+        >
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="update-balance" element={<AdminBalanceEditor />} />
+         
 
-    removeTidioScript(); // Ensure no duplicate scripts
-    addTidioScript();
-  }, [location.pathname, user, params]); // Re-run when the route, user info, or params change
+          <Route path="features" element={<AdminFeatures />} />
+        </Route>
+        <Route
+          path="/shop"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <ShoppingLayout />
+            </CheckAuth>
+          }
+        >
+          <Route path="home" element={<ShoppingHome />} />
+          <Route path="listing" element={<ShoppingListing />} />
+          <Route path="cart" element={<Checkout />} />
+          <Route path="orders" element={<CartPage />} />
+          <Route path="about" element={<About />} />
 
-  return null; // This component doesn't render anything
-};
 
-export default TawkTo;
+
+
+          
+        </Route>
+        <Route path="/unauth-page" element={<UnauthPage />} />
+        <Route path="*" element={<NotFound />} />
+        
+      </Routes>
+      <Footer />
+      <TawkTo />
+    </div>
+  );
+}
+
+export default App;

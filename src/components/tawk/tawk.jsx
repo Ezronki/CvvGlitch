@@ -9,7 +9,7 @@ const TawkTo = () => {
 
   useEffect(() => {
     // Check if the current route is an auth route
-    const isAuthRoute = ['/auth/login', '/auth/register'].includes(location.pathname);
+    const isAuthRoute = location.pathname.startsWith('/auth');
 
     // If it's an auth route, do nothing
     if (isAuthRoute) {
@@ -19,14 +19,14 @@ const TawkTo = () => {
     // Function to add the Tidio script
     const addTidioScript = () => {
       const script = document.createElement('script');
-      script.src = '//code.tidio.co/di5frqgckcrvpmvwxzisminklh7gwaot.js';
+      script.src = '//code.tidio.co/4jqjwvcpwyrohxt2vyzhvdgk4defmamp.js';
       script.async = true;
       document.body.appendChild(script);
     };
 
     // Remove existing script if any
     const removeTidioScript = () => {
-      const existingScript = document.querySelector('script[src="//code.tidio.co/di5frqgckcrvpmvwxzisminklh7gwaot.js"]');
+      const existingScript = document.querySelector('script[src="//code.tidio.co/4jqjwvcpwyrohxt2vyzhvdgk4defmamp.js"]');
       if (existingScript) {
         document.body.removeChild(existingScript);
       }
