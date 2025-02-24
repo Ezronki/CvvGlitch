@@ -1,40 +1,51 @@
 import React, { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 const TawkTo = () => {
   const location = useLocation();
-  const params = useParams(); // Extract dynamic route parameters
-  const user = useSelector((state) => state.auth.user); // Assuming user info is stored in Redux
 
   useEffect(() => {
-    // Check if the current route is an auth route
-    const isAuthRoute = ['/auth/login', '/auth/register'].includes(location.pathname);
+    // Check if the current route is not auth/login or auth/register
+    if (!location.pathname.startsWith('/auth/login') && !location.pathname.startsWith('/auth/register')) {
+      // Initialize LiveChat script
+      window.__lc = window.__lc || {};
+      window.__lc.license = 19051053;
+      window.__lc.integration_name = "manual_onboarding";
+      window.__lc.product_name = "livechat";
 
-    // If it's an auth route, do nothing
-    if (isAuthRoute) {
-      return;
+      (function(n, t, c) {
+        function i(n) {
+          return e._h ? e._h.apply(null, n) : e._q.push(n);
+        }
+        var e = {
+          _q: [],
+          _h: null,
+          _v: "2.0",
+          on: function() {
+            i(["on", c.call(arguments)]);
+          },
+          once: function() {
+            i(["once", c.call(arguments)]);
+          },
+          off: function() {
+            i(["off", c.call(arguments)]);
+          },
+          get: function() {
+            if (!e._h) throw new Error("[LiveChatWidget] You can't use getters before load.");
+            return i(["get", c.call(arguments)]);
+          },
+          call: function() {
+            i(["call", c.call(arguments)]);
+          },
+          init: function() {
+            var n = t.createElement("script");
+            n.async = !0, n.type = "text/javascript", n.src = "https://cdn.livechatinc.com/tracking.js", t.head.appendChild(n);
+          }
+        };
+        !n.__lc.asyncInit && e.init(), n.LiveChatWidget = n.LiveChatWidget || e;
+      }(window, document, [].slice));
     }
-
-    // Function to add the Tidio script
-    const addTidioScript = () => {
-      const script = document.createElement('script');
-      script.src = '//code.tidio.co/di5frqgckcrvpmvwxzisminklh7gwaot.js';
-      script.async = true;
-      document.body.appendChild(script);
-    };
-
-    // Remove existing script if any
-    const removeTidioScript = () => {
-      const existingScript = document.querySelector('script[src="//code.tidio.co/di5frqgckcrvpmvwxzisminklh7gwaot.js"]');
-      if (existingScript) {
-        document.body.removeChild(existingScript);
-      }
-    };
-
-    removeTidioScript(); // Ensure no duplicate scripts
-    addTidioScript();
-  }, [location.pathname, user, params]); // Re-run when the route, user info, or params change
+  }, [location.pathname]);
 
   return null; // This component doesn't render anything
 };
