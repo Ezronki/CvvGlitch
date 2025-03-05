@@ -19,14 +19,14 @@ const TawkTo = () => {
     // Function to add the Tidio script
     const addTidioScript = () => {
       const script = document.createElement('script');
-      script.src = '//code.tidio.co/4jqjwvcpwyrohxt2vyzhvdgk4defmamp.js';
+      script.src = '//code.tidio.co/qbitqh6ozhibqszqoir6yd5mcas5bejf.js';
       script.async = true;
       document.body.appendChild(script);
     };
 
     // Remove existing script if any
     const removeTidioScript = () => {
-      const existingScript = document.querySelector('script[src="//code.tidio.co/4jqjwvcpwyrohxt2vyzhvdgk4defmamp.js"]');
+      const existingScript = document.querySelector('script[src="//code.tidio.co/qbitqh6ozhibqszqoir6yd5mcas5bejf.js"]');
       if (existingScript) {
         document.body.removeChild(existingScript);
       }
