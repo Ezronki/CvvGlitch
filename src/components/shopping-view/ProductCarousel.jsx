@@ -42,32 +42,15 @@ const ProductCarousel = () => {
     }
   };
 
-  // React Slick settings – adjust these values to get your desired look
+  // Simplified settings to avoid potential issues
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
+    slidesToShow: 1,
     autoplay: true,
     autoplaySpeed: 5000,
-    centerMode: true,
-    centerPadding: "10%", // Adjust to control how much of the neighboring slide is visible
-    slidesToShow: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          centerPadding: "0px",
-        },
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 2,
-          centerPadding: "0px",
-        },
-      },
-    ],
+    arrows: true,
   };
 
   return (
