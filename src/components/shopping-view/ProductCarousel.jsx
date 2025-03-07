@@ -63,8 +63,8 @@ const ProductCarousel = () => {
           navigation
           pagination={{ clickable: true }}
           breakpoints={{
-            640: { slidesPerView: 2.2, spaceBetween: 24 },
-            1024: { slidesPerView: 4, spaceBetween: 32 },
+            640: { slidesPerView: 2.2, spaceBetween: 15 },
+            1024: { slidesPerView: 4, spaceBetween: 15 },
           }}
           // Ensure the carousel stays in normal stacking order
           className="!pb-12 relative z-10"
