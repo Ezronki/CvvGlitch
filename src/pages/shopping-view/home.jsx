@@ -8,6 +8,7 @@ import cardedItemsImage from "../../assets/img/ci.jpg";
 import tutorialsImage from "../../assets/img/tut.jpg";
 import bankLoginsImage from "../../assets/img/bank.jpg";
 import { useSearchParams } from "react-router-dom";
+import ProductCarousel from "../../components/shopping-view/ProductCarousel"
 
 
 
@@ -236,8 +237,14 @@ function ShoppingHome() {
         </div>
         <CardSection />
       </section>
+      <div className="mt-8 px-4">
+        <h2 className="text-2xl font-bold text-center text-[#ff9900] mb-4">
+          Featured Products
+        </h2>
+        <ProductCarousel />
+      </div>
 
-      
+
 
 
 
