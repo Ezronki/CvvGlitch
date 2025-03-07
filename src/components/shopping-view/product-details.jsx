@@ -23,12 +23,13 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   const { toast } = useToast();
 
   function handleRatingChange(getRating) {
+    console.log(getRating, "getRating");
     setRating(getRating);
   }
 
   function handleDialogClose() {
     setOpen(false);
-    dispatch(setProductDetails());
+    dispatch(setProductDetails()); // Clear product details when dialog closes
     setRating(0);
     setReviewMsg("");
   }
@@ -58,6 +59,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     if (productDetails !== null) dispatch(getReviews(productDetails?._id));
   }, [productDetails]);
 
+  console.log(reviews, "reviews");
+
   const averageReview =
     reviews && reviews.length > 0
       ? reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) /
@@ -66,160 +69,137 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
 
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
-      <DialogContent className="w-[95vw] sm:w-[80vw] lg:w-[70vw] max-w-[800px] max-h-[90vh] overflow-y-auto rounded-xl sm:p-8 p-4 shadow-2xl bg-white dark:bg-gray-900 border-0">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Product Image Section */}
-          <div className="relative group overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
+      <DialogContent className="w-[90vw] sm:w-[80vw] lg:w-[70vw] max-w-[600px] max-h-[90vh] overflow-y-auto rounded-lg sm:p-10 p-6 shadow-xl bg-white dark:bg-gray-900">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Product Image */}
+          <div className="relative overflow-hidden rounded-lg">
             <img
               src={productDetails?.image}
               alt={productDetails?.title}
-              className="w-full h-64 object-contain transition-transform duration-300 hover:scale-105"
+              width={600}
+              height={600}
+              className="aspect-square w-full object-contain" 
             />
-            <div className="p-4 space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Product Details
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                {productDetails?.description}
-              </p>
-            </div>
+            <h3 className="mt-2 text-left text-lg sm:text-xl font-bold mb-2 dark:text-white">
+              Description:
+            </h3>
+            <p className="text-muted-foreground text-lg sm:text-xl mt-3 mb-4 dark:text-gray-300">
+              {productDetails?.description}
+            </p>
           </div>
 
-          {/* Product Info Section */}
-          <div className="space-y-6">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                {productDetails?.title}
-              </h1>
-              
-              {/* Pricing */}
-              <div className="flex items-center gap-4 mb-4">
-                <span className={`text-xl font-bold ${
-                  productDetails?.salePrice > 0 
-                    ? "text-green-800 dark:text-gray-500 line-through"
-                    : "text-green-600 dark:text-green-400"
-                }`}>
-                  ${productDetails?.price}
-                </span>
-                {productDetails?.salePrice > 0 && (
-                  <span className="text-xl font-bold text-green-600 dark:text-green-400">
-                    ${productDetails?.salePrice}
-                  </span>
-                )}
-              </div>
+          {/* Product Info */}
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold dark:text-white">
+              {productDetails?.title}
+            </h1>
 
-              {/* Stock Info */}
-              {productDetails?.balance !== null && productDetails?.balance !== 0 && (
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                  <span>Available Balance:</span>
-                  <span className="font-medium">${productDetails?.balance}</span>
-                </div>
+            {/* Pricing */}
+            <div className="flex items-center justify-between">
+              <p
+                className={`text-xl text-green-800 sm:text-2xl font-bold text-primary ${
+                  productDetails?.salePrice > 0 ? "line-through" : ""
+                } dark:text-green-400`}
+              >
+                Price: ${productDetails?.price}
+              </p>
+              {productDetails?.salePrice > 0 && (
+                <p className="text-xl sm:text-2xl font-bold text-muted-foreground dark:text-gray-300">
+                  Price: ${productDetails?.salePrice}
+                </p>
               )}
-
-              {/* Ratings */}
-              <div className="flex items-center gap-2">
-                <StarRatingComponent rating={averageReview} />
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  ({reviews?.length} reviews)
-                </span>
-              </div>
             </div>
 
-            {/* Checkout Button */}
-            <div className="space-y-4">
+            {/* Balance */}
+            {productDetails?.balance !== null && productDetails?.balance !== 0 && (
+              <div className="flex justify-left items-left mb-2">
+                <span className="text-xl text-[15px] font-bold dark:text-white">
+                  Balance: ${productDetails?.balance}
+                </span>
+              </div>
+            )}
+
+            {/* Ratings */}
+            <div className="flex items-center gap-2 mt-2">
+              <StarRatingComponent rating={averageReview} />
+              <span className="text-muted-foreground text-sm dark:text-gray-400">
+                ({averageReview.toFixed(2)})
+              </span>
+            </div>
+
+            {/* Add to Cart */}
+            <div className="mt-5">
               {productDetails?.totalStock === 0 ? (
-                <Button 
-                  className="w-full bg-red-500/90 hover:bg-red-600 text-white transition-colors"
-                  disabled
-                >
-                  Out of Stock
+                <Button className="w-full opacity-60 bg-red-500 cursor-not-allowed dark:bg-red-600">
+                  SOLD OUT
                 </Button>
               ) : (
                 <Button
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg transition-colors"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 dark:bg-blue-700 dark:hover:bg-blue-800"
                   onClick={() => {
-                    dispatch(setProductDetails());
+                    dispatch(setProductDetails()); // Clear product details
                     navigate("/shop/cart");
                   }}
                 >
-                  Proceed to Checkout
+                  Checkout
                 </Button>
               )}
             </div>
 
-            <Separator className="dark:bg-gray-700" />
+            <Separator className="my-5 dark:bg-gray-700" />
 
             {/* Reviews Section */}
-            <div className="space-y-6">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Customer Reviews
+            <div className="max-h-[250px] overflow-y-auto">
+              <h2 className="text-lg sm:text-xl font-bold mb-3 dark:text-white">
+                Reviews
               </h2>
-              
-              <div className="space-y-4 max-h-[200px] overflow-y-auto pr-2">
+              <div className="grid gap-4">
                 {reviews?.length > 0 ? (
                   reviews.map((reviewItem) => (
-                    <div 
-                      key={reviewItem._id}
-                      className="p-3 rounded-lg bg-gray-50 dark:bg-gray-800"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Avatar className="w-8 h-8 border dark:border-gray-600">
-                          <AvatarFallback className="bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300">
-                            {reviewItem?.userName[0].toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between">
-                            <h3 className="font-medium text-gray-900 dark:text-gray-200">
-                              {reviewItem?.userName}
-                            </h3>
-                            <StarRatingComponent 
-                              rating={reviewItem?.reviewValue}
-                              starSize="16px"
-                            />
-                          </div>
-                          <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                            {reviewItem.reviewMessage}
-                          </p>
-                        </div>
+                    <div className="flex gap-4 items-start" key={reviewItem._id}>
+                      <Avatar className="w-10 h-10 border dark:border-gray-700">
+                        <AvatarFallback className="dark:bg-gray-800 dark:text-gray-300">
+                          {reviewItem?.userName[0].toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="grid gap-1">
+                        <h3 className="font-semibold dark:text-white">{reviewItem?.userName}</h3>
+                        <StarRatingComponent rating={reviewItem?.reviewValue} />
+                        <p className="text-sm text-muted-foreground dark:text-gray-400">
+                          {reviewItem.reviewMessage}
+                        </p>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-4 text-gray-500 dark:text-gray-400">
-                    No reviews yet
-                  </div>
+                  <h1 className="text-muted-foreground dark:text-gray-400">No Reviews</h1>
                 )}
               </div>
+            </div>
 
-              {/* Add Review Section */}
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label className="text-gray-900 dark:text-gray-200">
-                    Write a Review
-                  </Label>
-                  <div className="flex items-center gap-2">
-                    <StarRatingComponent
-                      rating={rating}
-                      handleRatingChange={handleRatingChange}
-                      starSize="24px"
-                    />
-                  </div>
-                  <Input
-                    value={reviewMsg}
-                    onChange={(e) => setReviewMsg(e.target.value)}
-                    placeholder="Share your experience..."
-                    className="dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                  />
-                </div>
-                <Button
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
-                  onClick={handleAddReview}
-                  disabled={!reviewMsg.trim() || rating === 0}
-                >
-                  Submit Review
-                </Button>
+            {/* Write a Review */}
+            <div className="mt-6">
+              <Label className="dark:text-white">Write a review</Label>
+              <div className="flex gap-1 my-2">
+                <StarRatingComponent
+                  rating={rating}
+                  handleRatingChange={handleRatingChange}
+                />
               </div>
+              <Input
+                name="reviewMsg"
+                value={reviewMsg}
+                onChange={(event) => setReviewMsg(event.target.value)}
+                placeholder="Write a review..."
+                className="dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              />
+              <Button
+                className="mt-3 dark:bg-blue-700 dark:hover:bg-blue-800"
+                onClick={handleAddReview}
+                disabled={reviewMsg.trim() === ""}
+              >
+                Submit
+              </Button>
             </div>
           </div>
         </div>
