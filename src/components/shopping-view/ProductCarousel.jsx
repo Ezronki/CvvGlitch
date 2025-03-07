@@ -11,39 +11,40 @@ import ProductDetailsDialog from "@/components/shopping-view/product-details";
 
 const ProductCarousel = () => {
   const dispatch = useDispatch();
-  const { productList, isLoading, productDetails } = useSelector(
-    (state) => state.shoppingProducts
-  );
+  const { productList, isLoading } = useSelector((state) => state.shoppingProducts);
+  
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  // Fetch products on component mount
+  // Fetch featured products on mount
   useEffect(() => {
     console.log("Dispatching fetchAllFilteredProducts...");
     dispatch(fetchAllFilteredProducts({
       filterParams: { featured: true },
       sortParams: "-createdAt",
-    })).then((result) => {
-      console.log("fetchAllFilteredProducts result:", result);
-    }).catch((error) => {
-      console.error("fetchAllFilteredProducts error:", error);
+    }))
+    .unwrap()
+    .then((result) => {
+      console.log("Fetched products:", result);
+    })
+    .catch((error) => {
+      console.error("Error fetching products:", error);
     });
   }, [dispatch]);
 
-  // Handle quick view for a product
+  // Handle Quick View for a product
   const handleQuickView = async (productId) => {
     console.log("Handling Quick View for product ID:", productId);
     try {
-      await dispatch(fetchProductDetails(productId));
-      console.log("Product details fetched:", productDetails);
-      setSelectedProduct(productDetails);
+      const productData = await dispatch(fetchProductDetails(productId)).unwrap();
+      console.log("Fetched product details:", productData);
+      setSelectedProduct(productData);
       setDialogOpen(true);
     } catch (error) {
       console.error("Error fetching product details:", error);
     }
   };
 
-  // Log productList for debugging
   console.log("ProductCarousel - productList:", productList);
 
   return (
@@ -54,11 +55,11 @@ const ProductCarousel = () => {
 
       {isLoading ? (
         <div className="text-center">Loading...</div>
-      ) : productList.length === 0 ? (
+      ) : !productList || productList.length === 0 ? (
         <div className="text-center text-gray-500">No featured products available.</div>
       ) : (
         <Swiper
-          modules={[Navigation, Pagination, Autoplay]} // Ensure modules are imported
+          modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={24}
           slidesPerView={1.2}
           centeredSlides={true}
@@ -71,20 +72,17 @@ const ProductCarousel = () => {
           }}
           className="!pb-12"
         >
-          {productList.map((product) => {
-            console.log("Rendering product:", product); // Debug each product
-            return (
-              <SwiperSlide key={product._id}>
-                <div className="px-2 py-4">
-                  <ShoppingProductTile
-                    product={product}
-                    handleGetProductDetails={handleQuickView}
-                    disableSwing // Disable swing animation for carousel
-                  />
-                </div>
-              </SwiperSlide>
-            );
-          })}
+          {productList.map((product) => (
+            <SwiperSlide key={product?._id}>
+              <div className="px-2 py-4">
+                <ShoppingProductTile
+                  product={product}
+                  handleGetProductDetails={handleQuickView}
+                  disableSwing // Disable swing animation for carousel
+                />
+              </div>
+            </SwiperSlide>
+          ))}
         </Swiper>
       )}
 
