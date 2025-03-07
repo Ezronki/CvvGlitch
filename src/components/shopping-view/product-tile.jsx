@@ -62,7 +62,7 @@ function ShoppingProductTile({ product, handleGetProductDetails, disableSwing })
             </h2>
             <div className="flex justify-center items-center mb-2">
               <span
-                className={`${product?.salePrice > 0 ? "line-through" : ""} text-xl text-green-500 font-bold flex justify-center items-center mb-2`}
+                className={`${product?.salePrice > 0 ? "line-through" : ""} text-xl text-green-800 font-bold flex justify-center items-center mb-2`}
               >
                 ${product?.price}
               </span>
