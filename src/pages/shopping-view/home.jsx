@@ -235,15 +235,13 @@ function ShoppingHome() {
           </p>
 
         </div>
+       
+        <ProductCarousel />
+
+
         <CardSection />
       </section>
-      <div className="mt-8 px-4">
-        <h2 className="text-2xl font-bold text-center text-[#ff9900] mb-4">
-          Featured Products
-        </h2>
-        <ProductCarousel />
-      </div>
-
+     
 
 
 

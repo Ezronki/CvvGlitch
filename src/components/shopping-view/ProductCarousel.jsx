@@ -4,22 +4,27 @@ import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/prod
 import ShoppingProductTile from "../../components/shopping-view/product-tile";
 import ProductDetailsDialog from "../../components/shopping-view/product-details";
 
-// Import Keen Slider hook and styles
-import { useKeenSlider } from "keen-slider/react";
-import "keen-slider/keen-slider.min.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const ProductCarousel = () => {
   const dispatch = useDispatch();
   const { productList, productDetails } = useSelector((state) => state.shopProducts);
-  
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
 
   // Fetch featured products on mount
   useEffect(() => {
-    dispatch(fetchAllFilteredProducts({
-      filterParams: { featured: true },
-      sortParams: "-createdAt",
-    }))
+    dispatch(
+      fetchAllFilteredProducts({
+        filterParams: { featured: true },
+        sortParams: "-createdAt",
+      })
+    )
       .unwrap()
       .then((result) => {
         console.log("Fetched products:", result);
@@ -29,29 +34,17 @@ const ProductCarousel = () => {
       });
   }, [dispatch]);
 
-  // Use the same handler as your listing page
+  // Use the same handler as in your listing page
   const handleGetProductDetails = (productId) => {
     dispatch(fetchProductDetails(productId));
   };
 
-  // Open dialog when productDetails are available
+  // Open details dialog when productDetails becomes available
   useEffect(() => {
     if (productDetails !== null) {
       setOpenDetailsDialog(true);
     }
   }, [productDetails]);
-
-  // Initialize Keen Slider with configuration
-  const [sliderRef] = useKeenSlider({
-    loop: true,
-    autoplay: { delay: 5000 },
-    spacing: 24,
-    slides: { perView: 1 },
-    breakpoints: {
-      "(min-width: 640px)": { slides: { perView: 2 } },
-      "(min-width: 1024px)": { slides: { perView: 3 } },
-    },
-  });
 
   return (
     <div className="relative py-12 bg-white">
@@ -62,17 +55,32 @@ const ProductCarousel = () => {
       {(!productList || productList.length === 0) ? (
         <div className="text-center text-gray-500">No featured products available.</div>
       ) : (
-        <div ref={sliderRef} className="keen-slider">
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={24}
+          slidesPerView={1.2}
+          centeredSlides={true}
+          autoplay={{ delay: 5000, pauseOnMouseEnter: true }}
+          navigation
+          pagination={{ clickable: true }}
+          breakpoints={{
+            640: { slidesPerView: 2.2, spaceBetween: 24 },
+            1024: { slidesPerView: 3.2, spaceBetween: 32 },
+          }}
+          className="!pb-12"
+        >
           {productList.map((productItem) => (
-            <div key={productItem.id} className="keen-slider__slide px-2 py-4">
-              <ShoppingProductTile
-                key={productItem.id}
-                product={productItem}
-                handleGetProductDetails={handleGetProductDetails}
-              />
-            </div>
+            <SwiperSlide key={productItem.id || productItem._id}>
+              <div className="px-2 py-4">
+                <ShoppingProductTile
+                  key={productItem.id || productItem._id}
+                  product={productItem}
+                  handleGetProductDetails={handleGetProductDetails}
+                />
+              </div>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       )}
 
       <ProductDetailsDialog
