@@ -59,7 +59,7 @@ const ProductCarousel = () => {
           // Removed centeredSlides to avoid blank space at the beginning
           centeredSlides={false}
           loop={true}
-          autoplay={{ delay: 5000, pauseOnMouseEnter: true, disableOnInteraction: false }}
+          autoplay={{ delay: 2000, pauseOnMouseEnter: true, disableOnInteraction: false }}
           navigation
           pagination={{ clickable: true }}
           breakpoints={{
