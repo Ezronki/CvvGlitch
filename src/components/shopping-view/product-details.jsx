@@ -99,7 +99,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
               <p
                 className={`text-xl text-green-800 sm:text-2xl font-bold text-primary ${
                   productDetails?.salePrice > 0 ? "line-through" : ""
-                } dark:text-green-400`}
+                } dark:text-green-800`}
               >
                 Price: ${productDetails?.price}
               </p>
