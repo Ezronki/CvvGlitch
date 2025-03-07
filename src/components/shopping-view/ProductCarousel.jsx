@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { 
   fetchAllFilteredProducts,
   fetchProductDetails 
-} from "@/redux/slices/shoppingProductSlice";
+} from "@/store/shop/products-slice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
