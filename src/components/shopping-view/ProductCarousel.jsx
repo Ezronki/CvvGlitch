@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
-import ShoppingProductTile from "@/components/shopping-view/product-tile";
-import ProductDetailsDialog from "@/components/shopping-view/product-details";
+import ShoppingProductTile from "../../components/shopping-view/product-tile";
+import ProductDetailsDialog from "../../components/shopping-view/product-details";
 
 // Import Keen Slider hook and styles
 import { useKeenSlider } from "keen-slider/react";
@@ -10,7 +10,7 @@ import "keen-slider/keen-slider.min.css";
 
 const ProductCarousel = () => {
   const dispatch = useDispatch();
-  const { productList, isLoading } = useSelector((state) => state.shoppingProducts);
+  const { productList, isLoading } = useSelector((state) => state.shopProducts);
   
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
