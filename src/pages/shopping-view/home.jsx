@@ -127,7 +127,7 @@ function ShoppingHome() {
       },
     ];
     return (
-      <section className="bg-black py-8 mt-8 mx-4 lg:mx-20 rounded-2xl">
+      <section className="bg-black py-8  mx-4 lg:mx-20 rounded-2xl">
         <div className="container mx-auto px-4">
           <h1 className="text-3xl mt-1 mb-2 text-white font-extrabold text-center" >Select what suits you best</h1>
           <div className="flex flex-row justify-between items-stretch flex-wrap">
