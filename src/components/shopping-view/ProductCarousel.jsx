@@ -4,15 +4,13 @@ import { fetchAllFilteredProducts, fetchProductDetails, resetProductDetails } fr
 import ShoppingProductTile from "../../components/shopping-view/product-tile";
 import ProductDetailsDialog from "../../components/shopping-view/product-details";
 
-// Correct Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper"; // Import directly from "swiper"
+import { Navigation, Pagination, Autoplay } from "swiper";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/autoplay";
 
 const ProductCarousel = () => {
   const dispatch = useDispatch();
@@ -27,6 +25,9 @@ const ProductCarousel = () => {
       })
     )
       .unwrap()
+      .then((result) => {
+        console.log("Fetched products:", result);
+      })
       .catch((error) => {
         console.error("Error fetching products:", error);
       });
@@ -37,25 +38,26 @@ const ProductCarousel = () => {
   };
 
   useEffect(() => {
-    if (productDetails) {
+    if (productDetails !== null) {
       setOpenDetailsDialog(true);
     }
   }, [productDetails]);
 
   return (
-    <div className="relative py-2 bg-black overflow-hidden">
+    <div className="relative py-2 bg-black z-10 pb-16"> {/* Added z-10 and pb-16 */}
       <h2 className="text-3xl font-bold text-center mb-2 text-white">
         Featured Products
       </h2>
-
-      {!productList?.length ? (
-        <div className="text-center text-gray-400 pb-4">No featured products available.</div>
+      
+      {(!productList || productList.length === 0) ? (
+        <div className="text-center text-gray-400">No featured products available.</div>
       ) : (
         <Swiper
-          modules={[Navigation, Pagination, Autoplay]} // Use the imported modules
+          modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={24}
           slidesPerView={1.2}
-          loop
+          centeredSlides={false}
+          loop={true}
           autoplay={{ delay: 5000, pauseOnMouseEnter: true, disableOnInteraction: false }}
           navigation
           pagination={{ clickable: true }}
@@ -63,15 +65,16 @@ const ProductCarousel = () => {
             640: { slidesPerView: 2.2, spaceBetween: 24 },
             1024: { slidesPerView: 4, spaceBetween: 32 },
           }}
-          className="!pb-16 h-[520px]"
+          className="pb-12" 
         >
           {productList.map((productItem) => (
             <SwiperSlide key={productItem.id || productItem._id}>
-              <div className="px-2 py-4 h-full">
+              <div className="px-2 py-4">
                 <ShoppingProductTile
+                  key={productItem.id || productItem._id}
                   product={productItem}
                   handleGetProductDetails={handleGetProductDetails}
-                  disableSwing
+                  disableSwing={true}
                 />
               </div>
             </SwiperSlide>
@@ -84,9 +87,9 @@ const ProductCarousel = () => {
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
         onClose={() => {
-          setOpenDetailsDialog(false);
-          dispatch(resetProductDetails());
-        }}
+            setOpenDetailsDialog(false);
+            dispatch(resetProductDetails());
+          }}
       />
     </div>
   );
