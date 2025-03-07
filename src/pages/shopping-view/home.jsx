@@ -8,6 +8,7 @@ import cardedItemsImage from "../../assets/img/ci.jpg";
 import tutorialsImage from "../../assets/img/tut.jpg";
 import bankLoginsImage from "../../assets/img/bank.jpg";
 import { useSearchParams } from "react-router-dom";
+import ProductCarousel from "../../components/shopping-view/ProductCarousel";
 
 
 import softwaresImage from "../../assets/img/sw.jpg";
@@ -186,7 +187,7 @@ function ShoppingHome() {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
 
-  
+
 
   useEffect(() => {
     dispatch(
@@ -199,8 +200,8 @@ function ShoppingHome() {
 
   console.log(productList, "productList");
 
-  
-  
+
+
 
   return (
     <div className="mt-14 flex flex-col min-h-screen">
@@ -222,7 +223,7 @@ function ShoppingHome() {
       </div>
 
 
-      
+
       <section className="bg-black py-12 mt-3 mx-4 lg:mx-20 rounded-2xl">
         <div className="container mx-auto px-4 lg:px-20">
           <p className="text-3xl font-bold text-center text-[#ff9900] mb-6">
@@ -236,11 +237,18 @@ function ShoppingHome() {
         <CardSection />
       </section>
 
+      <div className="mt-8 px-4">
+        <h2 className="text-2xl font-bold text-center text-[#ff9900] mb-4">
+          Featured Products
+        </h2>
+        <ProductCarousel />
+      </div>
+
 
 
 
       <div
-        
+
         className="mt-5 px-4 border-l-[10px] border-r-[10px] p-2 border-2 border-gray-800 bg-[#FFA500] rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer mx-5 md:mx-20"
       >
         <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-white text-center whitespace-nowrap">
