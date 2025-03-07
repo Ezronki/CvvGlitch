@@ -39,7 +39,7 @@ const ProductCarousel = () => {
     dispatch(fetchProductDetails(productId));
   };
 
-  // Open details dialog when productDetails becomes available
+  // Open dialog when productDetails become available
   useEffect(() => {
     if (productDetails !== null) {
       setOpenDetailsDialog(true);
@@ -47,25 +47,25 @@ const ProductCarousel = () => {
   }, [productDetails]);
 
   return (
-    <div className="relative py-12 bg-white">
-      <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
+    <div className="relative py-12 bg-black">
+      <h2 className="text-3xl font-bold text-center mb-8 text-white">
         Featured Products
       </h2>
       
       {(!productList || productList.length === 0) ? (
-        <div className="text-center text-gray-500">No featured products available.</div>
+        <div className="text-center text-gray-400">No featured products available.</div>
       ) : (
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={24}
           slidesPerView={1.2}
           centeredSlides={true}
-          autoplay={{ delay: 5000, pauseOnMouseEnter: true }}
+          autoplay={{ delay: 5000, pauseOnMouseEnter: true, disableOnInteraction: false }}
           navigation
           pagination={{ clickable: true }}
           breakpoints={{
             640: { slidesPerView: 2.2, spaceBetween: 24 },
-            1024: { slidesPerView: 3.2, spaceBetween: 32 },
+            1024: { slidesPerView: 4, spaceBetween: 32 },
           }}
           className="!pb-12"
         >
@@ -76,6 +76,7 @@ const ProductCarousel = () => {
                   key={productItem.id || productItem._id}
                   product={productItem}
                   handleGetProductDetails={handleGetProductDetails}
+                  disableSwing={true}  // This disables the swing animation in the product tile
                 />
               </div>
             </SwiperSlide>
