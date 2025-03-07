@@ -20,18 +20,44 @@ const ProductCarousel = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  // Log initial state
+  console.log("Initial State - productList:", productList);
+  console.log("Initial State - isLoading:", isLoading);
+  console.log("Initial State - productDetails:", productDetails);
+
   useEffect(() => {
+    console.log("Dispatching fetchAllFilteredProducts...");
     dispatch(fetchAllFilteredProducts({
       filterParams: { featured: true },
       sortParams: "-createdAt"
-    }));
+    })).then((result) => {
+      console.log("fetchAllFilteredProducts result:", result);
+    }).catch((error) => {
+      console.error("fetchAllFilteredProducts error:", error);
+    });
   }, [dispatch]);
 
   const handleQuickView = async (productId) => {
-    await dispatch(fetchProductDetails(productId));
-    setSelectedProduct(productDetails);
-    setDialogOpen(true);
+    console.log("Handling Quick View for product ID:", productId);
+    try {
+      await dispatch(fetchProductDetails(productId));
+      console.log("Product details fetched:", productDetails);
+      setSelectedProduct(productDetails);
+      setDialogOpen(true);
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+    }
   };
+
+  // Log when productList changes
+  useEffect(() => {
+    console.log("productList updated:", productList);
+  }, [productList]);
+
+  // Log when productDetails changes
+  useEffect(() => {
+    console.log("productDetails updated:", productDetails);
+  }, [productDetails]);
 
   return (
     <div className="relative py-12 bg-white">
@@ -39,33 +65,40 @@ const ProductCarousel = () => {
         Featured Products
       </h2>
 
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={24}
-        slidesPerView={1.2}
-        centeredSlides={true}
-        autoplay={{ delay: 5000, pauseOnMouseEnter: true }}
-        navigation
-        pagination={{ clickable: true }}
-        breakpoints={{
-          640: { slidesPerView: 2.2, spaceBetween: 24 },
-          1024: { slidesPerView: 3.2, spaceBetween: 32 }
-        }}
-        className="!pb-12"
-      >
-        {productList.map((product) => (
-          <SwiperSlide key={product._id}>
-            <div className="px-2 py-4">
-              <ShoppingProductTile 
-                product={product}
-                handleGetProductDetails={handleQuickView}
-                disableSwing
-                className="hover:shadow-lg transition-shadow"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={24}
+          slidesPerView={1.2}
+          centeredSlides={true}
+          autoplay={{ delay: 5000, pauseOnMouseEnter: true }}
+          navigation
+          pagination={{ clickable: true }}
+          breakpoints={{
+            640: { slidesPerView: 2.2, spaceBetween: 24 },
+            1024: { slidesPerView: 3.2, spaceBetween: 32 }
+          }}
+          className="!pb-12"
+        >
+          {productList.map((product) => {
+            console.log("Rendering product:", product); // Log each product
+            return (
+              <SwiperSlide key={product._id}>
+                <div className="px-2 py-4">
+                  <ShoppingProductTile 
+                    product={product}
+                    handleGetProductDetails={handleQuickView}
+                    disableSwing
+                    className="hover:shadow-lg transition-shadow"
+                  />
+                </div>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      )}
 
       <ProductDetailsDialog
         open={dialogOpen}
