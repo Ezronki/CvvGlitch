@@ -4,9 +4,15 @@ import { fetchAllFilteredProducts, fetchProductDetails, resetProductDetails } fr
 import ShoppingProductTile from "../../components/shopping-view/product-tile";
 import ProductDetailsDialog from "../../components/shopping-view/product-details";
 
+// Correct Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import "swiper/css/bundle";
+import { Navigation, Pagination, Autoplay } from "swiper"; // Import directly from "swiper"
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
 
 const ProductCarousel = () => {
   const dispatch = useDispatch();
@@ -46,7 +52,7 @@ const ProductCarousel = () => {
         <div className="text-center text-gray-400 pb-4">No featured products available.</div>
       ) : (
         <Swiper
-          modules={[Navigation, Pagination, Autoplay]}
+          modules={[Navigation, Pagination, Autoplay]} // Use the imported modules
           spaceBetween={24}
           slidesPerView={1.2}
           loop
