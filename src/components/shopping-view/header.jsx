@@ -1,4 +1,4 @@
-import { HousePlug, LogOut, Menu, UserCog, ChevronDown } from "lucide-react";
+import { HousePlug, LogOut, Menu, ShoppingCart, UserCog, ChevronDown } from "lucide-react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Label } from "../ui/label";
