@@ -25,7 +25,7 @@ function ShoppingProductTile({ product, handleGetProductDetails, disableSwing })
 
   return (
     <motion.div
-      className="w-full max-w-sm mx-auto h-96"  // Fixed overall height for consistency
+      className="w-full max-w-sm mx-auto h-50"  // Fixed overall height for consistency
       style={{ boxShadow: "0 0 10px rgba(0, 255, 255, 0.5)" }}
       {...animationProps}
       whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(0, 255, 255, 0.9)" }}
@@ -35,7 +35,7 @@ function ShoppingProductTile({ product, handleGetProductDetails, disableSwing })
       <Card className="w-full max-w-sm h-full mx-auto transition-transform duration-300">
         <div onClick={() => handleGetProductDetails(product?._id)} className="h-full flex flex-col">
           {/* Image container with fixed height */}
-          <div className="relative h-[100px]">
+          <div className="relative h-[150px]">
             <img
               src={product?.image}
               alt={product?.title}
