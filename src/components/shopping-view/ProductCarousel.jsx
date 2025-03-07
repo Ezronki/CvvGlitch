@@ -19,17 +19,28 @@ const ProductCarousel = () => {
 
   // Fetch products on component mount
   useEffect(() => {
+    console.log("Dispatching fetchAllFilteredProducts...");
     dispatch(fetchAllFilteredProducts({
       filterParams: { featured: true },
       sortParams: "-createdAt",
-    }));
+    })).then((result) => {
+      console.log("fetchAllFilteredProducts result:", result);
+    }).catch((error) => {
+      console.error("fetchAllFilteredProducts error:", error);
+    });
   }, [dispatch]);
 
   // Handle quick view for a product
   const handleQuickView = async (productId) => {
-    await dispatch(fetchProductDetails(productId));
-    setSelectedProduct(productDetails);
-    setDialogOpen(true);
+    console.log("Handling Quick View for product ID:", productId);
+    try {
+      await dispatch(fetchProductDetails(productId));
+      console.log("Product details fetched:", productDetails);
+      setSelectedProduct(productDetails);
+      setDialogOpen(true);
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+    }
   };
 
   // Log productList for debugging
@@ -47,7 +58,7 @@ const ProductCarousel = () => {
         <div className="text-center text-gray-500">No featured products available.</div>
       ) : (
         <Swiper
-          modules={[Navigation, Pagination, Autoplay]}
+          modules={[Navigation, Pagination, Autoplay]} // Ensure modules are imported
           spaceBetween={24}
           slidesPerView={1.2}
           centeredSlides={true}
@@ -60,17 +71,20 @@ const ProductCarousel = () => {
           }}
           className="!pb-12"
         >
-          {productList.map((product) => (
-            <SwiperSlide key={product._id}>
-              <div className="px-2 py-4">
-                <ShoppingProductTile
-                  product={product}
-                  handleGetProductDetails={handleQuickView}
-                  disableSwing // Disable swing animation for carousel
-                />
-              </div>
-            </SwiperSlide>
-          ))}
+          {productList.map((product) => {
+            console.log("Rendering product:", product); // Debug each product
+            return (
+              <SwiperSlide key={product._id}>
+                <div className="px-2 py-4">
+                  <ShoppingProductTile
+                    product={product}
+                    handleGetProductDetails={handleQuickView}
+                    disableSwing // Disable swing animation for carousel
+                  />
+                </div>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       )}
 
