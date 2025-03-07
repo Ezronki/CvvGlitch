@@ -44,8 +44,8 @@ const ProductCarousel = () => {
   }, [productDetails]);
 
   return (
-    <div className="relative py-12 bg-black">
-      <h2 className="text-3xl font-bold text-center mb-8 text-white">
+    <div className="relative py-2 bg-black">
+      <h2 className="text-3xl font-bold text-center mb-2 text-white">
         Featured Products
       </h2>
       
@@ -85,9 +85,13 @@ const ProductCarousel = () => {
       )}
 
       <ProductDetailsDialog
-        open={openDetailsDialog}
+        open={openDetailsDialog && !!productDetails} // Only open if productDetails exists
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
+        onClose={() => {
+            setOpenDetailsDialog(false);
+            dispatch(resetProductDetails());
+          }}
       />
     </div>
   );
