@@ -230,9 +230,7 @@ function ShoppingHome() {
           <p className="text-3xl font-bold text-center text-[#ff9900] mb-6">
             WELCOME TO CVV GLITCH
           </p>
-          <p className="text-lg text-gray-300 leading-relaxed mb-6">Never allow fear or insecurity to hinder you from exploring new opportunities. You will always face two options: your determination versus your apprehensions.
-            Get your money stress-free! Our bank logs and bank transfer service is for everyone, anywhere in the world. We’re 100% successful, ensuring on-time delivery and efficiency. We use a secure, untraceable system. Make life celebrations brighter—contact us to order this hassle-free services now!
-          </p>
+          
 
         </div>
        

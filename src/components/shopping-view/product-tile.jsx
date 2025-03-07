@@ -35,7 +35,7 @@ function ShoppingProductTile({ product, handleGetProductDetails, disableSwing })
       <Card className="w-full max-w-sm h-full mx-auto transition-transform duration-300">
         <div onClick={() => handleGetProductDetails(product?._id)} className="h-full flex flex-col">
           {/* Image container with fixed height */}
-          <div className="relative h-[150px]">
+          <div className="relative h-[100px]">
             <img
               src={product?.image}
               alt={product?.title}
