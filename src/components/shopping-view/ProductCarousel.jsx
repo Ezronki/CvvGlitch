@@ -44,7 +44,7 @@ const ProductCarousel = () => {
   }, [productDetails]);
 
   return (
-    <div className="relative py-2 bg-black z-10 pb-16"> {/* Added z-10 and pb-16 */}
+    <div className="relative py-2 bg-black z-10 pb-16"> 
       <h2 className="text-3xl font-bold text-center mb-2 text-white">
         Featured Products
       </h2>
