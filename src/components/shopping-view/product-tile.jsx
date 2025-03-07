@@ -1,111 +1,95 @@
-import { Card, CardContent, CardFooter } from "../ui/card";
-import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
-import { motion } from "framer-motion";
-import { Eye } from "lucide-react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
+import ShoppingProductTile from "../../components/shopping-view/product-tile";
+import ProductDetailsDialog from "../../components/shopping-view/product-details";
 
-// Swing animation configuration
-const swingAnimation = {
-  y: [0, -5, 5, -5, 5, 0],
-  transition: {
-    y: {
-      repeat: Infinity,
-      repeatType: "reverse",
-      duration: 4,
-    },
-  },
-};
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper";
 
-function ShoppingProductTile({ product, handleGetProductDetails, disableSwing }) {
-  const [hovered, setHovered] = useState(false);
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-  // If disableSwing is true, omit the swing animation
-  const animationProps = disableSwing ? {} : { animate: swingAnimation };
+const ProductCarousel = () => {
+  const dispatch = useDispatch();
+  const { productList, productDetails } = useSelector((state) => state.shopProducts);
+  const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+
+  useEffect(() => {
+    dispatch(
+      fetchAllFilteredProducts({
+        filterParams: { featured: true },
+        sortParams: "-createdAt",
+      })
+    )
+      .unwrap()
+      .then((result) => {
+        console.log("Fetched products:", result);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
+  }, [dispatch]);
+
+  const handleGetProductDetails = (productId) => {
+    dispatch(fetchProductDetails(productId));
+  };
+
+  useEffect(() => {
+    if (productDetails !== null) {
+      setOpenDetailsDialog(true);
+    }
+  }, [productDetails]);
 
   return (
-    <motion.div
-      className="w-full max-w-sm mx-auto h-96"  // Fixed overall height for consistency
-      style={{ boxShadow: "0 0 10px rgba(0, 255, 255, 0.5)" }}
-      {...animationProps}
-      whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(0, 255, 255, 0.9)" }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <Card className="w-full max-w-sm h-full mx-auto transition-transform duration-300">
-        <div onClick={() => handleGetProductDetails(product?._id)} className="h-full flex flex-col">
-          {/* Image container with fixed height */}
-          <div className="relative h-[150px]">
-            <img
-              src={product?.image}
-              alt={product?.title}
-              className="w-full h-full object-cover rounded-t-lg"
-            />
-            {product?.totalStock === 0 ? (
-              <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">
-                SOLD OUT
-              </Badge>
-            ) : product?.totalStock < 10 ? (
-              <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">
-                {`Only ${product?.totalStock} items left`}
-              </Badge>
-            ) : product?.salePrice > 0 ? (
-              <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">
-                Sale
-              </Badge>
-            ) : null}
-          </div>
-          {/* Card content with flexible height */}
-          <CardContent className="p-4 flex-1">
-            <h2 className="text-xl font-bold flex justify-center items-center mb-2">
-              {product?.title}
-            </h2>
-            <div className="flex justify-center items-center mb-2">
-              <span
-                className={`${product?.salePrice > 0 ? "line-through" : ""} text-xl text-green-500 font-bold flex justify-center items-center mb-2`}
-              >
-                ${product?.price}
-              </span>
-              {product?.salePrice > 0 && (
-                <span className="text-lg font-semibold text-primary">
-                  ${product?.salePrice}
-                </span>
-              )}
-            </div>
-            {product?.balance !== null && product?.balance !== 0 && (
-              <div className="flex justify-center items-center mb-2">
-                <span className="text-[15px] font-bold">
-                  Balance: ${product?.balance}
-                </span>
+    <div className="relative py-12 bg-black">
+      <h2 className="text-3xl font-bold text-center mb-8 text-white">
+        Featured Products
+      </h2>
+      
+      {(!productList || productList.length === 0) ? (
+        <div className="text-center text-gray-400">No featured products available.</div>
+      ) : (
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={24}
+          slidesPerView={1.2}
+          centeredSlides={true}
+          loop={true}
+          loopedSlides={productList.length}
+          autoplay={{ delay: 5000, pauseOnMouseEnter: true, disableOnInteraction: false }}
+          navigation
+          pagination={{ clickable: true }}
+          breakpoints={{
+            640: { slidesPerView: 2.2, spaceBetween: 24 },
+            1024: { slidesPerView: 4, spaceBetween: 32 },
+          }}
+          // Set a low z-index so it doesn't overlap the footer
+          className="!pb-12 relative z-10"
+        >
+          {productList.map((productItem) => (
+            <SwiperSlide key={productItem.id || productItem._id}>
+              <div className="px-2 py-4">
+                <ShoppingProductTile
+                  key={productItem.id || productItem._id}
+                  product={productItem}
+                  handleGetProductDetails={handleGetProductDetails}
+                />
               </div>
-            )}
-          </CardContent>
-          {/* Card footer with fixed height */}
-          <CardFooter className="relative h-12">
-            {product?.totalStock === 0 ? (
-              <Button className="w-full opacity-60 bg-red-500 cursor-not-allowed">
-                SOLD OUT
-              </Button>
-            ) : (
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center transition-opacity duration-300"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: hovered ? 1 : 0 }}
-              >
-                <Button
-                  onClick={() => handleGetProductDetails(product?._id)}
-                  className="w-full flex items-center gap-2 bg-black text-white py-2 px-4 rounded-lg"
-                >
-                  <Eye size={18} />
-                  Quick View
-                </Button>
-              </motion.div>
-            )}
-          </CardFooter>
-        </div>
-      </Card>
-    </motion.div>
-  );
-}
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
 
-export default ShoppingProductTile;
+      <ProductDetailsDialog
+        open={openDetailsDialog}
+        setOpen={setOpenDetailsDialog}
+        productDetails={productDetails}
+      />
+    </div>
+  );
+};
+
+export default ProductCarousel;
