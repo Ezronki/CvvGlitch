@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllFilteredProducts, fetchProductDetails, resetProductDetails } from "@/store/shop/products-slice";
+import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
 import ShoppingProductTile from "../../components/shopping-view/product-tile";
 import ProductDetailsDialog from "../../components/shopping-view/product-details";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 
-
+// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -44,8 +44,8 @@ const ProductCarousel = () => {
   }, [productDetails]);
 
   return (
-    <div className="relative py-2 bg-black z-10 pb-16"> 
-      <h2 className="text-3xl font-bold text-center mb-2 text-white">
+    <div className="relative py-2 bg-black z-10 pb-16">
+      <h2 className="text-3xl font-bold text-center mb- text-white">
         Featured Products
       </h2>
       
@@ -56,6 +56,7 @@ const ProductCarousel = () => {
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={24}
           slidesPerView={1.2}
+          // Removed centeredSlides to avoid blank space at the beginning
           centeredSlides={false}
           loop={true}
           autoplay={{ delay: 5000, pauseOnMouseEnter: true, disableOnInteraction: false }}
@@ -65,7 +66,8 @@ const ProductCarousel = () => {
             640: { slidesPerView: 2.2, spaceBetween: 24 },
             1024: { slidesPerView: 4, spaceBetween: 32 },
           }}
-         
+          // Ensure the carousel stays in normal stacking order
+          className="!pb-12 relative z-10"
         >
           {productList.map((productItem) => (
             <SwiperSlide key={productItem.id || productItem._id}>
@@ -74,7 +76,7 @@ const ProductCarousel = () => {
                   key={productItem.id || productItem._id}
                   product={productItem}
                   handleGetProductDetails={handleGetProductDetails}
-                  disableSwing={true}
+                  disableSwing={true} // disable the swing animation for the carousel
                 />
               </div>
             </SwiperSlide>
@@ -83,7 +85,7 @@ const ProductCarousel = () => {
       )}
 
       <ProductDetailsDialog
-        open={openDetailsDialog && !!productDetails}
+        open={openDetailsDialog && !!productDetails} // Only open if productDetails exists
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
         onClose={() => {
