@@ -1,4 +1,4 @@
-import { HousePlug, LogOut, Menu, ShoppingCart, UserCog, ChevronDown } from "lucide-react";
+import {  LogOut, Menu, ShoppingCart, UserCog, ChevronDown } from "lucide-react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Label } from "../ui/label";
@@ -6,7 +6,7 @@ import track4Logo from "../../assets/logo2/logo-2.gif";
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "@/config";
-import logo from "../../assets/logo.png";
+
 import SearchBar from "./SearchBar";
 import {
   DropdownMenu,
@@ -19,7 +19,8 @@ import {
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { logoutUser } from "@/store/auth-slice";
 import { useEffect, useState } from "react";
-
+import UserCartWrapper from "./cart-wrapper";
+import { fetchCartItems } from "@/store/shop/cart-slice";
 function MenuItems({ onItemClick, isMobile }) {
   const navigate = useNavigate();
   const location = useLocation();
