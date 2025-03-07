@@ -34,7 +34,7 @@ function ShoppingProductTile({ product, disableSwing, handleAddtoCart}) {
     >
       <Card className="w-full max-w-sm h-full mx-auto transition-transform duration-300">
         <div className="h-full flex flex-col">
-          {/* Image container with fixed height */}
+          
           <div className="relative h-[150px]">
             <img
               src={product?.image}
