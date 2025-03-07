@@ -25,7 +25,7 @@ function ShoppingProductTile({ product, handleGetProductDetails, disableSwing })
 
   return (
     <motion.div
-      className="w-full max-w-sm mx-auto h-50"  // Fixed overall height for consistency
+      className="w-full max-w-sm mx-auto h-[45px]"  // Using h-[45px] for a fixed height of 45px
       style={{ boxShadow: "0 0 10px rgba(0, 255, 255, 0.5)" }}
       {...animationProps}
       whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(0, 255, 255, 0.9)" }}
