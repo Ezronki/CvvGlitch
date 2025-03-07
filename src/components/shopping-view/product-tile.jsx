@@ -56,9 +56,9 @@ const ProductCarousel = () => {
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={24}
           slidesPerView={1.2}
-          centeredSlides={true}
+          // Removed centeredSlides to avoid blank space at the beginning
+          centeredSlides={false}
           loop={true}
-          loopedSlides={productList.length}
           autoplay={{ delay: 5000, pauseOnMouseEnter: true, disableOnInteraction: false }}
           navigation
           pagination={{ clickable: true }}
@@ -66,7 +66,7 @@ const ProductCarousel = () => {
             640: { slidesPerView: 2.2, spaceBetween: 24 },
             1024: { slidesPerView: 4, spaceBetween: 32 },
           }}
-          // Set a low z-index so it doesn't overlap the footer
+          // Ensure the carousel stays in normal stacking order
           className="!pb-12 relative z-10"
         >
           {productList.map((productItem) => (
@@ -76,6 +76,7 @@ const ProductCarousel = () => {
                   key={productItem.id || productItem._id}
                   product={productItem}
                   handleGetProductDetails={handleGetProductDetails}
+                  disableSwing={true} // disable the swing animation for the carousel
                 />
               </div>
             </SwiperSlide>
