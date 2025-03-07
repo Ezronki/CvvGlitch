@@ -17,7 +17,6 @@ const ProductCarousel = () => {
   const { productList, productDetails } = useSelector((state) => state.shopProducts);
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
 
-  // Fetch featured products on mount
   useEffect(() => {
     dispatch(
       fetchAllFilteredProducts({
@@ -34,12 +33,10 @@ const ProductCarousel = () => {
       });
   }, [dispatch]);
 
-  // Use the same handler as in your listing page
   const handleGetProductDetails = (productId) => {
     dispatch(fetchProductDetails(productId));
   };
 
-  // Open dialog when productDetails become available
   useEffect(() => {
     if (productDetails !== null) {
       setOpenDetailsDialog(true);
@@ -59,7 +56,9 @@ const ProductCarousel = () => {
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={24}
           slidesPerView={1.2}
-          centeredSlides={true}
+          // Removed centeredSlides to avoid blank space at the beginning
+          centeredSlides={false}
+          loop={true}
           autoplay={{ delay: 5000, pauseOnMouseEnter: true, disableOnInteraction: false }}
           navigation
           pagination={{ clickable: true }}
@@ -67,7 +66,8 @@ const ProductCarousel = () => {
             640: { slidesPerView: 2.2, spaceBetween: 24 },
             1024: { slidesPerView: 4, spaceBetween: 32 },
           }}
-          className="!pb-12"
+          // Ensure the carousel stays in normal stacking order
+          className="!pb-12 relative z-10"
         >
           {productList.map((productItem) => (
             <SwiperSlide key={productItem.id || productItem._id}>
@@ -76,7 +76,7 @@ const ProductCarousel = () => {
                   key={productItem.id || productItem._id}
                   product={productItem}
                   handleGetProductDetails={handleGetProductDetails}
-                  disableSwing={true}  // This disables the swing animation in the product tile
+                  disableSwing={true} // disable the swing animation for the carousel
                 />
               </div>
             </SwiperSlide>
