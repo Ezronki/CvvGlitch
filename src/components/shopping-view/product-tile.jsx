@@ -17,7 +17,7 @@ const swingAnimation = {
   },
 };
 
-function ShoppingProductTile({ product, handleGetProductDetails, disableSwing }) {
+function ShoppingProductTile({ product, disableSwing, handleAddtoCart}) {
   const [hovered, setHovered] = useState(false);
 
   // If disableSwing is true, omit the swing animation
@@ -33,7 +33,7 @@ function ShoppingProductTile({ product, handleGetProductDetails, disableSwing })
       onMouseLeave={() => setHovered(false)}
     >
       <Card className="w-full max-w-sm h-full mx-auto transition-transform duration-300">
-        <div onClick={() => handleGetProductDetails(product?._id)} className="h-full flex flex-col">
+        <div className="h-full flex flex-col">
           {/* Image container with fixed height */}
           <div className="relative h-[150px]">
             <img
@@ -81,25 +81,18 @@ function ShoppingProductTile({ product, handleGetProductDetails, disableSwing })
             )}
           </CardContent>
           {/* Card footer with fixed height */}
-          <CardFooter className="relative h-12">
+          <CardFooter>
             {product?.totalStock === 0 ? (
-              <Button className="w-full opacity-60 bg-red-500 cursor-not-allowed">
-                SOLD OUT
+              <Button className="w-full opacity-60 cursor-not-allowed">
+                Out Of Stock
               </Button>
             ) : (
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center transition-opacity duration-300"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: hovered ? 1 : 0 }}
+              <Button
+                onClick={() => handleAddtoCart(product?._id, product?.totalStock)}
+                className="w-full"
               >
-                <Button
-                  onClick={() => handleGetProductDetails(product?._id)}
-                  className="w-full flex items-center gap-2 bg-black text-white py-2 px-4 rounded-lg"
-                >
-                  <Eye size={18} />
-                  Quick View
-                </Button>
-              </motion.div>
+                Add to cart
+              </Button>
             )}
           </CardFooter>
         </div>

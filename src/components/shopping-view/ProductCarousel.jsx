@@ -33,9 +33,7 @@ const ProductCarousel = () => {
       });
   }, [dispatch]);
 
-  const handleGetProductDetails = (productId) => {
-    dispatch(fetchProductDetails(productId));
-  };
+  
 
   useEffect(() => {
     if (productDetails !== null) {
@@ -75,7 +73,6 @@ const ProductCarousel = () => {
                 <ShoppingProductTile
                   key={productItem.id || productItem._id}
                   product={productItem}
-                  handleGetProductDetails={handleGetProductDetails}
                   disableSwing={true} // disable the swing animation for the carousel
                 />
               </div>

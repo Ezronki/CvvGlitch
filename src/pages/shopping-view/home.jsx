@@ -163,9 +163,7 @@ function ShoppingHome() {
     )
   }
 
-  function handleGetProductDetails(getCurrentProductId) {
-    dispatch(fetchProductDetails(getCurrentProductId));
-  }
+  
 
   function handleAddtoCart(getCurrentProductId) {
     dispatch(

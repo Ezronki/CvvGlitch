@@ -13,9 +13,7 @@ const BrandProductsPage = () => {
 
   const brand = searchParams.get("brand") || ""; // Avoid null brand
 
-  function handleGetProductDetails(getCurrentProductId) {
-    dispatch(fetchProductDetails(getCurrentProductId));
-  }
+  
 
   useEffect(() => {
     const fetchBrandProducts = async () => {
@@ -92,7 +90,7 @@ const BrandProductsPage = () => {
             productList.map((productItem) => (
               <ShoppingProductTile
                 key={productItem._id || productItem.id || Math.random()}
-                handleGetProductDetails={handleGetProductDetails}
+               
                 product={productItem}
               />
             ))
