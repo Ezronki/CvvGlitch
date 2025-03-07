@@ -1,12 +1,11 @@
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
-import { brandOptionsMap, categoryOptionsMap } from "@/config";
 import { Badge } from "../ui/badge";
 import { motion } from "framer-motion";
 import { Eye } from "lucide-react";
 import { useState } from "react";
 
-
+// Swing animation configuration
 const swingAnimation = {
   y: [0, -5, 5, -5, 5, 0],
   transition: {
@@ -18,25 +17,29 @@ const swingAnimation = {
   },
 };
 
-function ShoppingProductTile({ product, handleGetProductDetails }) {
+function ShoppingProductTile({ product, handleGetProductDetails, disableSwing }) {
   const [hovered, setHovered] = useState(false);
+
+  // If disableSwing is true, omit the swing animation
+  const animationProps = disableSwing ? {} : { animate: swingAnimation };
 
   return (
     <motion.div
-      className="w-full max-w-sm mx-auto"
+      className="w-full max-w-sm mx-auto h-96"  // Fixed overall height for consistency
       style={{ boxShadow: "0 0 10px rgba(0, 255, 255, 0.5)" }}
-      animate={swingAnimation}
+      {...animationProps}
       whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(0, 255, 255, 0.9)" }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Card className="w-full max-w-sm mx-auto transition-transform duration-300 hover:scale-100">
-        <div onClick={() => handleGetProductDetails(product?._id)}>
-          <div className="relative">
+      <Card className="w-full max-w-sm h-full mx-auto transition-transform duration-300">
+        <div onClick={() => handleGetProductDetails(product?._id)} className="h-full flex flex-col">
+          {/* Image container with fixed height */}
+          <div className="relative h-[150px]">
             <img
               src={product?.image}
               alt={product?.title}
-              className="w-full h-[150px] object-cover rounded-t-lg"
+              className="w-full h-full object-cover rounded-t-lg"
             />
             {product?.totalStock === 0 ? (
               <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">
@@ -52,22 +55,22 @@ function ShoppingProductTile({ product, handleGetProductDetails }) {
               </Badge>
             ) : null}
           </div>
-          <CardContent className="p-4">
+          {/* Card content with flexible height */}
+          <CardContent className="p-4 flex-1">
             <h2 className="text-xl font-bold flex justify-center items-center mb-2">
               {product?.title}
             </h2>
             <div className="flex justify-center items-center mb-2">
               <span
-                className={`${product?.salePrice > 0 ? "line-through" : ""
-                  } text-xl text-green-500 font-bold flex justify-center items-center mb-2`}
+                className={`${product?.salePrice > 0 ? "line-through" : ""} text-xl text-green-500 font-bold flex justify-center items-center mb-2`}
               >
                 ${product?.price}
               </span>
-              {product?.salePrice > 0 ? (
+              {product?.salePrice > 0 && (
                 <span className="text-lg font-semibold text-primary">
                   ${product?.salePrice}
                 </span>
-              ) : null}
+              )}
             </div>
             {product?.balance !== null && product?.balance !== 0 && (
               <div className="flex justify-center items-center mb-2">
@@ -76,31 +79,30 @@ function ShoppingProductTile({ product, handleGetProductDetails }) {
                 </span>
               </div>
             )}
-
-
           </CardContent>
-        </div>
-        <CardFooter className="relative h-12">
-          {product?.totalStock === 0 ? (
-            <Button className="w-full opacity-60 bg-red-500 cursor-not-allowed">
-              SOLD OUT
-            </Button>
-          ) : (
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center transition-opacity duration-300"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: hovered ? 1 : 0 }}
-            >
-              <Button
-                onClick={() => handleGetProductDetails(product?._id)}
-                className="w-full flex items-center gap-2 bg-black text-white py-2 px-4 rounded-lg"
-              >
-                <Eye size={18} />
-                Quick View
+          {/* Card footer with fixed height */}
+          <CardFooter className="relative h-12">
+            {product?.totalStock === 0 ? (
+              <Button className="w-full opacity-60 bg-red-500 cursor-not-allowed">
+                SOLD OUT
               </Button>
-            </motion.div>
-          )}
-        </CardFooter>
+            ) : (
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center transition-opacity duration-300"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: hovered ? 1 : 0 }}
+              >
+                <Button
+                  onClick={() => handleGetProductDetails(product?._id)}
+                  className="w-full flex items-center gap-2 bg-black text-white py-2 px-4 rounded-lg"
+                >
+                  <Eye size={18} />
+                  Quick View
+                </Button>
+              </motion.div>
+            )}
+          </CardFooter>
+        </div>
       </Card>
     </motion.div>
   );
