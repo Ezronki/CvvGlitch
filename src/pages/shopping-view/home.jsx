@@ -241,9 +241,9 @@ function ShoppingHome() {
         <h2 className="text-2xl font-bold text-center text-[#ff9900] mb-4">
           Featured Products
         </h2>
+        {console.log("Rendering ProductCarousel...")} {/* Debugging */}
         <ProductCarousel />
       </div>
-
 
 
 
