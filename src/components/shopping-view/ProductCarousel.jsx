@@ -65,7 +65,7 @@ const ProductCarousel = () => {
             640: { slidesPerView: 2.2, spaceBetween: 24 },
             1024: { slidesPerView: 4, spaceBetween: 32 },
           }}
-          className="pb-12" 
+         
         >
           {productList.map((productItem) => (
             <SwiperSlide key={productItem.id || productItem._id}>
