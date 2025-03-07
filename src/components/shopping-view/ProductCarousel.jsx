@@ -13,6 +13,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+const { cartItems } = useSelector((state) => state.shopCart);
+const { user } = useSelector((state) => state.auth);
+
 function handleAddtoCart(getCurrentProductId, getTotalStock) {
     console.log(cartItems);
     let getCartItems = cartItems.items || [];
@@ -54,7 +57,7 @@ const ProductCarousel = () => {
   const dispatch = useDispatch();
   const { productList, productDetails } = useSelector((state) => state.shopProducts);
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const { cartItems } = useSelector((state) => state.shopCart);
+  
 
   useEffect(() => {
     dispatch(
