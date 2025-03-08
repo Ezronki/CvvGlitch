@@ -42,13 +42,14 @@ function UserCartWrapper({ cartItems, setOpenCartSheet }) {
         </div>
       </div>
 
-      <button 
-          onClick={() => navigate('/checkout')} // Navigate to PaymentPage
-          style={styles.checkoutButton}
-          disabled={cartItems.length === 0} // Disable if cart is empty
-        >
-          {cartItems.length === 0 ? 'Cart is Empty' : 'Proceed to Checkout'}
-        </button>
+      <button
+        onClick={() => navigate('/checkout')} // Navigate to PaymentPage
+        className="w-full py-3 bg-indigo-900 text-white font-semibold rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={cartItems.length === 0} // Disable if cart is em
+      >
+        {cartItems.length === 0 ? 'Cart is Empty' : 'Proceed to Checkout'}
+      </button>
+
     </SheetContent>
 
   );
