@@ -1,4 +1,4 @@
-import {  LogOut, Menu, ShoppingCart, UserCog, ChevronDown } from "lucide-react";
+import { LogOut, Menu, ShoppingCart, UserCog, ChevronDown } from "lucide-react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Label } from "../ui/label";
@@ -6,6 +6,7 @@ import track4Logo from "../../assets/logo2/logo-2.gif";
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "@/config";
+import { Plus } from 'lucide-react';
 
 import SearchBar from "./SearchBar";
 import {
@@ -144,27 +145,15 @@ function HeaderButtons({ onItemClick, isMobile }) {
 
   return (
     <div className="flex text-black items-center gap-2">
-      <Button
-        className="bg-[#04D94F] font-extrabold hover:bg-white text-black rounded-md "
-        onClick={() => {
-          navigate('/shop/cart');
-          onItemClick();
-        }}
+      <button
+        className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors"
+        onClick={() => navigate('/shop/topup')}
       >
-        Top Up
-      </Button>
-      <label className="bg-[#F2F2F2] px-4 py-2 font-extrabold rounded-md  text-black">
-        $0.00
-      </label>
-      <Button
-        className="bg-yellow-500  text-black hover:bg-white font-extrabold px-4 py-2 rounded-md transition-all"
-        onClick={() => {
-          navigate('/shop/Orders');
-          onItemClick();
-        }}
-      >
-        Orders
-      </Button>
+        <Plus className="w-5 h-5" />
+        <span>$0.00</span>
+      </button>
+
+
 
 
 
@@ -187,7 +176,7 @@ function HeaderRightContent() {
     dispatch(fetchCartItems(user?.id));
   }, [dispatch]);
 
-  
+
 
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">

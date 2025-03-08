@@ -14,6 +14,7 @@ import ShoppingHome from "./pages/shopping-view/home";
 import ShoppingListing from "./pages/shopping-view/listing";
 import Checkout from "./pages/shopping-view/cart";
 import PaymentPage from "./components/shopping-view/paymentPage.jsx";
+import TopUp from "./components/shopping-view/topUp.jsx";
 import CartPage from "./pages/shopping-view/Orders";
 import TawkTo from "./components/tawk/tawk.jsx";
 import AdminBalanceEditor from "./pages/admin-view/AdminBalanceEditor"
@@ -95,6 +96,7 @@ function App() {
           <Route path="orders" element={<CartPage />} />
           <Route path="about" element={<About />} />
           <Route path="checkout" element={<PaymentPage />} />
+          <Route path="topup" element={<TopUp />} />
 
 
 
