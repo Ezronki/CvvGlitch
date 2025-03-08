@@ -173,10 +173,7 @@ const PaymentPage = () => {
               <span>Subtotal:</span>
               <span>${totalCartAmount.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between mb-3 text-gray-600">
-              <span>Shipping:</span>
-              <span className="text-green-600">FREE</span>
-            </div>
+            
             <div className="flex justify-between pt-4 border-t border-gray-200">
               <span className="font-semibold">Total:</span>
               <span className="font-semibold text-red-700">${totalCartAmount.toFixed(2)}</span>
