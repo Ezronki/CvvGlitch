@@ -9,7 +9,8 @@ import ltcQR from "../../assets/crypto/ltc.jpg";
 const PaymentPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cartItems, isLoading, error } = useSelector((state) => state.shopCart); // Access shopCart from Redux store
+  const { cartItems } = useSelector((state) => state.shopCart);
+  const items = cartItems.items || []; // Access the `items` array with a fallback
   const { user } = useSelector((state) => state.auth);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [cryptoAddress, setCryptoAddress] = useState('');
@@ -25,33 +26,18 @@ const PaymentPage = () => {
 
   // Fetch cart items when the user ID is available
   useEffect(() => {
-    if (!user?.id) return; // Exit if user or user.id is missing
+    if (!user?.id) return;
     dispatch(fetchCartItems(user.id));
   }, [dispatch, user]);
 
-  // Calculate the total amount using your logic
+  // Calculate total amount with salePrice support
   const totalCartAmount =
-    cartItems && cartItems.length > 0
-      ? cartItems.reduce(
-          (sum, currentItem) =>
-            sum +
-            (currentItem?.salePrice > 0
-              ? currentItem?.salePrice
-              : currentItem?.price) *
-              currentItem?.quantity,
-          0
-        )
-      : 0;
-
-  // Show loading state while cart items are being fetched
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  // Show error state if there's an issue fetching cart items
-  if (error) {
-    return <div>Error loading cart items: {error}</div>;
-  }
+    (items || []).reduce(
+      (sum, item) =>
+        sum +
+        (item?.salePrice > 0 ? item.salePrice : item?.price) * item?.quantity,
+      0
+    );
 
   // Update payment details based on the selected cryptocurrency
   const updatePaymentDetails = async (method) => {
@@ -150,7 +136,7 @@ const PaymentPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {cartItems.map((item) => (
+                {(items || []).map((item) => ( // ✅ Use `items` instead of `cartItems`
                   <tr key={item._id} className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-6 py-4">
                       <img 
@@ -207,6 +193,7 @@ const PaymentPage = () => {
             </select>
           </div>
 
+          {/* Payment Details */}
           {showPaymentDetails && (
             <div className="bg-white border border-gray-200 rounded-xl p-6 mt-6">
               <div className="flex items-center mb-6">
