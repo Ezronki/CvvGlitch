@@ -152,7 +152,7 @@ function HeaderButtons({ onItemClick, isMobile }) {
         <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
           <Plus className="w-4 h-4 text-white" />
         </div>
-        <span>$0.00</span>
+        <span className="text-white">$0.00</span>
       </button>
 
 
