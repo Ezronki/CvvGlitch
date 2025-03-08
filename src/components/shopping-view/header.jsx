@@ -149,8 +149,8 @@ function HeaderButtons({ onItemClick, isMobile }) {
         className="flex items-center gap-2 bg-transparent text-black font-semibold py-2 px-4 rounded transition-colors"
         onClick={() => navigate('/shop/topup')}
       >
-        <div className="w-7 h-7 bg-green-600 rounded-full flex items-center justify-center">
-          <Plus className="w-4 h-4 text-white" />
+        <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center">
+          <Plus className="w-5 h-5 text-white" />
         </div>
         <span className="text-white">$0.00</span>
       </button>
