@@ -44,7 +44,7 @@ function UserCartWrapper({ cartItems, setOpenCartSheet }) {
 
       <Button
         onClick={() => {
-          navigate("/shop/checkout");
+          navigate("/shop/cart");
           setOpenCartSheet(false);
         }}
         className="w-full mt-6"
