@@ -7,7 +7,7 @@ import ProductDetailsDialog from "../../components/shopping-view/product-details
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
-import { toast } from useToast();
+
 
 // Import Swiper styles
 import "swiper/css";
@@ -20,6 +20,7 @@ const ProductCarousel = () => {
   const { cartItems } = useSelector((state) => state.shopCart);
   const user = useSelector((state) => state.auth.user);
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     dispatch(
