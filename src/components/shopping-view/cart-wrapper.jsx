@@ -43,7 +43,7 @@ function UserCartWrapper({ cartItems, setOpenCartSheet }) {
       </div>
 
       <button
-        onClick={() => navigate('/checkout')} // Navigate to PaymentPage
+        onClick={() => navigate('/shop/checkout')} // Navigate to PaymentPage
         className="w-full py-3 bg-indigo-900 text-white font-semibold rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={cartItems.length === 0} // Disable if cart is em
       >
