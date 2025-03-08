@@ -447,5 +447,4 @@ const styles = {
     cursor: 'pointer',
   },
 };
-
 export default PaymentPage;
