@@ -9,7 +9,7 @@ import ltcQR from "../../assets/crypto/ltc.jpg";
 const PaymentPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cartItems } = useSelector((state) => state.shopCart);
+  const { cartItems, isLoading, error } = useSelector((state) => state.shopCart); // Access shopCart from Redux store
   const { user } = useSelector((state) => state.auth);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [cryptoAddress, setCryptoAddress] = useState('');
@@ -18,16 +18,42 @@ const PaymentPage = () => {
   const [email, setEmail] = useState(user?.email || '');
   const [emailConfirmed, setEmailConfirmed] = useState(false);
 
+  // Redirect to login if user is not logged in
   useEffect(() => {
     if (!user) navigate('/login');
   }, [user, navigate]);
 
+  // Fetch cart items when the user ID is available
   useEffect(() => {
-    if (user?.id) dispatch(fetchCartItems(user.id));
+    if (!user?.id) return; // Exit if user or user.id is missing
+    dispatch(fetchCartItems(user.id));
   }, [dispatch, user]);
 
-  const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  // Calculate the total amount using your logic
+  const totalCartAmount =
+    cartItems && cartItems.length > 0
+      ? cartItems.reduce(
+          (sum, currentItem) =>
+            sum +
+            (currentItem?.salePrice > 0
+              ? currentItem?.salePrice
+              : currentItem?.price) *
+              currentItem?.quantity,
+          0
+        )
+      : 0;
 
+  // Show loading state while cart items are being fetched
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // Show error state if there's an issue fetching cart items
+  if (error) {
+    return <div>Error loading cart items: {error}</div>;
+  }
+
+  // Update payment details based on the selected cryptocurrency
   const updatePaymentDetails = async (method) => {
     setPaymentMethod(method);
     setShowPaymentDetails(true);
@@ -41,7 +67,7 @@ const PaymentPage = () => {
           const data = await response.json();
           const btcPrice = data.bitcoin.usd;
           setCryptoAddress("1G7VHkHiDLY28pqMNTPqjU7GVoce2tEXXS");
-          setConvertedAmount(`${(totalAmount / btcPrice).toFixed(8)} BTC`);
+          setConvertedAmount(`${(totalCartAmount / btcPrice).toFixed(8)} BTC`);
           break;
         }
         case "ltc": {
@@ -51,12 +77,12 @@ const PaymentPage = () => {
           const data = await response.json();
           const ltcPrice = data.litecoin.usd;
           setCryptoAddress("LPXGUN35hc15X3SvouXVzWifLKifjNvqUn");
-          setConvertedAmount(`${(totalAmount / ltcPrice).toFixed(6)} LTC`);
+          setConvertedAmount(`${(totalCartAmount / ltcPrice).toFixed(6)} LTC`);
           break;
         }
         case "usdt": {
           setCryptoAddress("TLZVUDTxWZ6L7tgYXcQqtSx29EinwjRP2w");
-          setConvertedAmount(`${totalAmount} USDT`);
+          setConvertedAmount(`${totalCartAmount} USDT`);
           break;
         }
         default: {
@@ -69,12 +95,14 @@ const PaymentPage = () => {
     }
   };
 
+  // Copy the crypto address to the clipboard
   const copyAddress = () => {
     navigator.clipboard.writeText(cryptoAddress).then(() => {
       alert('Address copied to clipboard!');
     });
   };
 
+  // Confirm the user's email address
   const confirmEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -85,6 +113,7 @@ const PaymentPage = () => {
     alert(`Email confirmed: ${email}`);
   };
 
+  // Confirm the order
   const confirmOrder = () => {
     if (!emailConfirmed) {
       alert('Please confirm your email before proceeding.');
@@ -93,7 +122,6 @@ const PaymentPage = () => {
     alert(
       `Your order has been submitted. Ensure your email is correct. Upon receiving payment, your order will be confirmed, and you will receive a notification via the email you provided.`
     );
-   
   };
 
   return (
@@ -133,9 +161,14 @@ const PaymentPage = () => {
                     </td>
                     <td className="px-6 py-4 font-medium text-gray-800">{item.title}</td>
                     <td className="px-6 py-4 text-gray-600">{item.quantity}</td>
-                    <td className="px-6 py-4 text-gray-600">${item.price.toFixed(2)}</td>
+                    <td className="px-6 py-4 text-gray-600">
+                      ${item.salePrice > 0 ? item.salePrice.toFixed(2) : item.price.toFixed(2)}
+                    </td>
                     <td className="px-6 py-4 text-green-700 font-medium">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ${(
+                        (item.salePrice > 0 ? item.salePrice : item.price) *
+                        item.quantity
+                      ).toFixed(2)}
                     </td>
                   </tr>
                 ))}
@@ -147,7 +180,7 @@ const PaymentPage = () => {
           <div className="bg-gray-50 rounded-xl p-6 mb-8">
             <div className="flex justify-between mb-3 text-gray-600">
               <span>Subtotal:</span>
-              <span>${totalAmount.toFixed(2)}</span>
+              <span>${totalCartAmount.toFixed(2)}</span>
             </div>
             <div className="flex justify-between mb-3 text-gray-600">
               <span>Shipping:</span>
@@ -155,7 +188,7 @@ const PaymentPage = () => {
             </div>
             <div className="flex justify-between pt-4 border-t border-gray-200">
               <span className="font-semibold">Total:</span>
-              <span className="font-semibold text-red-700">${totalAmount.toFixed(2)}</span>
+              <span className="font-semibold text-red-700">${totalCartAmount.toFixed(2)}</span>
             </div>
           </div>
 
@@ -174,7 +207,6 @@ const PaymentPage = () => {
             </select>
           </div>
 
-        
           {showPaymentDetails && (
             <div className="bg-white border border-gray-200 rounded-xl p-6 mt-6">
               <div className="flex items-center mb-6">
