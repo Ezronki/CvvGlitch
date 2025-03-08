@@ -50,20 +50,33 @@ const SearchBar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Add-to-Cart handler
+  // Add-to-Cart handler with sold-out and stock checks
   const handleAddtoCart = (productId, totalStock) => {
+    // Check if product is sold out
+    if (totalStock === 0) {
+      toast({
+        title: "This product is sold out",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const currentCartItems = cartItems?.items || [];
     const index = currentCartItems.findIndex((item) => item.productId === productId);
+
+    // If product exists in cart, check if adding one more exceeds the stock
     if (index > -1) {
       const currentQuantity = currentCartItems[index].quantity;
       if (currentQuantity + 1 > totalStock) {
         toast({
-          title: `Only ${currentQuantity} quantity can be added for this item`,
+          title: `Only ${currentQuantity} unit(s) can be added for this item`,
           variant: "destructive",
         });
         return;
       }
     }
+
+    // Proceed to add to cart
     dispatch(
       addToCart({
         userId: user?.id,
@@ -114,39 +127,47 @@ const SearchBar = () => {
                 <Loader2 className="animate-spin text-gray-500" size={24} />
               </div>
             ) : searchResults.length > 0 ? (
-              searchResults.map((item, index) => (
-                <div
-                  key={item?._id}
-                  className={`p-4 hover:bg-gray-100 transition-colors flex flex-col items-start gap-4 ${index === selectedIndex ? "bg-gray-100" : ""}`}
-                >
-                  <div className="flex items-center gap-4 w-full">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-12 h-12 object-cover rounded-md"
-                    />
-                    <div className="flex-1">
-                      <p className="font-bold text-gray-800">{item.title}</p>
-                      <p className="text-sm font-bold text-green-800">Price: ${item.price}</p>
-                      {item?.balance !== null && item?.balance !== 0 && (
-                        <p className="text-[15px] font-bold text-gray-800">
-                          Balance: ${item?.balance}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  {/* Direct Add-to-Cart Button */}
-                  <button
-                    onClick={() =>
-                      // Assuming 'item.stock' is available. If not, fall back to balance or a default value.
-                      handleAddtoCart(item._id, item.stock || item.balance || 0)
-                    }
-                    className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-colors"
+              searchResults.map((item, index) => {
+                // Determine available stock using stock or balance as a fallback.
+                const availableStock = item.stock || item.balance || 0;
+                return (
+                  <div
+                    key={item?._id}
+                    className={`p-4 hover:bg-gray-100 transition-colors flex flex-col items-start gap-4 ${
+                      index === selectedIndex ? "bg-gray-100" : ""
+                    }`}
                   >
-                    Add to Cart
-                  </button>
-                </div>
-              ))
+                    <div className="flex items-center gap-4 w-full">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-12 h-12 object-cover rounded-md"
+                      />
+                      <div className="flex-1">
+                        <p className="font-bold text-gray-800">{item.title}</p>
+                        <p className="text-sm font-bold text-green-800">Price: ${item.price}</p>
+                        {item?.balance !== null && item?.balance !== 0 && (
+                          <p className="text-[15px] font-bold text-gray-800">
+                            Balance: ${item?.balance}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    {/* Direct Add-to-Cart Button */}
+                    <button
+                      onClick={() => handleAddtoCart(item._id, availableStock)}
+                      className={`w-full py-2 rounded-md transition-colors text-white ${
+                        availableStock === 0
+                          ? "bg-gray-500 cursor-not-allowed"
+                          : "bg-green-600 hover:bg-green-700"
+                      }`}
+                      disabled={availableStock === 0}
+                    >
+                      {availableStock === 0 ? "Sold Out" : "Add to Cart"}
+                    </button>
+                  </div>
+                );
+              })
             ) : (
               <p className="text-center text-gray-500 p-4">No results found</p>
             )}
