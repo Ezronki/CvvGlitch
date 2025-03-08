@@ -13,7 +13,7 @@ import NotFound from "./pages/not-found";
 import ShoppingHome from "./pages/shopping-view/home";
 import ShoppingListing from "./pages/shopping-view/listing";
 import Checkout from "./pages/shopping-view/cart";
-import PaymentPage from "./components/shopping-view/paymentPage";
+import PaymentPage from "./components/shopping-view/paymentPage.jsx";
 import CartPage from "./pages/shopping-view/Orders";
 import TawkTo from "./components/tawk/tawk.jsx";
 import AdminBalanceEditor from "./pages/admin-view/AdminBalanceEditor"

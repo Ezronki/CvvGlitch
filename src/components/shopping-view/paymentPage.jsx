@@ -9,7 +9,7 @@ import ltcQR from "../../assets/crypto/ltc.jpg";
 const PaymentPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cartItems } = useSelector((state) => state.shoppingCart);
+  const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [cryptoAddress, setCryptoAddress] = useState('');
@@ -174,7 +174,7 @@ const PaymentPage = () => {
             </select>
           </div>
 
-          {/* Crypto Payment Details */}
+        
           {showPaymentDetails && (
             <div className="bg-white border border-gray-200 rounded-xl p-6 mt-6">
               <div className="flex items-center mb-6">
