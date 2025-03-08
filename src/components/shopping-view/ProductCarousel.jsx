@@ -13,7 +13,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const { cartItems } = useSelector((state) => state.shopCart);
+
 
 
 function handleAddtoCart(getCurrentProductId, getTotalStock) {
