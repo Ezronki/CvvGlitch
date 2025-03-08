@@ -107,11 +107,12 @@ const ProductCarousel = () => {
             <SwiperSlide key={productItem.id || productItem._id}>
               <div className="px-2 py-4">
                 <ShoppingProductTile
-                  key={productItem.id || productItem._id}
+                  key={productItem.id}
+             
                   product={productItem}
                   disableSwing={true}
                   handleAddtoCart={() =>
-                    handleAddtoCart(productItem.id, productItem.stock)
+                    handleAddtoCart={handleAddtoCart}
                   }
                 />
               </div>
