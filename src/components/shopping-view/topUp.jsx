@@ -72,7 +72,7 @@ const TopUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8 font-sans">
+    <div className="min-h-screen bg-gray-50 mt-8 p-4 md:p-8 font-sans">
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
         <header className="bg-gray-100 px-4 md:px-8 py-6 border-b border-gray-200">
           <h1 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-4">
