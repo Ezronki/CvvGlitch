@@ -14,9 +14,11 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const { cartItems } = useSelector((state) => state.shopCart);
-const { user } = useSelector((state) => state.auth);
+
 
 function handleAddtoCart(getCurrentProductId, getTotalStock) {
+
+  const { cartItems } = useSelector((state) => state.shopCart);
     console.log(cartItems);
     let getCartItems = cartItems.items || [];
 
