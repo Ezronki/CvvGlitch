@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
 import ShoppingProductTile from "../../components/shopping-view/product-tile";
 import ProductDetailsDialog from "../../components/shopping-view/product-details";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
@@ -19,7 +18,7 @@ const ProductCarousel = () => {
   const { productList, productDetails } = useSelector((state) => state.shopProducts);
   const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
-  const { toast } = useToast(); // toast hook from your UI library
+  const { toast } = useToast();
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
 
   useEffect(() => {
@@ -81,12 +80,14 @@ const ProductCarousel = () => {
 
   return (
     <div className="relative py-2 bg-black z-10 pb-16">
-      <h2 className="text-3xl font-bold text-center mb- text-white">
+      <h2 className="text-3xl font-bold text-center text-white">
         Featured Products
       </h2>
 
       {(!productList || productList.length === 0) ? (
-        <div className="text-center text-gray-400">No featured products available.</div>
+        <div className="text-center text-gray-400">
+          No featured products available.
+        </div>
       ) : (
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
@@ -108,12 +109,9 @@ const ProductCarousel = () => {
               <div className="px-2 py-4">
                 <ShoppingProductTile
                   key={productItem.id}
-             
                   product={productItem}
                   disableSwing={true}
-                  handleAddtoCart={() =>
-                    handleAddtoCart={handleAddtoCart}
-                  }
+                  handleAddtoCart={handleAddtoCart}
                 />
               </div>
             </SwiperSlide>
