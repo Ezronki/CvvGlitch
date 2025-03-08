@@ -7,7 +7,7 @@ import ProductDetailsDialog from "../../components/shopping-view/product-details
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
-import { toast } from "react-toastify"; // Ensure you have react-toastify installed
+import { toast } from useToast();
 
 // Import Swiper styles
 import "swiper/css";
