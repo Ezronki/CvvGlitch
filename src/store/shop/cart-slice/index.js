@@ -84,6 +84,7 @@ const shoppingCartSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchCartItems.fulfilled, (state, action) => {
+        console.log("API Response:", action.payload);
         state.isLoading = false;
         state.cartItems = action.payload.data;
       })
