@@ -1,50 +1,77 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, fetchCartItems } from "@/store/slices/shopCartSlice";
-import { useToast } from "@/components/ui/use-toast";
-import ShoppingProductTile from "@/components/products/ShoppingProductTile";
+import { fetchAllFilteredProducts, fetchProductDetails, resetProductDetails } from "@/store/shop/products-slice";
+import ShoppingProductTile from "../../components/shopping-view/product-tile";
+import ProductDetailsDialog from "../../components/shopping-view/product-details";
 
-function handleAddtoCart(dispatch, cartItems, user, getCurrentProductId, getTotalStock, toast) {
-  let getCartItems = cartItems.items || [];
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper";
+import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { toast } from "react-toastify"; // Ensure you have react-toastify installed
 
-  if (getCartItems.length) {
-    const indexOfCurrentItem = getCartItems.findIndex(
-      (item) => item.productId === getCurrentProductId
-    );
-    if (indexOfCurrentItem > -1) {
-      const getQuantity = getCartItems[indexOfCurrentItem].quantity;
-      if (getQuantity + 1 > getTotalStock) {
-        toast({
-          title: `Only ${getQuantity} quantity can be added for this item`,
-          variant: "destructive",
-        });
-        return;
-      }
-    }
-  }
-
-  dispatch(
-    addToCart({
-      userId: user?.id,
-      productId: getCurrentProductId,
-      quantity: 1,
-    })
-  ).then((data) => {
-    if (data?.payload?.success) {
-      dispatch(fetchCartItems(user?.id));
-      toast({ title: "Product added to cart" });
-    }
-  });
-}
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const ProductCarousel = () => {
   const dispatch = useDispatch();
-  const { productList } = useSelector((state) => state.shopProducts);
+  const { productList, productDetails } = useSelector((state) => state.shopProducts);
   const { cartItems } = useSelector((state) => state.shopCart);
-  const { user } = useSelector((state) => state.auth);
-  const { toast } = useToast();
+  const user = useSelector((state) => state.auth.user);
+  const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+
+  useEffect(() => {
+    dispatch(
+      fetchAllFilteredProducts({
+        filterParams: { featured: true },
+        sortParams: "-createdAt",
+      })
+    )
+      .unwrap()
+      .then((result) => {
+        console.log("Fetched products:", result);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (productDetails !== null) {
+      setOpenDetailsDialog(true);
+    }
+  }, [productDetails]);
+
+  const handleAddtoCart = (getCurrentProductId, getTotalStock) => {
+    const getCartItems = cartItems?.items || [];
+
+    if (getCartItems.length) {
+      const indexOfCurrentItem = getCartItems.findIndex(
+        (item) => item.productId === getCurrentProductId
+      );
+      if (indexOfCurrentItem > -1) {
+        const currentQuantity = getCartItems[indexOfCurrentItem].quantity;
+        if (currentQuantity + 1 > getTotalStock) {
+          toast.error(`Only ${currentQuantity} quantity can be added for this item`);
+          return;
+        }
+      }
+    }
+
+    dispatch(
+      addToCart({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems(user?.id));
+        toast.success("Product added to cart");
+      }
+    });
+  };
 
   return (
     <div className="relative py-2 bg-black z-10 pb-16">
@@ -77,8 +104,8 @@ const ProductCarousel = () => {
                   key={productItem.id || productItem._id}
                   product={productItem}
                   disableSwing={true}
-                  handleAddtoCart={(id, stock) =>
-                    handleAddtoCart(dispatch, cartItems, user, id, stock, toast)
+                  handleAddtoCart={() =>
+                    handleAddtoCart(productItem.id, productItem.stock)
                   }
                 />
               </div>
@@ -86,6 +113,16 @@ const ProductCarousel = () => {
           ))}
         </Swiper>
       )}
+
+      <ProductDetailsDialog
+        open={openDetailsDialog && !!productDetails}
+        setOpen={setOpenDetailsDialog}
+        productDetails={productDetails}
+        onClose={() => {
+          setOpenDetailsDialog(false);
+          dispatch(resetProductDetails());
+        }}
+      />
     </div>
   );
 };
