@@ -93,53 +93,48 @@ const PaymentPage = () => {
     alert(
       `Your order has been submitted. Ensure your email is correct. Upon receiving payment, your order will be confirmed, and you will receive a notification via the email you provided.`
     );
-    const orderDetails = {
-      cartItems,
-      totalAmount,
-      paymentMethod,
-      cryptoAddress,
-      convertedAmount,
-      email,
-    };
-    // sendOrderToBackend(orderDetails);
+   
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.content}>
-        <header style={styles.header}>
-          <h1 style={styles.title}>Secure Checkout</h1>
-          <div style={styles.progressBar}>
-            <div style={styles.progressFill}></div>
+    <div className="min-h-screen bg-gray-50 p-8 font-sans">
+      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <header className="bg-gray-100 px-8 py-6 border-b border-gray-200">
+          <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">
+            Secure Checkout
+          </h1>
+          <div className="h-1 bg-gray-200 rounded-full">
+            <div className="h-full bg-green-600 rounded-full w-2/3 transition-all"></div>
           </div>
         </header>
 
-        <div style={styles.paymentContainer}>
-          <div style={styles.tableContainer}>
-            <table style={styles.table}>
-              <thead>
+        <div className="p-8">
+          {/* Cart Items Table */}
+          <div className="overflow-x-auto mb-8">
+            <table className="w-full">
+              <thead className="bg-gray-100">
                 <tr>
-                  <th style={styles.tableHeader}>Item</th>
-                  <th style={styles.tableHeader}>Product</th>
-                  <th style={styles.tableHeader}>Qty</th>
-                  <th style={styles.tableHeader}>Price</th>
-                  <th style={styles.tableHeader}>Total</th>
+                  <th className="px-6 py-4 text-left text-gray-600 font-medium">Item</th>
+                  <th className="px-6 py-4 text-left text-gray-600 font-medium">Product</th>
+                  <th className="px-6 py-4 text-left text-gray-600 font-medium">Qty</th>
+                  <th className="px-6 py-4 text-left text-gray-600 font-medium">Price</th>
+                  <th className="px-6 py-4 text-left text-gray-600 font-medium">Total</th>
                 </tr>
               </thead>
               <tbody>
                 {cartItems.map((item) => (
-                  <tr key={item._id} style={styles.tableRow}>
-                    <td style={styles.tableCell}>
+                  <tr key={item._id} className="border-b border-gray-200 hover:bg-gray-50">
+                    <td className="px-6 py-4">
                       <img 
                         src={item.image} 
                         alt={item.title} 
-                        style={styles.productImage} 
+                        className="w-14 h-14 rounded-lg object-cover shadow-sm"
                       />
                     </td>
-                    <td style={{ ...styles.tableCell, fontWeight: 500 }}>{item.title}</td>
-                    <td style={styles.tableCell}>{item.quantity}</td>
-                    <td style={styles.tableCell}>${item.price.toFixed(2)}</td>
-                    <td style={{ ...styles.tableCell, color: '#2e7d32' }}>
+                    <td className="px-6 py-4 font-medium text-gray-800">{item.title}</td>
+                    <td className="px-6 py-4 text-gray-600">{item.quantity}</td>
+                    <td className="px-6 py-4 text-gray-600">${item.price.toFixed(2)}</td>
+                    <td className="px-6 py-4 text-green-700 font-medium">
                       ${(item.price * item.quantity).toFixed(2)}
                     </td>
                   </tr>
@@ -148,29 +143,29 @@ const PaymentPage = () => {
             </table>
           </div>
 
-          <div style={styles.summaryCard}>
-            <div style={styles.summaryRow}>
+          {/* Payment Summary */}
+          <div className="bg-gray-50 rounded-xl p-6 mb-8">
+            <div className="flex justify-between mb-3 text-gray-600">
               <span>Subtotal:</span>
               <span>${totalAmount.toFixed(2)}</span>
             </div>
-            <div style={styles.summaryRow}>
+            <div className="flex justify-between mb-3 text-gray-600">
               <span>Shipping:</span>
-              <span style={{ color: '#2e7d32' }}>FREE</span>
+              <span className="text-green-600">FREE</span>
             </div>
-            <div style={{ ...styles.summaryRow, borderTop: '1px solid #eee', paddingTop: 12 }}>
-              <span style={{ fontWeight: 600 }}>Total:</span>
-              <span style={{ fontWeight: 600, color: '#d32f2f' }}>
-                ${totalAmount.toFixed(2)}
-              </span>
+            <div className="flex justify-between pt-4 border-t border-gray-200">
+              <span className="font-semibold">Total:</span>
+              <span className="font-semibold text-red-700">${totalAmount.toFixed(2)}</span>
             </div>
           </div>
 
-          <div style={styles.paymentMethodCard}>
-            <h3 style={styles.sectionTitle}>Select Payment Method</h3>
+          {/* Payment Method Selection */}
+          <div className="mb-8">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Select Payment Method</h3>
             <select
               id="payment-method"
               onChange={(e) => updatePaymentDetails(e.target.value)}
-              style={styles.select}
+              className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
             >
               <option value="" disabled selected>Choose Cryptocurrency</option>
               <option value="btc">Bitcoin (BTC)</option>
@@ -179,53 +174,68 @@ const PaymentPage = () => {
             </select>
           </div>
 
+          {/* Crypto Payment Details */}
           {showPaymentDetails && (
-            <div style={styles.cryptoCard}>
-              <div style={styles.cryptoHeader}>
-                <span style={styles.cryptoBadge}>{paymentMethod.toUpperCase()}</span>
-                <h3 style={styles.sectionTitle}>Crypto Payment Details</h3>
+            <div className="bg-white border border-gray-200 rounded-xl p-6 mt-6">
+              <div className="flex items-center mb-6">
+                <span className="bg-green-600 text-white px-4 py-1 rounded-full text-sm font-semibold mr-3">
+                  {paymentMethod.toUpperCase()}
+                </span>
+                <h3 className="text-xl font-semibold text-gray-800">Crypto Payment Details</h3>
               </div>
 
-              <div style={styles.qrSection}>
+              <div className="flex flex-col md:flex-row gap-8 items-center mb-6">
                 <img
                   src={paymentMethod === 'btc' ? btcQR : paymentMethod === 'ltc' ? ltcQR : usdtQR}
                   alt="QR Code"
-                  style={styles.qrCode}
+                  className="w-48 h-48 rounded-xl border border-gray-200 p-2 bg-white"
                 />
-                <div style={styles.addressSection}>
-                  <p style={styles.cryptoAddress}>{cryptoAddress}</p>
-                  <button onClick={copyAddress} style={styles.copyButton}>
+                <div className="flex-1 w-full">
+                  <div className="bg-gray-100 rounded-lg p-4 mb-4">
+                    <p className="font-mono text-sm break-all text-gray-800">
+                      {cryptoAddress}
+                    </p>
+                  </div>
+                  <button 
+                    onClick={copyAddress}
+                    className="w-full bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
                     Copy Address
                   </button>
                 </div>
               </div>
 
-              <div style={styles.conversionSection}>
-                <p style={styles.conversionText}>
+              <div className="bg-gray-100 rounded-lg p-4 mb-6">
+                <p className="text-green-700 font-medium">
                   Amount: <strong>{convertedAmount}</strong>
                 </p>
-                <p style={styles.note}>
+                <p className="text-gray-500 text-sm mt-2">
                   Conversion rate updates every 5 minutes. Send exact amount to avoid delays.
                 </p>
               </div>
 
-              <div style={styles.emailSection}>
+              <div className="space-y-4">
                 <input
                   type="email"
                   id="user-email"
                   placeholder="Enter your email for payment confirmation"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  style={styles.emailInput}
+                  className="w-full p-4 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={emailConfirmed}
                 />
-                {!emailConfirmed && (
-                  <button onClick={confirmEmail} style={styles.confirmEmailButton}>
+                {!emailConfirmed ? (
+                  <button 
+                    onClick={confirmEmail}
+                    className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  >
                     Confirm Email
                   </button>
-                )}
-                {emailConfirmed && (
-                  <button onClick={confirmOrder} style={styles.confirmButton}>
+                ) : (
+                  <button 
+                    onClick={confirmOrder}
+                    className="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+                  >
                     Confirm Payment
                   </button>
                 )}
@@ -238,213 +248,4 @@ const PaymentPage = () => {
   );
 };
 
-const styles = {
-  container: {
-    backgroundColor: '#fafafa',
-    minHeight: '100vh',
-    padding: '32px 16px',
-    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-  },
-  content: {
-    maxWidth: '800px',
-    margin: '0 auto',
-    backgroundColor: '#fff',
-    borderRadius: '16px',
-    boxShadow: '0 8px 32px rgba(0,0,0,0.05)',
-    overflow: 'hidden',
-  },
-  header: {
-    padding: '32px',
-    backgroundColor: '#f8f9fa',
-    borderBottom: '1px solid #eee',
-  },
-  title: {
-    margin: 0,
-    fontSize: '28px',
-    color: '#1a237e',
-    fontWeight: 600,
-    textAlign: 'center',
-  },
-  progressBar: {
-    height: '4px',
-    backgroundColor: '#eee',
-    borderRadius: '2px',
-    marginTop: '16px',
-  },
-  progressFill: {
-    width: '66%',
-    height: '100%',
-    backgroundColor: '#2e7d32',
-    borderRadius: '2px',
-    transition: 'width 0.3s ease',
-  },
-  paymentContainer: {
-    padding: '32px',
-  },
-  tableContainer: {
-    overflowX: 'auto',
-    marginBottom: '32px',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  tableHeader: {
-    padding: '16px',
-    backgroundColor: '#f8f9fa',
-    color: '#616161',
-    fontWeight: 500,
-    textAlign: 'left',
-    borderBottom: '2px solid #eee',
-  },
-  tableRow: {
-    borderBottom: '1px solid #eee',
-  },
-  tableCell: {
-    padding: '16px',
-    color: '#424242',
-  },
-  productImage: {
-    width: '56px',
-    height: '56px',
-    borderRadius: '8px',
-    objectFit: 'cover',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-  },
-  summaryCard: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: '12px',
-    padding: '24px',
-    marginBottom: '32px',
-  },
-  summaryRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: '12px',
-    color: '#616161',
-  },
-  paymentMethodCard: {
-    marginBottom: '32px',
-  },
-  sectionTitle: {
-    fontSize: '20px',
-    color: '#1a237e',
-    margin: '0 0 16px 0',
-  },
-  select: {
-    width: '100%',
-    padding: '14px',
-    borderRadius: '8px',
-    border: '1px solid #e0e0e0',
-    backgroundColor: '#fff',
-    fontSize: '16px',
-    appearance: 'none',
-  },
-  cryptoCard: {
-    backgroundColor: '#fff',
-    borderRadius: '12px',
-    border: '1px solid #e0e0e0',
-    padding: '24px',
-    marginTop: '24px',
-  },
-  cryptoHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '24px',
-  },
-  cryptoBadge: {
-    backgroundColor: '#2e7d32',
-    color: '#fff',
-    padding: '6px 12px',
-    borderRadius: '20px',
-    fontSize: '12px',
-    fontWeight: 600,
-    marginRight: '12px',
-  },
-  qrSection: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '32px',
-    marginBottom: '24px',
-  },
-  qrCode: {
-    width: '180px',
-    height: '180px',
-    borderRadius: '12px',
-    border: '1px solid #eee',
-    padding: '8px',
-    backgroundColor: '#fff',
-  },
-  addressSection: {
-    flex: 1,
-  },
-  cryptoAddress: {
-    backgroundColor: '#f8f9fa',
-    padding: '16px',
-    borderRadius: '8px',
-    fontFamily: 'monospace',
-    fontSize: '14px',
-    color: '#424242',
-    margin: '16px 0',
-    wordBreak: 'break-all',
-  },
-  copyButton: {
-    padding: '10px 20px',
-    backgroundColor: '#1a237e',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-  },
-  conversionSection: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: '8px',
-    padding: '16px',
-    margin: '24px 0',
-  },
-  conversionText: {
-    margin: 0,
-    color: '#2e7d32',
-    fontWeight: 500,
-    fontSize: '18px',
-  },
-  note: {
-    margin: '8px 0 0 0',
-    color: '#757575',
-    fontSize: '14px',
-  },
-  emailSection: {
-    marginTop: '24px',
-  },
-  emailInput: {
-    width: '100%',
-    padding: '14px',
-    borderRadius: '8px',
-    border: '1px solid #e0e0e0',
-    marginBottom: '16px',
-    fontSize: '16px',
-  },
-  confirmEmailButton: {
-    width: '100%',
-    padding: '14px',
-    backgroundColor: '#1a237e',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    fontSize: '16px',
-    fontWeight: 600,
-    cursor: 'pointer',
-  },
-  confirmButton: {
-    width: '100%',
-    padding: '14px',
-    backgroundColor: '#2e7d32',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    fontSize: '16px',
-    fontWeight: 600,
-    cursor: 'pointer',
-  },
-};
 export default PaymentPage;
