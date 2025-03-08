@@ -138,7 +138,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 dark:bg-blue-700 dark:hover:bg-blue-800"
                   onClick={() => {
                     dispatch(setProductDetails()); // Clear product details
-                    navigate("/shop/cart");
+                    navigate("/shop/checkout");
                   }}
                 >
                   Checkout
@@ -148,59 +148,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
 
             <Separator className="my-5 dark:bg-gray-700" />
 
-            {/* Reviews Section */}
-            <div className="max-h-[250px] overflow-y-auto">
-              <h2 className="text-lg sm:text-xl font-bold mb-3 dark:text-white">
-                Reviews
-              </h2>
-              <div className="grid gap-4">
-                {reviews?.length > 0 ? (
-                  reviews.map((reviewItem) => (
-                    <div className="flex gap-4 items-start" key={reviewItem._id}>
-                      <Avatar className="w-10 h-10 border dark:border-gray-700">
-                        <AvatarFallback className="dark:bg-gray-800 dark:text-gray-300">
-                          {reviewItem?.userName[0].toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="grid gap-1">
-                        <h3 className="font-semibold dark:text-white">{reviewItem?.userName}</h3>
-                        <StarRatingComponent rating={reviewItem?.reviewValue} />
-                        <p className="text-sm text-muted-foreground dark:text-gray-400">
-                          {reviewItem.reviewMessage}
-                        </p>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <h1 className="text-muted-foreground dark:text-gray-400">No Reviews</h1>
-                )}
-              </div>
-            </div>
-
-            {/* Write a Review */}
-            <div className="mt-6">
-              <Label className="dark:text-white">Write a review</Label>
-              <div className="flex gap-1 my-2">
-                <StarRatingComponent
-                  rating={rating}
-                  handleRatingChange={handleRatingChange}
-                />
-              </div>
-              <Input
-                name="reviewMsg"
-                value={reviewMsg}
-                onChange={(event) => setReviewMsg(event.target.value)}
-                placeholder="Write a review..."
-                className="dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              />
-              <Button
-                className="mt-3 dark:bg-blue-700 dark:hover:bg-blue-800"
-                onClick={handleAddReview}
-                disabled={reviewMsg.trim() === ""}
-              >
-                Submit
-              </Button>
-            </div>
+           
           </div>
         </div>
       </DialogContent>
