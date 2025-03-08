@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllFilteredProducts, fetchProductDetails, resetProductDetails } from "@/store/shop/products-slice";
+import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
 import ShoppingProductTile from "../../components/shopping-view/product-tile";
 import ProductDetailsDialog from "../../components/shopping-view/product-details";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
-
+import { useToast } from "@/components/ui/use-toast";
 
 // Import Swiper styles
 import "swiper/css";
@@ -18,9 +18,9 @@ const ProductCarousel = () => {
   const dispatch = useDispatch();
   const { productList, productDetails } = useSelector((state) => state.shopProducts);
   const { cartItems } = useSelector((state) => state.shopCart);
-  const user = useSelector((state) => state.auth.user);
+  const { user } = useSelector((state) => state.auth);
+  const { toast } = useToast(); // toast hook from your UI library
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const { toast } = useToast();
 
   useEffect(() => {
     dispatch(
@@ -54,7 +54,10 @@ const ProductCarousel = () => {
       if (indexOfCurrentItem > -1) {
         const currentQuantity = getCartItems[indexOfCurrentItem].quantity;
         if (currentQuantity + 1 > getTotalStock) {
-          toast.error(`Only ${currentQuantity} quantity can be added for this item`);
+          toast({
+            title: `Only ${currentQuantity} quantity can be added for this item`,
+            variant: "destructive",
+          });
           return;
         }
       }
@@ -69,7 +72,9 @@ const ProductCarousel = () => {
     ).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchCartItems(user?.id));
-        toast.success("Product added to cart");
+        toast({
+          title: "Product added to cart",
+        });
       }
     });
   };
@@ -119,10 +124,6 @@ const ProductCarousel = () => {
         open={openDetailsDialog && !!productDetails}
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
-        onClose={() => {
-          setOpenDetailsDialog(false);
-          dispatch(resetProductDetails());
-        }}
       />
     </div>
   );
