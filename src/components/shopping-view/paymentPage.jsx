@@ -1,221 +1,3 @@
-// Styles defined at the top so they are available for the component
-const styles = {
-  container: {
-    backgroundColor: '#fafafa',
-    minHeight: '100vh',
-    padding: '32px 16px',
-    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-  },
-  content: {
-    maxWidth: '800px',
-    margin: '0 auto',
-    backgroundColor: '#fff',
-    borderRadius: '16px',
-    boxShadow: '0 8px 32px rgba(0,0,0,0.05)',
-    overflow: 'hidden',
-  },
-  header: {
-    padding: '32px',
-    backgroundColor: '#f8f9fa',
-    borderBottom: '1px solid #eee',
-  },
-  title: {
-    margin: 0,
-    fontSize: '28px',
-    color: '#1a237e',
-    fontWeight: 600,
-    textAlign: 'center',
-  },
-  progressBar: {
-    height: '4px',
-    backgroundColor: '#eee',
-    borderRadius: '2px',
-    marginTop: '16px',
-  },
-  progressFill: {
-    width: '66%',
-    height: '100%',
-    backgroundColor: '#2e7d32',
-    borderRadius: '2px',
-    transition: 'width 0.3s ease',
-  },
-  paymentContainer: {
-    padding: '32px',
-  },
-  tableContainer: {
-    overflowX: 'auto',
-    marginBottom: '32px',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  tableHeader: {
-    padding: '16px',
-    backgroundColor: '#f8f9fa',
-    color: '#616161',
-    fontWeight: 500,
-    textAlign: 'left',
-    borderBottom: '2px solid #eee',
-  },
-  tableRow: {
-    borderBottom: '1px solid #eee',
-  },
-  tableCell: {
-    padding: '16px',
-    color: '#424242',
-  },
-  productImage: {
-    width: '56px',
-    height: '56px',
-    borderRadius: '8px',
-    objectFit: 'cover',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-  },
-  summaryCard: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: '12px',
-    padding: '24px',
-    marginBottom: '32px',
-  },
-  summaryRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: '12px',
-    color: '#616161',
-  },
-  paymentMethodCard: {
-    marginBottom: '32px',
-  },
-  sectionTitle: {
-    fontSize: '20px',
-    color: '#1a237e',
-    margin: '0 0 16px 0',
-  },
-  select: {
-    width: '100%',
-    padding: '14px',
-    borderRadius: '8px',
-    border: '1px solid #e0e0e0',
-    backgroundColor: '#fff',
-    fontSize: '16px',
-    appearance: 'none',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'right 16px center',
-    transition: 'border-color 0.2s ease',
-  },
-  cryptoCard: {
-    backgroundColor: '#fff',
-    borderRadius: '12px',
-    border: '1px solid #e0e0e0',
-    padding: '24px',
-    marginTop: '24px',
-  },
-  cryptoHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '24px',
-  },
-  cryptoBadge: {
-    backgroundColor: '#2e7d32',
-    color: '#fff',
-    padding: '6px 12px',
-    borderRadius: '20px',
-    fontSize: '12px',
-    fontWeight: 600,
-    marginRight: '12px',
-  },
-  qrSection: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '32px',
-    marginBottom: '24px',
-  },
-  qrCode: {
-    width: '180px',
-    height: '180px',
-    borderRadius: '12px',
-    border: '1px solid #eee',
-    padding: '8px',
-    backgroundColor: '#fff',
-  },
-  addressSection: {
-    flex: 1,
-  },
-  cryptoAddress: {
-    backgroundColor: '#f8f9fa',
-    padding: '16px',
-    borderRadius: '8px',
-    fontFamily: 'monospace',
-    fontSize: '14px',
-    color: '#424242',
-    margin: '16px 0',
-    wordBreak: 'break-all',
-  },
-  copyButton: {
-    padding: '10px 20px',
-    backgroundColor: '#1a237e',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    transition: 'background-color 0.2s ease',
-  },
-  conversionSection: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: '8px',
-    padding: '16px',
-    margin: '24px 0',
-  },
-  conversionText: {
-    margin: 0,
-    color: '#2e7d32',
-    fontWeight: 500,
-    fontSize: '18px',
-  },
-  note: {
-    margin: '8px 0 0 0',
-    color: '#757575',
-    fontSize: '14px',
-  },
-  emailSection: {
-    marginTop: '24px',
-  },
-  emailInput: {
-    width: '100%',
-    padding: '14px',
-    borderRadius: '8px',
-    border: '1px solid #e0e0e0',
-    marginBottom: '16px',
-    fontSize: '16px',
-    transition: 'border-color 0.2s ease',
-  },
-  confirmEmailButton: {
-    width: '100%',
-    padding: '14px',
-    backgroundColor: '#1a237e',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    fontSize: '16px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'background-color 0.2s ease',
-  },
-  confirmButton: {
-    width: '100%',
-    padding: '14px',
-    backgroundColor: '#2e7d32',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    fontSize: '16px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'background-color 0.2s ease',
-  },
-};
-
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -251,7 +33,10 @@ const PaymentPage = () => {
   }, [dispatch, user]);
 
   // Calculate total amount
-  const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const totalAmount = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
   // Update payment details based on selected method
   const updatePaymentDetails = async (method) => {
@@ -297,7 +82,7 @@ const PaymentPage = () => {
       console.error("Error updating payment details:", error);
     }
   };
-  
+
   // Copy crypto address to clipboard
   const copyAddress = () => {
     navigator.clipboard.writeText(cryptoAddress).then(() => {
@@ -323,7 +108,7 @@ const PaymentPage = () => {
       return;
     }
     alert(
-      `Your order has been submitted. Ensure your email is correct. Upon receiving payment, your order will be confirmed, and you will receive a notification via the email you provided.`
+      `Your order has been submitted. Upon receiving payment, your order will be confirmed, and you will receive a notification via the email you provided.`
     );
     const orderDetails = {
       cartItems,
@@ -337,42 +122,36 @@ const PaymentPage = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.content}>
-        <header style={styles.header}>
-          <h1 style={styles.title}>Secure Checkout</h1>
-          <div style={styles.progressBar}>
-            <div style={styles.progressFill}></div>
-          </div>
+    <div className="bg-gray-50 min-h-screen p-8 font-sans">
+      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+        <header className="p-8 bg-gray-100 border-b border-gray-200">
+          <h1 className="text-3xl font-bold text-indigo-900 text-center">Secure Checkout</h1>
+          <div className="h-1 bg-green-600 mt-4 rounded-full" style={{ width: '66%' }}></div>
         </header>
 
-        <div style={styles.paymentContainer}>
+        <div className="p-8">
           {/* Cart Items Table */}
-          <div style={styles.tableContainer}>
-            <table style={styles.table}>
-              <thead>
+          <div className="overflow-x-auto mb-8">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
                 <tr>
-                  <th style={styles.tableHeader}>Item</th>
-                  <th style={styles.tableHeader}>Product</th>
-                  <th style={styles.tableHeader}>Qty</th>
-                  <th style={styles.tableHeader}>Price</th>
-                  <th style={styles.tableHeader}>Total</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Item</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Qty</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Total</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-white divide-y divide-gray-200">
                 {cartItems.map((item) => (
-                  <tr key={item._id} style={styles.tableRow}>
-                    <td style={styles.tableCell}>
-                      <img 
-                        src={item.image} 
-                        alt={item.title} 
-                        style={styles.productImage} 
-                      />
+                  <tr key={item._id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <img className="w-14 h-14 rounded-md object-cover" src={item.image} alt={item.title} />
                     </td>
-                    <td style={{ ...styles.tableCell, fontWeight: 500 }}>{item.title}</td>
-                    <td style={styles.tableCell}>{item.quantity}</td>
-                    <td style={styles.tableCell}>${item.price.toFixed(2)}</td>
-                    <td style={{ ...styles.tableCell, color: '#2e7d32' }}>
+                    <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-700">{item.title}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{item.quantity}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">${item.price.toFixed(2)}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-green-600 font-medium">
                       ${(item.price * item.quantity).toFixed(2)}
                     </td>
                   </tr>
@@ -382,30 +161,27 @@ const PaymentPage = () => {
           </div>
 
           {/* Payment Summary */}
-          <div style={styles.summaryCard}>
-            <div style={styles.summaryRow}>
-              <span>Subtotal:</span>
-              <span>${totalAmount.toFixed(2)}</span>
+          <div className="bg-gray-100 rounded-lg p-6 mb-8">
+            <div className="flex justify-between mb-4">
+              <span className="text-gray-700">Subtotal:</span>
+              <span className="text-gray-700">${totalAmount.toFixed(2)}</span>
             </div>
-            <div style={styles.summaryRow}>
-              <span>Shipping:</span>
-              <span style={{ color: '#2e7d32' }}>FREE</span>
+            <div className="flex justify-between mb-4">
+              <span className="text-gray-700">Shipping:</span>
+              <span className="text-green-600 font-medium">FREE</span>
             </div>
-            <div style={{ ...styles.summaryRow, borderTop: '1px solid #eee', paddingTop: 12 }}>
-              <span style={{ fontWeight: 600 }}>Total:</span>
-              <span style={{ fontWeight: 600, color: '#d32f2f' }}>
-                ${totalAmount.toFixed(2)}
-              </span>
+            <div className="flex justify-between border-t pt-4">
+              <span className="font-semibold text-red-600">Total:</span>
+              <span className="font-semibold text-red-600">${totalAmount.toFixed(2)}</span>
             </div>
           </div>
 
           {/* Payment Method Selection */}
-          <div style={styles.paymentMethodCard}>
-            <h3 style={styles.sectionTitle}>Select Payment Method</h3>
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold text-indigo-900 mb-4">Select Payment Method</h3>
             <select
-              id="payment-method"
               onChange={(e) => updatePaymentDetails(e.target.value)}
-              style={styles.select}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
             >
               <option value="" disabled selected>
                 Choose Cryptocurrency
@@ -418,14 +194,17 @@ const PaymentPage = () => {
 
           {/* Crypto Payment Details */}
           {showPaymentDetails && (
-            <div style={styles.cryptoCard}>
-              <div style={styles.cryptoHeader}>
-                <span style={styles.cryptoBadge}>{paymentMethod.toUpperCase()}</span>
-                <h3 style={styles.sectionTitle}>Crypto Payment Details</h3>
+            <div className="bg-white rounded-lg border p-6">
+              <div className="flex items-center mb-6">
+                <span className="bg-green-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-full mr-4">
+                  {paymentMethod.toUpperCase()}
+                </span>
+                <h3 className="text-xl font-semibold text-indigo-900">Crypto Payment Details</h3>
               </div>
 
-              <div style={styles.qrSection}>
+              <div className="flex items-center gap-8 mb-6">
                 <img
+                  className="w-44 h-44 rounded-lg border p-2"
                   src={
                     paymentMethod === 'btc'
                       ? btcQR
@@ -434,42 +213,41 @@ const PaymentPage = () => {
                       : usdtQR
                   }
                   alt="QR Code"
-                  style={styles.qrCode}
                 />
-                <div style={styles.addressSection}>
-                  <p style={styles.cryptoAddress}>{cryptoAddress}</p>
-                  <button onClick={copyAddress} style={styles.copyButton}>
+                <div className="flex-1">
+                  <p className="bg-gray-100 p-4 rounded-lg font-mono text-sm text-gray-700 break-words">
+                    {cryptoAddress}
+                  </p>
+                  <button onClick={copyAddress} className="mt-4 w-full px-4 py-2 bg-indigo-900 text-white rounded-lg hover:bg-indigo-700">
                     Copy Address
                   </button>
                 </div>
               </div>
 
-              <div style={styles.conversionSection}>
-                <p style={styles.conversionText}>
-                  Amount: <strong>{convertedAmount}</strong>
+              <div className="bg-gray-100 rounded-lg p-4 mb-6">
+                <p className="text-green-600 font-semibold">
+                  Amount: <span className="font-bold">{convertedAmount}</span>
                 </p>
-                <p style={styles.note}>
+                <p className="text-gray-600 text-sm mt-2">
                   Conversion rate updates every 5 minutes. Send exact amount to avoid delays.
                 </p>
               </div>
 
-              <div style={styles.emailSection}>
+              <div className="mb-6">
                 <input
                   type="email"
-                  id="user-email"
                   placeholder="Enter your email for payment confirmation"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  style={styles.emailInput}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
                   disabled={emailConfirmed}
                 />
-                {!emailConfirmed && (
-                  <button onClick={confirmEmail} style={styles.confirmEmailButton}>
+                {!emailConfirmed ? (
+                  <button onClick={confirmEmail} className="mt-4 w-full px-4 py-3 bg-indigo-900 text-white rounded-lg hover:bg-indigo-700">
                     Confirm Email
                   </button>
-                )}
-                {emailConfirmed && (
-                  <button onClick={confirmOrder} style={styles.confirmButton}>
+                ) : (
+                  <button onClick={confirmOrder} className="mt-4 w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
                     Confirm Payment
                   </button>
                 )}
