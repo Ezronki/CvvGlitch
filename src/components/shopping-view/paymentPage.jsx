@@ -18,6 +18,7 @@ const PaymentPage = () => {
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const [email, setEmail] = useState(user?.email || '');
   const [emailConfirmed, setEmailConfirmed] = useState(false);
+  const [transactionHash, setTransactionHash] = useState(''); // New state for transaction hash
 
   // Redirect to login if user is not logged in
   useEffect(() => {
@@ -105,16 +106,20 @@ const PaymentPage = () => {
       alert('Please confirm your email before proceeding.');
       return;
     }
+    if (!transactionHash) {
+      alert('Please enter the transaction hash ID.');
+      return;
+    }
     alert(
-      `Your order has been submitted. Ensure your email is correct. Upon receiving payment, your order will be confirmed, and you will receive a notification via the email you provided.`
+      `Your order has been submitted. Transaction Hash: ${transactionHash}. Ensure your email is correct. Upon receiving payment, your order will be confirmed, and you will receive a notification via the email you provided.`
     );
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 font-sans">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8 font-sans">
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-        <header className="bg-gray-100 px-8 py-6 border-b border-gray-200">
-          <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">
+        <header className="bg-gray-100 px-4 md:px-8 py-6 border-b border-gray-200">
+          <h1 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-4">
             Secure Checkout
           </h1>
           <div className="h-1 bg-gray-200 rounded-full">
@@ -122,35 +127,35 @@ const PaymentPage = () => {
           </div>
         </header>
 
-        <div className="p-8">
+        <div className="p-4 md:p-8">
           {/* Cart Items Table */}
           <div className="overflow-x-auto mb-8">
             <table className="w-full">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="px-6 py-4 text-left text-gray-600 font-medium">Item</th>
-                  <th className="px-6 py-4 text-left text-gray-600 font-medium">Product</th>
-                  <th className="px-6 py-4 text-left text-gray-600 font-medium">Qty</th>
-                  <th className="px-6 py-4 text-left text-gray-600 font-medium">Price</th>
-                  <th className="px-6 py-4 text-left text-gray-600 font-medium">Total</th>
+                  <th className="px-4 py-2 md:px-6 md:py-4 text-left text-gray-600 font-medium">Item</th>
+                  <th className="px-4 py-2 md:px-6 md:py-4 text-left text-gray-600 font-medium">Product</th>
+                  <th className="px-4 py-2 md:px-6 md:py-4 text-left text-gray-600 font-medium">Qty</th>
+                  <th className="px-4 py-2 md:px-6 md:py-4 text-left text-gray-600 font-medium">Price</th>
+                  <th className="px-4 py-2 md:px-6 md:py-4 text-left text-gray-600 font-medium">Total</th>
                 </tr>
               </thead>
               <tbody>
-                {(items || []).map((item) => ( // ✅ Use `items` instead of `cartItems`
+                {(items || []).map((item) => (
                   <tr key={item._id} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="px-6 py-4">
+                    <td className="px-4 py-2 md:px-6 md:py-4">
                       <img 
                         src={item.image} 
                         alt={item.title} 
-                        className="w-14 h-14 rounded-lg object-cover shadow-sm"
+                        className="w-10 h-10 md:w-14 md:h-14 rounded-lg object-cover shadow-sm"
                       />
                     </td>
-                    <td className="px-6 py-4 font-medium text-gray-800">{item.title}</td>
-                    <td className="px-6 py-4 text-gray-600">{item.quantity}</td>
-                    <td className="px-6 py-4 text-gray-600">
+                    <td className="px-4 py-2 md:px-6 md:py-4 font-medium text-gray-800">{item.title}</td>
+                    <td className="px-4 py-2 md:px-6 md:py-4 text-gray-600">{item.quantity}</td>
+                    <td className="px-4 py-2 md:px-6 md:py-4 text-gray-600">
                       ${item.salePrice > 0 ? item.salePrice.toFixed(2) : item.price.toFixed(2)}
                     </td>
-                    <td className="px-6 py-4 text-green-700 font-medium">
+                    <td className="px-4 py-2 md:px-6 md:py-4 text-green-700 font-medium">
                       ${(
                         (item.salePrice > 0 ? item.salePrice : item.price) *
                         item.quantity
@@ -163,7 +168,7 @@ const PaymentPage = () => {
           </div>
 
           {/* Payment Summary */}
-          <div className="bg-gray-50 rounded-xl p-6 mb-8">
+          <div className="bg-gray-50 rounded-xl p-4 md:p-6 mb-8">
             <div className="flex justify-between mb-3 text-gray-600">
               <span>Subtotal:</span>
               <span>${totalCartAmount.toFixed(2)}</span>
@@ -184,7 +189,7 @@ const PaymentPage = () => {
             <select
               id="payment-method"
               onChange={(e) => updatePaymentDetails(e.target.value)}
-              className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+              className="w-full p-3 md:p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
             >
               <option value="" disabled selected>Choose Cryptocurrency</option>
               <option value="btc">Bitcoin (BTC)</option>
@@ -195,7 +200,7 @@ const PaymentPage = () => {
 
           {/* Payment Details */}
           {showPaymentDetails && (
-            <div className="bg-white border border-gray-200 rounded-xl p-6 mt-6">
+            <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-6 mt-6">
               <div className="flex items-center mb-6">
                 <span className="bg-green-600 text-white px-4 py-1 rounded-full text-sm font-semibold mr-3">
                   {paymentMethod.toUpperCase()}
@@ -207,7 +212,7 @@ const PaymentPage = () => {
                 <img
                   src={paymentMethod === 'btc' ? btcQR : paymentMethod === 'ltc' ? ltcQR : usdtQR}
                   alt="QR Code"
-                  className="w-48 h-48 rounded-xl border border-gray-200 p-2 bg-white"
+                  className="w-32 h-32 md:w-48 md:h-48 rounded-xl border border-gray-200 p-2 bg-white"
                 />
                 <div className="flex-1 w-full">
                   <div className="bg-gray-100 rounded-lg p-4 mb-4">
@@ -240,8 +245,16 @@ const PaymentPage = () => {
                   placeholder="Enter your email for payment confirmation"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full p-4 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full p-3 md:p-4 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={emailConfirmed}
+                />
+                <input
+                  type="text"
+                  id="transaction-hash"
+                  placeholder="Enter transaction hash ID"
+                  value={transactionHash}
+                  onChange={(e) => setTransactionHash(e.target.value)}
+                  className="w-full p-3 md:p-4 border border-gray-300 rounded-lg"
                 />
                 {!emailConfirmed ? (
                   <button 
