@@ -42,15 +42,13 @@ function UserCartWrapper({ cartItems, setOpenCartSheet }) {
         </div>
       </div>
 
-      <Button
-        onClick={() => {
-          navigate("/shop/cart");
-          setOpenCartSheet(false);
-        }}
-        className="w-full mt-6"
-      >
-        Checkout
-      </Button>
+      <button 
+          onClick={() => navigate('/checkout')} // Navigate to PaymentPage
+          style={styles.checkoutButton}
+          disabled={cartItems.length === 0} // Disable if cart is empty
+        >
+          {cartItems.length === 0 ? 'Cart is Empty' : 'Proceed to Checkout'}
+        </button>
     </SheetContent>
 
   );
